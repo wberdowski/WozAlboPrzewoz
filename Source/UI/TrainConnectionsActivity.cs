@@ -57,7 +57,7 @@ namespace WozAlboPrzewoz
 
             mTrainConnData = new List<TrainConnection>();
 
-            mTrainConnAdapter = new ConnectionsRecyclerAdapter(mTrainConnData);
+            mTrainConnAdapter = new ConnectionsRecyclerAdapter(this, mTrainConnData);
             mTrainConnAdapter.ItemClick += MTrainConnAdapter_ItemClick;
             mRecyclerView.SetAdapter(mTrainConnAdapter);
 

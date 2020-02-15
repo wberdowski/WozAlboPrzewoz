@@ -4,4 +4,11 @@
   <color name="colorPrimaryDark">#263238</color>
   <color name="colorPrimaryLight">#37474f</color>
   <color name="colorAccent">#00c853</color>
+  <color name="colorStatusGood">#00c853</color>
+  <color name="colorStatusGoodDark">#009624</color>
+  <color name="colorStatusIntermediate">#ffd600</color>
+  <color name="colorStatusIntermediateDark">#c7a500</color>
+  <color name="colorStatusBad">#dd2c00</color>
+  <color name="colorStatusBadDark">#a30000</color>
+  <color name="colorStatusDim">#cfd8dc</color>
 </resources>

@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using Android.Graphics;
 using System.Threading;
 using Xamarin.Forms;
+using Android.Content.Res;
+using Android.Content;
+using Android.Support.V4.Content;
 
 namespace WozAlboPrzewoz
 {
@@ -14,9 +17,11 @@ namespace WozAlboPrzewoz
         public event EventHandler<RecyclerAdapterClickEventArgs> ItemClick;
         public event EventHandler<RecyclerAdapterClickEventArgs> ItemLongClick;
         List<TrainConnection> items;
+        Context context;
 
-        public ConnectionsRecyclerAdapter(List<TrainConnection> data)
+        public ConnectionsRecyclerAdapter(Context ctx, List<TrainConnection> data)
         {
+            context = ctx;
             items = data;
         }
 
@@ -40,50 +45,80 @@ namespace WozAlboPrzewoz
             var item = items[position];
             var holder = viewHolder as RecyclerAdapterViewHolder;
 
-            var departureTime = DateTime.FromOADate(item.timeDeparture);
-            var minutesLeft = Math.Ceiling(departureTime.AddMinutes(item.delay).Subtract(DateTime.Now).TotalMinutes);
+            var departureTime = NormalizeTime(DateTime.FromOADate(item.timeDeparture));
+            var delayNormalized = Math.Max(0, item.delay);
+            var minutesLeft = (int)Math.Ceiling(departureTime.Subtract(DateTime.Now).TotalMinutes) + delayNormalized;
+
+            //
+            //  Status
+            //
+
 
             if (item.delay > 0)
             {
-                holder.textViewStatus.Text = $"+{item.delay} min";
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(200, 0, 0));
+                holder.textViewStatus.Text = context.GetString(Resource.String.delay, item.delay);
+                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
             }
             else
             {
-                holder.textViewStatus.Text = $"Na czas";
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(0, 170, 0));
+                if (item.up.Length > 0)
+                {
+                    holder.textViewStatus.Text = context.GetString(Resource.String.difficulties);
+                    holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+                }
+                else
+                {
+                    holder.textViewStatus.Text = context.GetString(Resource.String.on_time);
+                    holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusGoodDark)));
+                }
             }
 
-            if (minutesLeft < 0)
+            //
+            //  Status indicator
+            //
+
+            if (item.up.Length > 0)
             {
-                holder.textViewStatus.Text = $"Odjechał";
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(170, 170, 170));
+                holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusBad);
             }
-            else if (minutesLeft < 1)
+            else
             {
-                holder.textViewStatus.Text = $"Odjeżdża";
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(170, 170, 170));
+                if (minutesLeft < 1)
+                {
+                    holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusDim);
+                }
+                else
+                {
+                    holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusGood);
+                }
             }
+
+            //
+            //  Time or minutes left
+            //
 
             if (minutesLeft < 60)
             {
-                holder.textViewTime.Text = $"{Math.Abs(minutesLeft)}";
+                holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
                 holder.textViewMin.Visibility = ViewStates.Visible;
             }
             else
             {
-                holder.textViewTime.Text = departureTime.AddMinutes(item.delay).ToShortTimeString();
+                holder.textViewTime.Text = departureTime.AddMinutes(delayNormalized).ToShortTimeString();
                 holder.textViewMin.Visibility = ViewStates.Gone;
-            }
-
-            if (minutesLeft == 1)
-            {
-                holder.textViewTime.Text = $"<1";
             }
 
             holder.textViewDestination.Text = item.stationEnd;
             holder.textViewLine.Text = item.line;
             holder.textViewCarrier.Text = item.carrier;
+
+            holder.textViewTime1.Text = departureTime.ToShortTimeString();
+            holder.textViewTime2.Text = DateTime.FromOADate(item.timeArrivalEnd).ToShortTimeString();
+        }
+
+        private DateTime NormalizeTime(DateTime time)
+        {
+            return time.AddSeconds(-time.Second);
         }
 
         public override int ItemCount => items.Count;
@@ -100,6 +135,9 @@ namespace WozAlboPrzewoz
         public TextView textViewDestination { get; set; }
         public TextView textViewCarrier { get; set; }
         public TextView textViewLine { get; set; }
+        public LinearLayout statusIndicator { get; set; }
+        public TextView textViewTime1 { get; set; }
+        public TextView textViewTime2 { get; set; }
 
         public RecyclerAdapterViewHolder(Android.Views.View itemView, Action<RecyclerAdapterClickEventArgs> clickListener,
                             Action<RecyclerAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -110,6 +148,10 @@ namespace WozAlboPrzewoz
             textViewDestination = (TextView)itemView.FindViewById(Resource.Id.textViewDestination);
             textViewCarrier = (TextView)itemView.FindViewById(Resource.Id.textViewCarrier);
             textViewLine = (TextView)itemView.FindViewById(Resource.Id.textViewLine);
+            statusIndicator = (LinearLayout)itemView.FindViewById(Resource.Id.statusIndicator);
+            textViewTime1 = (TextView)itemView.FindViewById(Resource.Id.textViewTime1);
+            textViewTime2 = (TextView)itemView.FindViewById(Resource.Id.textViewTime2);
+
             //TextView = v;
             itemView.Click += (sender, e) => clickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
             itemView.LongClick += (sender, e) => longClickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
