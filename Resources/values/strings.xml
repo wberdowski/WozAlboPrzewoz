@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">Wóz albo przewóz</string>
+  <string name="action_settings">Ustawienia</string>
+  <string name="action_undo">Cofnij</string>
+  <string name="action_favorite_removed">Stacja %s usunięta z ulubionych.</string>
+  <string name="action_favorite_added">Stacja %s dodana do ulubionych.</string>
+</resources>

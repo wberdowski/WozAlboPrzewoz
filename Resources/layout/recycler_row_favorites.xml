@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp">
+
+    <TextView
+        android:id="@+id/textViewFavoriteText"
+        android:text="Test"
+        android:textSize="16dp"
+        android:padding="16dp"
+        android:textStyle="bold"
+        android:textColor="#444"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</android.support.v7.widget.CardView>
