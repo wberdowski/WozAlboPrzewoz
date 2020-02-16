@@ -55,17 +55,15 @@ namespace WozAlboPrzewoz
 
         public static void Load()
         {
-            if (!File.Exists(GetFilePath()))
+            using (var reader = new StreamReader(File.Open(GetFilePath(), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite)))
             {
-                File.Create(GetFilePath());
-            }
-
-            var arr = JsonConvert.DeserializeObject<List<int>>(File.ReadAllText(GetFilePath()));
-            if (arr != null)
-            {
-                foreach (int sid in arr)
+                var arr = JsonConvert.DeserializeObject<List<int>>(reader.ReadToEnd());
+                if (arr != null)
                 {
-                    favorites.Add(StationsCache.Stations.Where(x => x.id == sid).FirstOrDefault());
+                    foreach (int sid in arr)
+                    {
+                        favorites.Add(StationsCache.Stations.Where(x => x.id == sid).FirstOrDefault());
+                    }
                 }
             }
         }
