@@ -3,12 +3,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
-using Android.Graphics;
-using System.Threading;
-using Xamarin.Forms;
-using Android.Content.Res;
 using Android.Content;
-using Android.Support.V4.Content;
 
 namespace WozAlboPrzewoz
 {
@@ -16,10 +11,10 @@ namespace WozAlboPrzewoz
     {
         public event EventHandler<RecyclerAdapterClickEventArgs> ItemClick;
         public event EventHandler<RecyclerAdapterClickEventArgs> ItemLongClick;
-        List<TrainConnection> items;
+        List<TrainConnectionListItem> items;
         Context context;
 
-        public ConnectionsRecyclerAdapter(Context ctx, List<TrainConnection> data)
+        public ConnectionsRecyclerAdapter(Context ctx, List<TrainConnectionListItem> data)
         {
             context = ctx;
             items = data;
@@ -43,25 +38,39 @@ namespace WozAlboPrzewoz
         public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
         {
             var item = items[position];
+            var connection = item.Connection;
             var holder = viewHolder as RecyclerAdapterViewHolder;
 
-            var departureTime = NormalizeTime(DateTime.FromOADate(item.timeDeparture));
-            var delayNormalized = Math.Max(0, item.delay);
+            var departureTime = NormalizeTime(DateTime.FromOADate(connection.timeDeparture));
+            var delayNormalized = Math.Max(0, connection.delay);
             var minutesLeft = (int)Math.Ceiling(departureTime.Subtract(DateTime.Now).TotalMinutes) + delayNormalized;
+
+            //
+            //  Header
+            //
+
+            if (item.HasHeader)
+            {
+                holder.textViewHeader.Text = item.HeaderText;
+                holder.textViewHeader.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                holder.textViewHeader.Visibility = ViewStates.Gone;
+            }
 
             //
             //  Status
             //
 
-
-            if (item.delay > 0)
+            if (connection.delay > 0)
             {
-                holder.textViewStatus.Text = context.GetString(Resource.String.delay, item.delay);
+                holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.delay);
                 holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
             }
             else
             {
-                if (item.up.Length > 0)
+                if (connection.up.Length > 0)
                 {
                     holder.textViewStatus.Text = context.GetString(Resource.String.difficulties);
                     holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
@@ -77,7 +86,7 @@ namespace WozAlboPrzewoz
             //  Status indicator
             //
 
-            if (item.up.Length > 0)
+            if (connection.up.Length > 0)
             {
                 holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusBad);
             }
@@ -108,12 +117,12 @@ namespace WozAlboPrzewoz
                 holder.textViewMin.Visibility = ViewStates.Gone;
             }
 
-            holder.textViewDestination.Text = item.stationEnd;
-            holder.textViewLine.Text = item.line;
-            holder.textViewCarrier.Text = item.carrier;
+            holder.textViewDestination.Text = connection.stationEnd;
+            holder.textViewLine.Text = connection.line;
+            holder.textViewCarrier.Text = connection.carrier;
 
             holder.textViewTime1.Text = departureTime.ToShortTimeString();
-            holder.textViewTime2.Text = DateTime.FromOADate(item.timeArrivalEnd).ToShortTimeString();
+            holder.textViewTime2.Text = DateTime.FromOADate(connection.timeArrivalEnd).ToShortTimeString();
         }
 
         private DateTime NormalizeTime(DateTime time)
@@ -129,6 +138,8 @@ namespace WozAlboPrzewoz
 
     public class RecyclerAdapterViewHolder : RecyclerView.ViewHolder
     {
+        public CardView cardViewRow { get; set; }
+        public TextView textViewHeader { get; set; }
         public TextView textViewTime { get; set; }
         public TextView textViewMin { get; set; }
         public TextView textViewStatus { get; set; }
@@ -142,6 +153,8 @@ namespace WozAlboPrzewoz
         public RecyclerAdapterViewHolder(Android.Views.View itemView, Action<RecyclerAdapterClickEventArgs> clickListener,
                             Action<RecyclerAdapterClickEventArgs> longClickListener) : base(itemView)
         {
+            cardViewRow = (CardView)itemView.FindViewById(Resource.Id.cardViewRow);
+            textViewHeader = (TextView)itemView.FindViewById(Resource.Id.textViewHeader);
             textViewTime = (TextView)itemView.FindViewById(Resource.Id.textViewTime);
             textViewMin = (TextView)itemView.FindViewById(Resource.Id.textViewMin);
             textViewStatus = (TextView)itemView.FindViewById(Resource.Id.textViewStatus);
@@ -153,8 +166,8 @@ namespace WozAlboPrzewoz
             textViewTime2 = (TextView)itemView.FindViewById(Resource.Id.textViewTime2);
 
             //TextView = v;
-            itemView.Click += (sender, e) => clickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
-            itemView.LongClick += (sender, e) => longClickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            cardViewRow.Click += (sender, e) => clickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            cardViewRow.LongClick += (sender, e) => longClickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
         }
     }
 

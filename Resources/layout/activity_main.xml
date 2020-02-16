@@ -14,21 +14,14 @@
         android:paddingHorizontal="8dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.SearchView
+            android:id="@+id/editTextSearch"
+            app:defaultQueryHint="Nazwa stacji"
+            app:iconifiedByDefault="false"
+            app:searchIcon="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#fff">
-
-            <android.support.v7.widget.SearchView
-                android:id="@+id/editTextSearch"
-                app:defaultQueryHint="Nazwa stacji"
-                app:iconifiedByDefault="false"
-                app:searchIcon="@null"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
+            android:background="#fff"/>
 
     </LinearLayout>
 

@@ -5,7 +5,11 @@
   <string name="action_favorite_removed">Stacja %s usunięta z ulubionych.</string>
   <string name="action_favorite_added">Stacja %s dodana do ulubionych.</string>
   <string name="action_favorite">Ulubione</string>
-  <string name="difficulties">Utrudn.</string>
+  <string name="difficulties">Utrudnienia</string>
   <string name="on_time">Na czas</string>
   <string name="delay">+%d min</string>
+  <string name="dialog_server_error_title">Błąd ładowania danych</string>
+  <string name="dialog_server_error_body">Serwer zwrócił status %1$d %2$s. Użyj przycisku Ponów próbę lub spróbuj ponownie później.</string>
+  <string name="dialog_button_ok">OK</string>
+  <string name="dialog_button_try_again">Ponów próbę</string>
 </resources>

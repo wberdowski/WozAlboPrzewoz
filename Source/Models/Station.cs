@@ -7,7 +7,7 @@ namespace WozAlboPrzewoz
         [JsonProperty("ID")]
         public int id;
         [JsonProperty("N")]
-        public string nazwa;
+        public string name;
         [JsonProperty("P")]
         public int p;
         [JsonProperty("M")]

@@ -62,7 +62,8 @@
   <ItemGroup>
     <Compile Include="Source\Adapters\FavoritesAdapter.cs" />
     <Compile Include="Source\Adapters\SearchCursorAdapter.cs" />
-    <Compile Include="Source\FavoritesManager.cs" />
+    <Compile Include="Source\Utils\FavoritesManager.cs" />
+    <Compile Include="Source\Models\TrainConnectionListItem.cs" />
     <Compile Include="Source\UI\ConnectionDetailsActivity.cs" />
     <Compile Include="Source\Utils\HttpUtils.cs" />
     <Compile Include="Source\UI\MainActivity.cs" />

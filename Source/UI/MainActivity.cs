@@ -8,8 +8,6 @@ using Android.Provider;
 using Android.Database;
 using Android.Content;
 using Android.Support.V7.Widget;
-using System;
-using System.Linq;
 using Android.Support.Design.Widget;
 
 namespace WozAlboPrzewoz
@@ -35,12 +33,12 @@ namespace WozAlboPrzewoz
             FavoritesManager.FavoritesChanged += FavoritesManager_FavoritesChanged;
 
             //
-            //  Favorites recycler
+            //  Favorites Recycler
             //
 
             mRecyclerViewFavorites = (RecyclerView)FindViewById(Resource.Id.recyclerViewFavorites);
 
-            LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+            var mLayoutManager = new LinearLayoutManager(this);
             mRecyclerViewFavorites.SetLayoutManager(mLayoutManager);
 
             mFavoritesData = FavoritesManager.favorites;
@@ -66,23 +64,23 @@ namespace WozAlboPrzewoz
 
         private void MFavoritesAdapter_ItemLongClick(object sender, RecyclerAdapterClickEventArgs e)
         {
-            Station s = FavoritesManager.favorites[e.Position];
-            int idx = FavoritesManager.RemoveFavorite(s);
+            var station = FavoritesManager.favorites[e.Position];
+            int idx = FavoritesManager.RemoveFavorite(station);
             mFavoritesAdapter.NotifyItemRemoved(idx);
-            Snackbar.Make(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, s.nazwa), Snackbar.LengthLong)
+            Snackbar.Make(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.name), Snackbar.LengthLong)
                 .SetAction(Resource.String.action_undo, (v) =>
                 {
-                    FavoritesManager.AddFavorite(s);
+                    FavoritesManager.AddFavorite(station);
                 })
                 .Show();
         }
 
         private void MFavoritesAdapter_ItemClick(object sender, RecyclerAdapterClickEventArgs e)
         {
-            Station s = FavoritesManager.favorites[e.Position];
+            var station = FavoritesManager.favorites[e.Position];
             for (int i = 0; i < StationsCache.Stations.Length; i++)
             {
-                if (StationsCache.Stations[i].id == s.id)
+                if (StationsCache.Stations[i].id == station.id)
                 {
                     OpenStationActivity(i);
                 }
@@ -96,7 +94,7 @@ namespace WozAlboPrzewoz
 
         private void OpenStationActivity(int sid)
         {
-            Intent startActivityIntent = new Intent(this, typeof(TrainConnectionsActivity));
+            var startActivityIntent = new Intent(this, typeof(TrainConnectionsActivity));
             startActivityIntent.PutExtra("id", sid);
             StartActivity(startActivityIntent);
         }
@@ -106,7 +104,7 @@ namespace WozAlboPrzewoz
             string text = ReplaceNonEnglishCharacters(e.NewText.ToLower());
             if (text.Length > 1)
             {
-                MatrixCursor cursor = mSearchSuggestionsAdapter.GetItem(0) as MatrixCursor;
+                var cursor = mSearchSuggestionsAdapter.GetItem(0) as MatrixCursor;
                 int sid = cursor.GetInt(0);
 
                 OpenStationActivity(sid);
@@ -119,7 +117,7 @@ namespace WozAlboPrzewoz
 
         private void MSearchView_SuggestionClick(object sender, Android.Support.V7.Widget.SearchView.SuggestionClickEventArgs e)
         {
-            MatrixCursor cursor = mSearchSuggestionsAdapter.GetItem(e.Position) as MatrixCursor;
+            var cursor = mSearchSuggestionsAdapter.GetItem(e.Position) as MatrixCursor;
             int sid = cursor.GetInt(0);
 
             OpenStationActivity(sid);
@@ -134,15 +132,15 @@ namespace WozAlboPrzewoz
             string text = ReplaceNonEnglishCharacters(e.NewText.ToLower());
             if (text.Length > 1)
             {
-                MatrixCursor c = new MatrixCursor(new string[] { BaseColumns.Id, "nazwa" });
+                var c = new MatrixCursor(new string[] { BaseColumns.Id, "nazwa" });
 
                 for (int i = 0; i < StationsCache.Stations.Length; i++)
                 {
-                    Station s = StationsCache.Stations[i];
+                    var station = StationsCache.Stations[i];
 
-                    if (ReplaceNonEnglishCharacters(s.nazwa.ToLower()).Contains(text))
+                    if (ReplaceNonEnglishCharacters(station.name.ToLower()).Contains(text))
                     {
-                        c.AddRow(new Java.Lang.Object[] { i, s.nazwa });
+                        c.AddRow(new Java.Lang.Object[] { i, station.name });
                     }
                 }
 
@@ -167,7 +165,7 @@ namespace WozAlboPrzewoz
 
         private string ReplaceNonEnglishCharacters(string str)
         {
-            char[] chars = str.ToCharArray();
+            var chars = str.ToCharArray();
 
             for (int i = 0; i < chars.Length; i++)
             {

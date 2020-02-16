@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
@@ -9,18 +10,20 @@ using Android.Widget;
 using Java.Lang;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Xamarin.Forms;
 
 namespace WozAlboPrzewoz
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = false)]
-    public class TrainConnectionsActivity : AppCompatActivity
+    public class TrainConnectionsActivity : AppCompatActivity, TimePickerDialog.IOnTimeSetListener
     {
         private Station mSelectedStation;
-        private List<TrainConnection> mTrainConnData;
+        private List<TrainConnectionListItem> mTrainConnData;
         private ConnectionsRecyclerAdapter mTrainConnAdapter;
         private TickReceiver mTickReceiver;
         private SwipeRefreshLayout mSwipeRefreshLayout;
+        private Android.Widget.Button mButtonPickDateTime;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -37,7 +40,7 @@ namespace WozAlboPrzewoz
             int sid = Intent.GetIntExtra("id", 0);
             mSelectedStation = StationsCache.Stations[sid];
 
-            Title = mSelectedStation.nazwa;
+            Title = mSelectedStation.name;
 
             //
             //  Swipe refresh layout
@@ -50,16 +53,27 @@ namespace WozAlboPrzewoz
             //  Train connections recycler
             //
 
-            RecyclerView mRecyclerView = (RecyclerView)FindViewById(Resource.Id.recyclerView);
+            var mRecyclerView = (RecyclerView)FindViewById(Resource.Id.recyclerView);
 
-            LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+            var mLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.SetLayoutManager(mLayoutManager);
 
-            mTrainConnData = new List<TrainConnection>();
+            mTrainConnData = new List<TrainConnectionListItem>();
 
             mTrainConnAdapter = new ConnectionsRecyclerAdapter(this, mTrainConnData);
             mTrainConnAdapter.ItemClick += MTrainConnAdapter_ItemClick;
             mRecyclerView.SetAdapter(mTrainConnAdapter);
+
+            //  
+            //  Button DateTime Picker
+            //
+
+            //mButtonPickDateTime = (Android.Widget.Button)FindViewById(Resource.Id.buttonPickDateTime);
+            //mButtonPickDateTime.Click += (v, e) =>
+            //{
+            //    TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, DateTime.Now.Hour, DateTime.Now.Minute, true);
+            //    timePickerDialog.Show();
+            //};
 
             //
             //  Results time update timer
@@ -72,8 +86,8 @@ namespace WozAlboPrzewoz
 
         private void MTrainConnAdapter_ItemClick(object sender, RecyclerAdapterClickEventArgs e)
         {
-            TrainConnection conn = mTrainConnData[e.Position];
-            OpenDetailsActivity(conn);
+            TrainConnectionListItem item = mTrainConnData[e.Position];
+            OpenDetailsActivity(item.Connection);
         }
 
         private void OpenDetailsActivity(TrainConnection conn)
@@ -135,13 +149,56 @@ namespace WozAlboPrzewoz
             mSwipeRefreshLayout.Refreshing = true;
             new System.Threading.Thread(() =>
             {
-                TrainConnection[] connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.Now);
-                Device.BeginInvokeOnMainThread(() =>
+                try
                 {
-                    mTrainConnData.AddRange(connections);
-                    mTrainConnAdapter.NotifyDataSetChanged();
-                    mSwipeRefreshLayout.Refreshing = false;
-                });
+                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.Now);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DateTime lastDate = DateTime.Now;
+
+                        for (int i = 0; i < connections.Length; i++)
+                        {
+                            var conn = connections[i];
+                            var item = new TrainConnectionListItem(conn);
+                            var date = DateTime.FromOADate(conn.timeDeparture).Date;
+
+                            if (lastDate < date)
+                            {
+                                item.HasHeader = true;
+                                item.HeaderText = date.ToLongDateString();
+                            }
+
+                            lastDate = date;
+                            mTrainConnData.Add(item);
+                        }
+                        mTrainConnAdapter.NotifyDataSetChanged();
+                        mSwipeRefreshLayout.Refreshing = false;
+                    });
+                }
+                catch (WebException ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        mSwipeRefreshLayout.Refreshing = false;
+
+                        var status = ((HttpWebResponse)ex.Response).StatusCode;
+
+                        var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
+                        dialog.SetTitle(Resource.String.dialog_server_error_title);
+                        dialog.SetMessage(Resources.GetString(Resource.String.dialog_server_error_body, (int)status, status.ToString()));
+                        dialog.SetNeutralButton(Resource.String.dialog_button_try_again, (s, e) =>
+                        {
+                            UpdateAdapterData();
+                        });
+                        dialog.SetPositiveButton(Resource.String.dialog_button_ok, (s, e) =>
+                        {
+
+                        });
+                        dialog.Show();
+                    });
+                }
             }).Start();
         }
 
@@ -186,6 +243,13 @@ namespace WozAlboPrzewoz
             {
                 mAdapter.NotifyDataSetChanged();
             }
+        }
+
+        public void OnTimeSet(Android.Widget.TimePicker view, int hourOfDay, int minute)
+        {
+            DateTime currentTime = DateTime.Now;
+            DateTime selectedTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day, hourOfDay, minute, 0);
+            mButtonPickDateTime.Text = selectedTime.ToShortTimeString();
         }
     }
 }
