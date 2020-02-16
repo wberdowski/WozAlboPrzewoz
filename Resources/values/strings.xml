@@ -12,4 +12,6 @@
   <string name="dialog_server_error_body">Serwer zwrócił status %1$d %2$s. Użyj przycisku Ponów próbę lub spróbuj ponownie później.</string>
   <string name="dialog_button_ok">OK</string>
   <string name="dialog_button_try_again">Ponów próbę</string>
+  <string name="dialog_connection_error_title">Błąd połączenia</string>
+  <string name="dialog_connection_error_body">Nie można nawiązać połączenia z serwerem. Sprawdź swoje połączenie internetowe i spróbuj ponownie.</string>
 </resources>

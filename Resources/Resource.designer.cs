@@ -7263,49 +7263,55 @@ namespace WozAlboPrzewoz
 			public const int dialog_button_try_again = 2131623987;
 			
 			// aapt resource value: 0x7F0E0034
-			public const int dialog_server_error_body = 2131623988;
+			public const int dialog_connection_error_body = 2131623988;
 			
 			// aapt resource value: 0x7F0E0035
-			public const int dialog_server_error_title = 2131623989;
+			public const int dialog_connection_error_title = 2131623989;
 			
 			// aapt resource value: 0x7F0E0036
-			public const int difficulties = 2131623990;
+			public const int dialog_server_error_body = 2131623990;
 			
 			// aapt resource value: 0x7F0E0037
-			public const int fab_transformation_scrim_behavior = 2131623991;
+			public const int dialog_server_error_title = 2131623991;
 			
 			// aapt resource value: 0x7F0E0038
-			public const int fab_transformation_sheet_behavior = 2131623992;
+			public const int difficulties = 2131623992;
 			
 			// aapt resource value: 0x7F0E0039
-			public const int hide_bottom_view_on_scroll_behavior = 2131623993;
+			public const int fab_transformation_scrim_behavior = 2131623993;
 			
 			// aapt resource value: 0x7F0E003A
-			public const int mtrl_chip_close_icon_content_description = 2131623994;
+			public const int fab_transformation_sheet_behavior = 2131623994;
 			
 			// aapt resource value: 0x7F0E003B
-			public const int on_time = 2131623995;
+			public const int hide_bottom_view_on_scroll_behavior = 2131623995;
 			
 			// aapt resource value: 0x7F0E003C
-			public const int password_toggle_content_description = 2131623996;
+			public const int mtrl_chip_close_icon_content_description = 2131623996;
 			
 			// aapt resource value: 0x7F0E003D
-			public const int path_password_eye = 2131623997;
+			public const int on_time = 2131623997;
 			
 			// aapt resource value: 0x7F0E003E
-			public const int path_password_eye_mask_strike_through = 2131623998;
+			public const int password_toggle_content_description = 2131623998;
 			
 			// aapt resource value: 0x7F0E003F
-			public const int path_password_eye_mask_visible = 2131623999;
+			public const int path_password_eye = 2131623999;
 			
 			// aapt resource value: 0x7F0E0040
-			public const int path_password_strike_through = 2131624000;
+			public const int path_password_eye_mask_strike_through = 2131624000;
 			
 			// aapt resource value: 0x7F0E0041
-			public const int search_menu_title = 2131624001;
+			public const int path_password_eye_mask_visible = 2131624001;
 			
 			// aapt resource value: 0x7F0E0042
-			public const int status_bar_notification_info_overflow = 2131624002;
+			public const int path_password_strike_through = 2131624002;
+			
+			// aapt resource value: 0x7F0E0043
+			public const int search_menu_title = 2131624003;
+			
+			// aapt resource value: 0x7F0E0044
+			public const int status_bar_notification_info_overflow = 2131624004;
 			
 			static String()
 			{

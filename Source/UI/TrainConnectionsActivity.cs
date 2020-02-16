@@ -182,21 +182,38 @@ namespace WozAlboPrzewoz
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         mSwipeRefreshLayout.Refreshing = false;
-
-                        var status = ((HttpWebResponse)ex.Response).StatusCode;
-
-                        var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
-                        dialog.SetTitle(Resource.String.dialog_server_error_title);
-                        dialog.SetMessage(Resources.GetString(Resource.String.dialog_server_error_body, (int)status, status.ToString()));
-                        dialog.SetNeutralButton(Resource.String.dialog_button_try_again, (s, e) =>
+                        if (ex.Response != null)
                         {
-                            UpdateAdapterData();
-                        });
-                        dialog.SetPositiveButton(Resource.String.dialog_button_ok, (s, e) =>
-                        {
+                            var status = ((HttpWebResponse)ex.Response).StatusCode;
 
-                        });
-                        dialog.Show();
+                            var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
+                            dialog.SetTitle(Resource.String.dialog_server_error_title);
+                            dialog.SetMessage(Resources.GetString(Resource.String.dialog_server_error_body, (int)status, status.ToString()));
+                            dialog.SetNeutralButton(Resource.String.dialog_button_try_again, (s, e) =>
+                            {
+                                UpdateAdapterData();
+                            });
+                            dialog.SetPositiveButton(Resource.String.dialog_button_ok, (s, e) =>
+                            {
+
+                            });
+                            dialog.Show();
+                        }
+                        else
+                        {
+                            var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
+                            dialog.SetTitle(Resource.String.dialog_connection_error_title);
+                            dialog.SetMessage(Resource.String.dialog_connection_error_body);
+                            dialog.SetNeutralButton(Resource.String.dialog_button_try_again, (s, e) =>
+                            {
+                                UpdateAdapterData();
+                            });
+                            dialog.SetPositiveButton(Resource.String.dialog_button_ok, (s, e) =>
+                            {
+
+                            });
+                            dialog.Show();
+                        }
                     });
                 }
             }).Start();
