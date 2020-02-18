@@ -62,39 +62,45 @@ namespace WozAlboPrzewoz
             //
             //  Status
             //
-
-            if (connection.delay > 0)
+            if (minutesLeft < 1)
             {
-                holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.delay);
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+                holder.textViewStatus.Text = context.GetString(Resource.String.train_left);
+                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextLight)));
             }
             else
             {
-                if (connection.up.Length > 0)
+                if (connection.delay > 0)
                 {
-                    holder.textViewStatus.Text = context.GetString(Resource.String.difficulties);
+                    holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.delay);
                     holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
                 }
                 else
                 {
-                    holder.textViewStatus.Text = context.GetString(Resource.String.on_time);
-                    holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusGoodDark)));
+                    if (connection.up.Length > 0)
+                    {
+                        holder.textViewStatus.Text = context.GetString(Resource.String.difficulties);
+                        holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+                    }
+                    else
+                    {
+                        holder.textViewStatus.Text = context.GetString(Resource.String.on_time);
+                        holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusGoodDark)));
+                    }
                 }
             }
 
             //
             //  Status indicator
             //
-
-            if (connection.up.Length > 0)
+            if (minutesLeft < 1)
             {
-                holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusBad);
+                holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusDim);
             }
             else
             {
-                if (minutesLeft < 1)
+                if (connection.up.Length > 0)
                 {
-                    holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusDim);
+                    holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusBad);
                 }
                 else
                 {
@@ -108,8 +114,16 @@ namespace WozAlboPrzewoz
 
             if (minutesLeft < 60)
             {
-                holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
-                holder.textViewMin.Visibility = ViewStates.Visible;
+                if (minutesLeft <= -60)
+                {
+                    holder.textViewTime.Text = TimeSpan.FromMinutes(minutesLeft).ToString(@"hh\:mm");
+                    holder.textViewMin.Visibility = ViewStates.Gone;
+                }
+                else
+                {
+                    holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
+                    holder.textViewMin.Visibility = ViewStates.Visible;
+                }
             }
             else
             {

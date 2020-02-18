@@ -23,7 +23,8 @@ namespace WozAlboPrzewoz
         private ConnectionsRecyclerAdapter mTrainConnAdapter;
         private TickReceiver mTickReceiver;
         private SwipeRefreshLayout mSwipeRefreshLayout;
-        private Android.Widget.Button mButtonPickDateTime;
+        private DateTime mSearchTime;
+        private IMenuItem mDatetimeAction;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,6 +40,7 @@ namespace WozAlboPrzewoz
 
             int sid = Intent.GetIntExtra("id", 0);
             mSelectedStation = StationsCache.Stations[sid];
+            mSearchTime = DateTime.Now.AddMinutes(-3);
 
             Title = mSelectedStation.name;
 
@@ -63,17 +65,6 @@ namespace WozAlboPrzewoz
             mTrainConnAdapter = new ConnectionsRecyclerAdapter(this, mTrainConnData);
             mTrainConnAdapter.ItemClick += MTrainConnAdapter_ItemClick;
             mRecyclerView.SetAdapter(mTrainConnAdapter);
-
-            //  
-            //  Button DateTime Picker
-            //
-
-            //mButtonPickDateTime = (Android.Widget.Button)FindViewById(Resource.Id.buttonPickDateTime);
-            //mButtonPickDateTime.Click += (v, e) =>
-            //{
-            //    TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, DateTime.Now.Hour, DateTime.Now.Minute, true);
-            //    timePickerDialog.Show();
-            //};
 
             //
             //  Results time update timer
@@ -115,6 +106,9 @@ namespace WozAlboPrzewoz
                 favoriteAction.SetIcon(Resource.Drawable.favorite_24px);
             }
 
+            mDatetimeAction = menu.FindItem(Resource.Id.action_datetime);
+            mDatetimeAction.SetTitle(mSearchTime.ToShortTimeString());
+
             return base.OnPrepareOptionsMenu(menu);
         }
 
@@ -132,6 +126,10 @@ namespace WozAlboPrzewoz
                     FavoritesManager.RemoveFavorite(mSelectedStation);
                     item.SetIcon(Resource.Drawable.favorite_border_24px);
                 }
+            } else if(item.ItemId == Resource.Id.action_datetime)
+            {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mSearchTime.Hour, mSearchTime.Minute, true);
+                timePickerDialog.Show();
             }
 
             return base.OnOptionsItemSelected(item);
@@ -151,7 +149,7 @@ namespace WozAlboPrzewoz
             {
                 try
                 {
-                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.Now);
+                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, mSearchTime);
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -266,7 +264,9 @@ namespace WozAlboPrzewoz
         {
             DateTime currentTime = DateTime.Now;
             DateTime selectedTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day, hourOfDay, minute, 0);
-            mButtonPickDateTime.Text = selectedTime.ToShortTimeString();
+            mDatetimeAction.SetTitle(selectedTime.ToShortTimeString());
+            mSearchTime = selectedTime;
+            UpdateAdapterData();
         }
     }
 }

@@ -14,4 +14,5 @@
   <string name="dialog_button_try_again">Ponów próbę</string>
   <string name="dialog_connection_error_title">Błąd połączenia</string>
   <string name="dialog_connection_error_body">Nie można nawiązać połączenia z serwerem. Sprawdź swoje połączenie internetowe i spróbuj ponownie.</string>
+  <string name="train_left">Odjechał</string>
 </resources>
