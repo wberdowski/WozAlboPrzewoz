@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
@@ -10,14 +11,10 @@ namespace WozAlboPrzewoz
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = false)]
     public class DetailsActivity : AppCompatActivity
     {
-        private int r;
-        private int z;
-        private double dk;
-        private int spnnt;
-        private int sknnt;
         private RecyclerView mRecyclerDetails;
         private List<StationSchedule> mConnectionDetails;
         private DetailsAdapter mDetailsAdapter;
+        private TrainConnection mTrainConnection;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,13 +26,9 @@ namespace WozAlboPrzewoz
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
-            r = Intent.GetIntExtra("r", 0);
-            z = Intent.GetIntExtra("z", 0);
-            dk = Intent.GetDoubleExtra("dk", 0);
-            spnnt = Intent.GetIntExtra("spnnt", 0);
-            sknnt = Intent.GetIntExtra("sknnt", 0);
+            mTrainConnection = JsonConvert.DeserializeObject<TrainConnection>(Intent.GetStringExtra("train_conn"));
 
-            Title = r + " " + z + " " + dk + " " + spnnt + " " + sknnt;
+            Title = $"{mTrainConnection.trainNumber} {mTrainConnection.stationEnd}";
 
             //
             //  Recycler details
@@ -54,7 +47,15 @@ namespace WozAlboPrzewoz
 
             new System.Threading.Thread(() =>
             {
-                var details = PKPAPI.GetConnectionRoute(r, z, dk, spnnt, sknnt);
+                var req = new ConnectionDetailsRequest(
+                    mTrainConnection.timetableYear,
+                    mTrainConnection.z,
+                    mTrainConnection.dk,
+                    mTrainConnection.spnnt,
+                    mTrainConnection.sknnt
+                    );
+
+                var details = PKPAPI.GetConnectionRoute(req);
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     var dt = new ConnectionDetails()

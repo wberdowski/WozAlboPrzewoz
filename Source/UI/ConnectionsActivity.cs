@@ -5,11 +5,15 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
 using Java.Lang;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Xamarin.Forms;
 
@@ -22,9 +26,11 @@ namespace WozAlboPrzewoz
         private List<TrainConnectionListItem> mTrainConnData;
         private ConnectionsAdapter mTrainConnAdapter;
         private TickReceiver mTickReceiver;
-        private SwipeRefreshLayout mSwipeRefreshLayout;
+        private SwipyRefreshLayout mSwipyRefreshLayout;
         private DateTime mSearchTime;
         private IMenuItem mDatetimeAction;
+        private RecyclerView mRecyclerView;
+        private LinearLayoutManager mLayoutManager;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -40,24 +46,25 @@ namespace WozAlboPrzewoz
 
             int sid = Intent.GetIntExtra("id", 0);
             mSelectedStation = StationsCache.Stations[sid];
-            mSearchTime = DateTime.Now.AddMinutes(-3);
+            mSearchTime = DateTime.Now.AddMinutes(-1);
 
             Title = mSelectedStation.name;
 
             //
-            //  Swipe refresh layout
+            //  Swipy refresh layout
             //
 
-            mSwipeRefreshLayout = (SwipeRefreshLayout)FindViewById(Resource.Id.swipeRefreshLayoutTrains);
-            mSwipeRefreshLayout.Refresh += MSwipeRefreshLayout_Refresh;
+            mSwipyRefreshLayout = (SwipyRefreshLayout)FindViewById(Resource.Id.swipyRefreshLayoutTrains);
+            mSwipyRefreshLayout.SetDistanceToTriggerSync((int)(Resources.DisplayMetrics.Density * 64));
+            mSwipyRefreshLayout.Refresh += MSwipeRefreshLayout_Refresh;
 
             //
             //  Train connections recycler
             //
 
-            var mRecyclerView = (RecyclerView)FindViewById(Resource.Id.recyclerView);
+            mRecyclerView = (RecyclerView)FindViewById(Resource.Id.recyclerView);
 
-            var mLayoutManager = new LinearLayoutManager(this);
+            mLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.SetLayoutManager(mLayoutManager);
 
             mTrainConnData = new List<TrainConnectionListItem>();
@@ -75,6 +82,11 @@ namespace WozAlboPrzewoz
             UpdateAdapterData();
         }
 
+        private void MSwipeRefreshLayout_Refresh(object sender, SwipyRefreshLayout.RefreshEventArgs e)
+        {
+            LoadMore(e.P0);
+        }
+
         private void MTrainConnAdapter_ItemClick(object sender, ConnectionsAdapterClickEventArgs e)
         {
             TrainConnectionListItem item = mTrainConnData[e.Position];
@@ -83,19 +95,11 @@ namespace WozAlboPrzewoz
 
         private void OpenDetailsActivity(TrainConnection conn)
         {
-            Intent startActivityIntent = new Intent(this, typeof(DetailsActivity));
-            startActivityIntent.PutExtra("r", conn.timetableYear);
-            startActivityIntent.PutExtra("z", conn.z);
-            startActivityIntent.PutExtra("dk", conn.dk);
-            startActivityIntent.PutExtra("spnnt", conn.spnnt);
-            startActivityIntent.PutExtra("sknnt", conn.sknnt);
-            StartActivity(startActivityIntent);
+            var intent = new Intent(this, typeof(DetailsActivity));
+            intent.PutExtra("train_conn", JsonConvert.SerializeObject(conn));
+            StartActivity(intent);
         }
 
-        private void MSwipeRefreshLayout_Refresh(object sender, EventArgs e)
-        {
-            UpdateAdapterData();
-        }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -126,7 +130,8 @@ namespace WozAlboPrzewoz
                     FavoritesManager.RemoveFavorite(mSelectedStation);
                     item.SetIcon(Resource.Drawable.favorite_border_24px);
                 }
-            } else if(item.ItemId == Resource.Id.action_datetime)
+            }
+            else if (item.ItemId == Resource.Id.action_datetime)
             {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mSearchTime.Hour, mSearchTime.Minute, true);
                 timePickerDialog.Show();
@@ -141,10 +146,78 @@ namespace WozAlboPrzewoz
             return true;
         }
 
+        private void LoadMore(SwipyRefreshLayoutDirection direction)
+        {
+            new System.Threading.Thread(() =>
+            {
+                if (direction == SwipyRefreshLayoutDirection.Top)
+                {
+                    var firstConn = mTrainConnData.First().Connection;
+                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(firstConn.timeDeparture), 0, 10);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        var list = new List<TrainConnectionListItem>();
+
+                        foreach (var conn in connections)
+                        {
+                            list.Add(new TrainConnectionListItem(conn));
+                        }
+
+                        mTrainConnData.InsertRange(0, list);
+                        AdjustDateHeaders();
+                        mTrainConnAdapter.NotifyDataSetChanged();
+                        mSwipyRefreshLayout.Refreshing = false;
+                    });
+                }
+                else if (direction == SwipyRefreshLayoutDirection.Bottom)
+                {
+                    var lastConn = mTrainConnData.Last().Connection;
+                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(lastConn.timeDeparture), 2, 10);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        foreach (var conn in connections)
+                        {
+                            if (lastConn.sknnt == conn.sknnt && lastConn.spnnt == conn.spnnt) continue;
+
+                            mTrainConnData.Add(new TrainConnectionListItem(conn));
+                        }
+
+                        AdjustDateHeaders();
+                        mTrainConnAdapter.NotifyDataSetChanged();
+                        mSwipyRefreshLayout.Refreshing = false;
+                    });
+                }
+            }).Start();
+
+        }
+
+        private void AdjustDateHeaders()
+        {
+            DateTime lastDate = DateTime.Now;
+
+            foreach (var item in mTrainConnData)
+            {
+                var date = DateTime.FromOADate(item.Connection.timeDeparture).Date;
+
+                if (lastDate < date)
+                {
+                    item.HasHeader = true;
+                    item.HeaderText = date.ToLongDateString();
+                }
+
+                lastDate = date;
+            }
+        }
+
         private void UpdateAdapterData()
         {
             mTrainConnData.Clear();
-            mSwipeRefreshLayout.Refreshing = true;
+            mSwipyRefreshLayout.Post(() =>
+            {
+                mSwipyRefreshLayout.Refreshing = true;
+            });
             new System.Threading.Thread(() =>
             {
                 try
@@ -171,7 +244,7 @@ namespace WozAlboPrzewoz
                             mTrainConnData.Add(item);
                         }
                         mTrainConnAdapter.NotifyDataSetChanged();
-                        mSwipeRefreshLayout.Refreshing = false;
+                        mSwipyRefreshLayout.Refreshing = false;
                     });
                 }
                 catch (WebException ex)
@@ -179,7 +252,7 @@ namespace WozAlboPrzewoz
                     Console.WriteLine(ex.StackTrace);
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        mSwipeRefreshLayout.Refreshing = false;
+                        mSwipyRefreshLayout.Refreshing = false;
                         if (ex.Response != null)
                         {
                             var status = ((HttpWebResponse)ex.Response).StatusCode;

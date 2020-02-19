@@ -21,9 +21,9 @@ namespace WozAlboPrzewoz
             return arr.ToObject<Station[]>();
         }
 
-        public static TrainConnection[] GetStationTimetable(int sid, DateTime time)
+        public static TrainConnection[] GetStationTimetable(int sid, DateTime time, int k = 1, int s = 0)
         {
-            StationTimetableRequest packet = new StationTimetableRequest(sid, time.ToOADate(), 1, 1, 0, 0.0);
+            StationTimetableRequest packet = new StationTimetableRequest(sid, time.ToOADate(), 1, k, s, 0.0);
             string parameters = EncryptionHelpers.Encrypt(packet.Serialize());
             HttpStatusCode status;
             string response = HttpUtils.SendGETRequest($"https://portalpasazera.pl/API/RozkladNaStacji?parametry={parameters}", out status);
@@ -32,22 +32,20 @@ namespace WozAlboPrzewoz
             return arr.ToObject<TrainConnection[]>();
         }
 
-        public static string GetConnectionDetails(int r, int z, double dk, int spnnt, int sknnt)
+        public static string GetConnectionDetails(ConnectionDetailsRequest packet)
         {
             //[{"R":2020,"Z":130026500,"DK":43871.0,"SPNNT":6,"SKNNT":25}]
 
-            ConnectionDetailsRequest packet = new ConnectionDetailsRequest(r, z, dk, spnnt, sknnt);
             string parameters = EncryptionHelpers.Encrypt(packet.Serialize());
             HttpStatusCode status;
             string response = HttpUtils.SendGETRequest($"https://portalpasazera.pl/API/SzczegolyPolaczeniaDane?parametry={parameters}&v=kb", out status);
             return response;
         }
 
-        public static string GetConnectionRoute(int r, int z, double dk, int spnnt, int sknnt)
+        public static string GetConnectionRoute(ConnectionDetailsRequest packet)
         {
             //[{"R":2020,"Z":130026500,"DK":43871.0,"SPNNT":6,"SKNNT":25}]
 
-            ConnectionDetailsRequest packet = new ConnectionDetailsRequest(r, z, dk, spnnt, sknnt);
             string parameters = EncryptionHelpers.Encrypt(packet.Serialize());
             HttpStatusCode status;
             string response = HttpUtils.SendGETRequest($"https://portalpasazera.pl/API/SzczegolyPolaczeniaTrasa?parametry={parameters}&v=kb", out status);
