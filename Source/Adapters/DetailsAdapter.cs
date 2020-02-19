@@ -38,7 +38,14 @@ namespace WozAlboPrzewoz
             var holder = viewHolder as DetailsAdapterViewHolder;
 
             holder.textViewStationName.Text = item.Name;
-            holder.textViewTime.Text = item.DepartureTime.ToShortTimeString();
+            if (position == 0)
+            {
+                holder.textViewTime.Text = item.DepartureTime.ToShortTimeString();
+            }
+            else
+            {
+                holder.textViewTime.Text = item.ArrivalTime.ToShortTimeString();
+            }
             holder.textViewTrack.Text = $"Peron {item.Platform} Tor {item.Track}";
         }
 

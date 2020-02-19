@@ -21,7 +21,8 @@ namespace WozAlboPrzewoz
             {
                 var s = new StationSchedule();
                 s.Name = item["N"].ToString();
-                s.DepartureTime = DateTime.FromOADate(item["PPDT"].Value<double>());
+                s.ArrivalTime = DateTime.FromOADate(item["PPDT"].Value<double>());
+                s.DepartureTime = DateTime.FromOADate(item["PODT"].Value<double>());
                 s.Platform = item["P0"].ToString();
                 s.Track = item["T0"].ToString();
                 Stations.Add(s);
