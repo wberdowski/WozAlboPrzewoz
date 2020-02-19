@@ -16,11 +16,11 @@ using Xamarin.Forms;
 namespace WozAlboPrzewoz
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = false)]
-    public class TrainConnectionsActivity : AppCompatActivity, TimePickerDialog.IOnTimeSetListener
+    public class ConnectionsActivity : AppCompatActivity, TimePickerDialog.IOnTimeSetListener
     {
         private Station mSelectedStation;
         private List<TrainConnectionListItem> mTrainConnData;
-        private ConnectionsRecyclerAdapter mTrainConnAdapter;
+        private ConnectionsAdapter mTrainConnAdapter;
         private TickReceiver mTickReceiver;
         private SwipeRefreshLayout mSwipeRefreshLayout;
         private DateTime mSearchTime;
@@ -62,7 +62,7 @@ namespace WozAlboPrzewoz
 
             mTrainConnData = new List<TrainConnectionListItem>();
 
-            mTrainConnAdapter = new ConnectionsRecyclerAdapter(this, mTrainConnData);
+            mTrainConnAdapter = new ConnectionsAdapter(this, mTrainConnData);
             mTrainConnAdapter.ItemClick += MTrainConnAdapter_ItemClick;
             mRecyclerView.SetAdapter(mTrainConnAdapter);
 
@@ -75,7 +75,7 @@ namespace WozAlboPrzewoz
             UpdateAdapterData();
         }
 
-        private void MTrainConnAdapter_ItemClick(object sender, RecyclerAdapterClickEventArgs e)
+        private void MTrainConnAdapter_ItemClick(object sender, ConnectionsAdapterClickEventArgs e)
         {
             TrainConnectionListItem item = mTrainConnData[e.Position];
             OpenDetailsActivity(item.Connection);
@@ -83,7 +83,7 @@ namespace WozAlboPrzewoz
 
         private void OpenDetailsActivity(TrainConnection conn)
         {
-            Intent startActivityIntent = new Intent(this, typeof(ConnectionDetailsActivity));
+            Intent startActivityIntent = new Intent(this, typeof(DetailsActivity));
             startActivityIntent.PutExtra("r", conn.timetableYear);
             startActivityIntent.PutExtra("z", conn.z);
             startActivityIntent.PutExtra("dk", conn.dk);
@@ -247,9 +247,9 @@ namespace WozAlboPrzewoz
 
         private class TickReceiver : BroadcastReceiver
         {
-            private ConnectionsRecyclerAdapter mAdapter;
+            private ConnectionsAdapter mAdapter;
 
-            public TickReceiver(ConnectionsRecyclerAdapter adapter)
+            public TickReceiver(ConnectionsAdapter adapter)
             {
                 mAdapter = adapter;
             }

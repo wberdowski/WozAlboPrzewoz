@@ -8,8 +8,8 @@ namespace WozAlboPrzewoz
 {
     public class FavoritesAdapter : RecyclerView.Adapter
     {
-        public event EventHandler<RecyclerAdapterClickEventArgs> ItemClick;
-        public event EventHandler<RecyclerAdapterClickEventArgs> ItemLongClick;
+        public event EventHandler<ConnectionsAdapterClickEventArgs> ItemClick;
+        public event EventHandler<ConnectionsAdapterClickEventArgs> ItemLongClick;
         List<Station> items;
 
         public FavoritesAdapter(List<Station> data)
@@ -42,21 +42,21 @@ namespace WozAlboPrzewoz
 
         public override int ItemCount => items.Count;
 
-        void OnClick(RecyclerAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
-        void OnLongClick(RecyclerAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
+        void OnClick(ConnectionsAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
+        void OnLongClick(ConnectionsAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
     }
 
     public class FavoritesAdapterViewHolder : RecyclerView.ViewHolder
     {
         public TextView textViewText { get; set; }
 
-        public FavoritesAdapterViewHolder(Android.Views.View itemView, Action<RecyclerAdapterClickEventArgs> clickListener,
-                            Action<RecyclerAdapterClickEventArgs> longClickListener) : base(itemView)
+        public FavoritesAdapterViewHolder(Android.Views.View itemView, Action<ConnectionsAdapterClickEventArgs> clickListener,
+                            Action<ConnectionsAdapterClickEventArgs> longClickListener) : base(itemView)
         {
             textViewText = (TextView)itemView.FindViewById(Resource.Id.textViewFavoriteText);
             //TextView = v;
-            itemView.Click += (sender, e) => clickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
-            itemView.LongClick += (sender, e) => longClickListener(new RecyclerAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            itemView.Click += (sender, e) => clickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            itemView.LongClick += (sender, e) => longClickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
         }
     }
 

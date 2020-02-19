@@ -1,20 +1,23 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Support.V7.App;
-using Android.Widget;
+using Android.Support.V7.Widget;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace WozAlboPrzewoz
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = false)]
-    public class ConnectionDetailsActivity : AppCompatActivity
+    public class DetailsActivity : AppCompatActivity
     {
         private int r;
         private int z;
         private double dk;
         private int spnnt;
         private int sknnt;
-        private TextView tv1;
+        private RecyclerView mRecyclerDetails;
+        private List<StationSchedule> mConnectionDetails;
+        private DetailsAdapter mDetailsAdapter;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,16 +37,39 @@ namespace WozAlboPrzewoz
 
             Title = r + " " + z + " " + dk + " " + spnnt + " " + sknnt;
 
-            tv1 = (TextView)FindViewById(Resource.Id.textView1);
+            //
+            //  Recycler details
+            //
+
+            mRecyclerDetails = (RecyclerView)FindViewById(Resource.Id.recyclerViewDetails);
+
+            var mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerDetails.SetLayoutManager(mLayoutManager);
+
+            mConnectionDetails = new List<StationSchedule>();
+
+            mDetailsAdapter = new DetailsAdapter(mConnectionDetails);
+            mDetailsAdapter.ItemClick += MDetailsAdapter_ItemClick;
+            mRecyclerDetails.SetAdapter(mDetailsAdapter);
 
             new System.Threading.Thread(() =>
             {
                 var details = PKPAPI.GetConnectionRoute(r, z, dk, spnnt, sknnt);
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    tv1.Text = details;
+                    var dt = new ConnectionDetails()
+                    .FromJson(details);
+
+                    mConnectionDetails.AddRange(dt.Stations);
+
+                    mDetailsAdapter.NotifyDataSetChanged();
                 });
             }).Start();
+        }
+
+        private void MDetailsAdapter_ItemClick(object sender, DetailsAdapterClickEventArgs e)
+        {
+
         }
 
         public override bool OnSupportNavigateUp()

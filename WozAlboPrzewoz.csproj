@@ -69,11 +69,15 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Adapters\DetailsAdapter.cs" />
     <Compile Include="Source\Adapters\FavoritesAdapter.cs" />
     <Compile Include="Source\Adapters\SearchCursorAdapter.cs" />
+    <Compile Include="Source\Interfaces\IJsonModel.cs" />
+    <Compile Include="Source\Models\ConnectionDetails.cs" />
+    <Compile Include="Source\Models\StationSchedule.cs" />
     <Compile Include="Source\Utils\FavoritesManager.cs" />
     <Compile Include="Source\Models\TrainConnectionListItem.cs" />
-    <Compile Include="Source\UI\ConnectionDetailsActivity.cs" />
+    <Compile Include="Source\UI\DetailsActivity.cs" />
     <Compile Include="Source\Utils\HttpUtils.cs" />
     <Compile Include="Source\UI\MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -86,8 +90,8 @@
     <Compile Include="Source\Models\TrainConnection.cs" />
     <Compile Include="Source\PKP\EncryptionHelpers.cs" />
     <Compile Include="Source\PKP\PKPAPI.cs" />
-    <Compile Include="Source\Adapters\ConnectionsRecyclerAdapter.cs" />
-    <Compile Include="Source\UI\TrainConnectionsActivity.cs" />
+    <Compile Include="Source\Adapters\ConnectionsAdapter.cs" />
+    <Compile Include="Source\UI\ConnectionsActivity.cs" />
     <Compile Include="Source\Utils\StationsCache.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +191,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\time_24px.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\recycler_row_details.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\station_circle_24px.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

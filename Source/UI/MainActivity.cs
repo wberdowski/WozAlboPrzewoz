@@ -62,7 +62,7 @@ namespace WozAlboPrzewoz
             mSearchView.SuggestionsAdapter = mSearchSuggestionsAdapter;
         }
 
-        private void MFavoritesAdapter_ItemLongClick(object sender, RecyclerAdapterClickEventArgs e)
+        private void MFavoritesAdapter_ItemLongClick(object sender, ConnectionsAdapterClickEventArgs e)
         {
             var station = FavoritesManager.favorites[e.Position];
             int idx = FavoritesManager.RemoveFavorite(station);
@@ -75,7 +75,7 @@ namespace WozAlboPrzewoz
                 .Show();
         }
 
-        private void MFavoritesAdapter_ItemClick(object sender, RecyclerAdapterClickEventArgs e)
+        private void MFavoritesAdapter_ItemClick(object sender, ConnectionsAdapterClickEventArgs e)
         {
             var station = FavoritesManager.favorites[e.Position];
             for (int i = 0; i < StationsCache.Stations.Length; i++)
@@ -94,7 +94,7 @@ namespace WozAlboPrzewoz
 
         private void OpenStationActivity(int sid)
         {
-            var startActivityIntent = new Intent(this, typeof(TrainConnectionsActivity));
+            var startActivityIntent = new Intent(this, typeof(ConnectionsActivity));
             startActivityIntent.PutExtra("id", sid);
             StartActivity(startActivityIntent);
         }
