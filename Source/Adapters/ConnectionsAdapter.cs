@@ -112,18 +112,10 @@ namespace WozAlboPrzewoz
             //  Time or minutes left
             //
 
-            if (minutesLeft < 60)
+            if (Math.Abs(minutesLeft) < 60)
             {
-                if (minutesLeft <= -60)
-                {
-                    holder.textViewTime.Text = TimeSpan.FromMinutes(minutesLeft).ToString(@"hh\:mm");
-                    holder.textViewMin.Visibility = ViewStates.Gone;
-                }
-                else
-                {
-                    holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
-                    holder.textViewMin.Visibility = ViewStates.Visible;
-                }
+                holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
+                holder.textViewMin.Visibility = ViewStates.Visible;
             }
             else
             {
@@ -131,11 +123,12 @@ namespace WozAlboPrzewoz
                 holder.textViewMin.Visibility = ViewStates.Gone;
             }
 
-            if(minutesLeft < 0)
+            if (minutesLeft < 0)
             {
                 holder.textViewTime.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextLight)));
                 holder.textViewMin.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextLight)));
-            } else
+            }
+            else
             {
                 holder.textViewTime.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextStandard)));
                 holder.textViewMin.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextStandard)));
