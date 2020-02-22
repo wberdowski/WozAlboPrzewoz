@@ -1,12 +1,10 @@
 ﻿using System;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
 using System.Collections.Generic;
 using Android.Content;
-using Android.Graphics;
-using Android.Content.Res;
-using Android.Support.V4.Content;
+using AndroidX.RecyclerView.Widget;
+using AndroidX.CardView.Widget;
 
 namespace WozAlboPrzewoz
 {
@@ -29,7 +27,7 @@ namespace WozAlboPrzewoz
 
             //Setup your layout here
             Android.Views.View itemView = null;
-            var id = Resource.Layout.recycler_row;
+            var id = Resource.Layout.recycler_row_connection;
             itemView = LayoutInflater.From(parent.Context).
                    Inflate(id, parent, false);
 

@@ -38,8 +38,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                     <TextView
                         android:id="@+id/textViewStatus"
                         android:text="Status"
-                        android:textSize="12dp"
+                        android:textSize="14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -92,54 +92,45 @@
                     android:padding="8dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center">
 
-                            <ImageView
-                                android:layout_marginTop="1dp"
-                                android:id="@+id/imageViewTrain"
-                                android:src="@drawable/train_24px"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:tint="@color/colorTextStandard"/>
+                        <ImageView
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/imageViewTrain"
+                            android:src="@drawable/train_24px"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:tint="@color/colorTextStandard"/>
 
-                            <TextView
-                                android:id="@+id/textViewLine"
-                                android:text="ABC"
-                                android:textStyle="bold"
-                                android:textSize="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/colorTextStandard"/>
-                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/textViewLine"
+                            android:text="ABC"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextStandard"/>
+
                         <TextView
                             android:id="@+id/textViewDestination"
+                                android:textColor="@color/colorTextStandard"
+                                android:textSize="16dp"
                             android:textStyle="bold"
-                            android:textColor="@color/colorTextStandard"
-                            android:textSize="18dp"
-                            android:text="Example Station"
-                            android:scrollHorizontally="true"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:layout_marginLeft="8dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-
-
+                                android:text="Example Station"
+                                android:scrollHorizontally="true"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"/>
                     </LinearLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp">
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/textViewTime1"

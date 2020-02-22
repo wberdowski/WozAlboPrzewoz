@@ -161,7 +161,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\recycler_row.xml">
+    <AndroidResource Include="Resources\layout\recycler_row_connection.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -4971,7 +4971,7 @@ namespace WozAlboPrzewoz
 			public const int preference_widget_switch_compat = 2131492939;
 			
 			// aapt resource value: 0x7F0C004C
-			public const int recycler_row = 2131492940;
+			public const int recycler_row_connection = 2131492940;
 			
 			// aapt resource value: 0x7F0C004D
 			public const int recycler_row_details = 2131492941;

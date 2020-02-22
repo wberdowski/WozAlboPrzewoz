@@ -1,9 +1,9 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
 using Java.Lang;
 using Newtonsoft.Json;
