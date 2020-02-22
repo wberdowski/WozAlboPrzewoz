@@ -8,7 +8,7 @@
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,10 +16,14 @@
         android:gravity="center_vertical">
 
         <LinearLayout
+            android:id="@+id/linearLayoutTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/textViewTime"
@@ -31,7 +35,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/textViewDelay"
+                android:id="@+id/textViewStatus"
                 android:text="Status"
                 android:textSize="14dp"
                 android:layout_width="wrap_content"
@@ -40,10 +44,15 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayoutDesc"
             android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="@id/linearLayoutTime"
+            app:layout_constraintRight_toLeftOf="@id/linearLayoutCount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/textViewStationName"
@@ -51,7 +60,7 @@
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:textColor="@color/colorTextStandard"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <TextView
@@ -59,11 +68,31 @@
                 android:text="Platform 0 Track 0"
                 android:textSize="12dp"
                 android:textColor="@color/colorTextLight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCount"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/textViewCount"
+                android:text="1"
+                android:textSize="40dp"
+                android:textColor="@color/colorTextUltraLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

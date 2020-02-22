@@ -2,7 +2,9 @@
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using AndroidX.SwipeRefreshLayout.Widget;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
@@ -14,6 +16,7 @@ namespace WozAlboPrzewoz
         private List<StationSchedule> mConnectionDetails;
         private DetailsAdapter mDetailsAdapter;
         private TrainConnection mTrainConnection;
+        private SwipeRefreshLayout mSwipeRefreshLayout;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,7 +30,13 @@ namespace WozAlboPrzewoz
 
             mTrainConnection = JsonConvert.DeserializeObject<TrainConnection>(Intent.GetStringExtra("train_conn"));
 
-            Title = $"{mTrainConnection.trainNumber} {mTrainConnection.stationEnd}";
+            Title = $"{mTrainConnection.TrainNumber} {mTrainConnection.StationEnd}";
+
+            //
+            //  SwipeRefreshLayout
+            //
+
+            mSwipeRefreshLayout = (SwipeRefreshLayout)FindViewById(Resource.Id.swipeRefreshLayoutDetails);
 
             //
             //  Recycler details
@@ -40,18 +49,24 @@ namespace WozAlboPrzewoz
 
             mConnectionDetails = new List<StationSchedule>();
 
-            mDetailsAdapter = new DetailsAdapter(mConnectionDetails);
+            mDetailsAdapter = new DetailsAdapter(mTrainConnection, mConnectionDetails);
             mDetailsAdapter.ItemClick += MDetailsAdapter_ItemClick;
             mRecyclerDetails.SetAdapter(mDetailsAdapter);
 
+            UpdateAdapterData();
+        }
+
+        private void UpdateAdapterData()
+        {
+            mSwipeRefreshLayout.Refreshing = true;
             new System.Threading.Thread(() =>
             {
                 var req = new ConnectionDetailsRequest(
-                    mTrainConnection.timetableYear,
-                    mTrainConnection.z,
-                    mTrainConnection.dk,
-                    mTrainConnection.spnnt,
-                    mTrainConnection.sknnt
+                    mTrainConnection.TimetableYear,
+                    mTrainConnection.Z,
+                    mTrainConnection.Dk,
+                    mTrainConnection.Spnnt,
+                    mTrainConnection.Sknnt
                     );
 
                 var details = PKPAPI.GetConnectionRoute(req);
@@ -63,6 +78,7 @@ namespace WozAlboPrzewoz
                     mConnectionDetails.AddRange(dt.Stations);
 
                     mDetailsAdapter.NotifyDataSetChanged();
+                    mSwipeRefreshLayout.Refreshing = false;
                 });
             }).Start();
         }

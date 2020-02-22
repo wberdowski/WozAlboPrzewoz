@@ -42,8 +42,8 @@ namespace WozAlboPrzewoz
             var connection = item.Connection;
             var holder = viewHolder as ConnectionsAdapterViewHolder;
 
-            var departureTime = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.timeDeparture));
-            var delayNormalized = Math.Max(0, connection.delay);
+            var departureTime = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeDeparture));
+            var delayNormalized = Math.Max(0, connection.Delay);
             var minutesLeft = (int)Math.Ceiling(departureTime.Subtract(DateTime.Now).TotalMinutes) + delayNormalized;
 
             //
@@ -70,14 +70,14 @@ namespace WozAlboPrzewoz
             }
             else
             {
-                if (connection.delay > 0)
+                if (connection.Delay > 0)
                 {
-                    holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.delay);
+                    holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.Delay);
                     holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
                 }
                 else
                 {
-                    if (connection.up.Length > 0)
+                    if (connection.Up.Length > 0)
                     {
                         holder.textViewStatus.Text = context.GetString(Resource.String.difficulties);
                         holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
@@ -99,7 +99,7 @@ namespace WozAlboPrzewoz
             }
             else
             {
-                if (connection.up.Length > 0)
+                if (connection.Up.Length > 0)
                 {
                     holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusBad);
                 }
@@ -135,10 +135,10 @@ namespace WozAlboPrzewoz
                 holder.textViewMin.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextStandard)));
             }
 
-            holder.textViewDestination.Text = connection.stationEnd;
-            holder.textViewLine.Text = connection.line;
+            holder.textViewDestination.Text = connection.StationEnd;
+            holder.textViewLine.Text = connection.Line;
             holder.textViewTime1.Text = departureTime.ToShortTimeString();
-            holder.textViewTime2.Text = DateTime.FromOADate(connection.timeArrivalEnd).ToShortTimeString();
+            holder.textViewTime2.Text = DateTime.FromOADate(connection.TimeArrivalEnd).ToShortTimeString();
         }
 
         public override int ItemCount => items.Count;

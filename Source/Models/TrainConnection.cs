@@ -5,57 +5,57 @@ namespace WozAlboPrzewoz
     public class TrainConnection : JPacket
     {
         [JsonProperty("R")]
-        public int timetableYear;
+        public int TimetableYear { get; set; }
         [JsonProperty("Z")]
-        public int z;
+        public int Z { get; set; }
         [JsonProperty("DK")]
-        public int dk;
+        public int Dk { get; set; }
         [JsonProperty("P")]
-        public string platformStart;
+        public string PlatformStart { get; set; }
         [JsonProperty("T")]
-        public string trackStart;
+        public string TrackStart { get; set; }
         [JsonProperty("G")]
-        public double timeDeparture;
+        public double TimeDeparture { get; set; }
         [JsonProperty("GO")]
-        public int delay;
+        public int Delay { get; set; }
         [JsonProperty("PS")]
-        public string carrier;
+        public string Carrier { get; set; }
         [JsonProperty("KH")]
-        public string line;
+        public string Line { get; set; }
         [JsonProperty("PNM")]
-        public string trainNumber;
+        public string TrainNumber { get; set; }
         [JsonProperty("PN")]
-        public string trainName;
+        public string TrainName { get; set; }
         [JsonProperty("RP")]
-        public string stationStart;
+        public string StationStart { get; set; }
         [JsonProperty("RPL")]
-        public string countryStart;
+        public string CountryStart { get; set; }
         [JsonProperty("RPP")]
-        public string platform;
+        public string Platform { get; set; }
         [JsonProperty("RPT")]
-        public string track;
+        public string Track { get; set; }
         [JsonProperty("RPG")]
-        public double timeDepartureStart;
+        public double TimeDepartureStart { get; set; }
         [JsonProperty("RPO")]
-        public int rpo;
+        public int Rpo { get; set; }
         [JsonProperty("RK")]
-        public string stationEnd;
+        public string StationEnd { get; set; }
         [JsonProperty("RKL")]
-        public string countryEnd;
+        public string CountryEnd { get; set; }
         [JsonProperty("RKP")]
-        public string platoformEnd;
+        public string PlatoformEnd { get; set; }
         [JsonProperty("RKT")]
-        public string trackEnd;
+        public string TrackEnd { get; set; }
         [JsonProperty("RKG")]
-        public double timeArrivalEnd;
+        public double TimeArrivalEnd { get; set; }
         [JsonProperty("RKO")]
-        public int rko;
+        public int Rko { get; set; }
         [JsonProperty("SPNNT")]
-        public int spnnt;
+        public int Spnnt { get; set; }
         [JsonProperty("sknnt")]
-        public int sknnt;
+        public int Sknnt { get; set; }
         [JsonProperty("UP")]
-        public string up;
+        public string Up { get; set; }
 
         public TrainConnection()
         {

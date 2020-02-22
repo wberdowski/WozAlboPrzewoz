@@ -3,6 +3,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
+using AndroidX.Core.Content;
 
 namespace WozAlboPrzewoz
 {
@@ -10,10 +11,12 @@ namespace WozAlboPrzewoz
     {
         public event EventHandler<DetailsAdapterClickEventArgs> ItemClick;
         public event EventHandler<DetailsAdapterClickEventArgs> ItemLongClick;
+        TrainConnection connection;
         List<StationSchedule> items;
 
-        public DetailsAdapter(List<StationSchedule> data)
+        public DetailsAdapter(TrainConnection connection, List<StationSchedule> data)
         {
+            this.connection = connection;
             items = data;
         }
 
@@ -36,18 +39,52 @@ namespace WozAlboPrzewoz
         {
             var item = items[position];
             var holder = viewHolder as DetailsAdapterViewHolder;
+            var context = holder.textViewStatus.Context;
 
             holder.textViewStationName.Text = item.Name;
+
+            DateTime time;
+            int delay;
+
             if (position == 0)
             {
-                holder.textViewTime.Text = item.DepartureTime.ToShortTimeString();
+                time = item.DepartureTime;
+                delay = Math.Max(0, connection.Delay);
             }
             else
             {
-                holder.textViewTime.Text = item.ArrivalTime.ToShortTimeString();
+                time = item.ArrivalTime;
+                delay = Math.Max(0, item.Delay);
             }
+
+            //
+            //  Time
+            //
+
+            holder.textViewTime.Text = time.ToShortTimeString();
+
+            //
+            //  Status
+            //
+
+            if (delay > 0)
+            {
+                holder.textViewStatus.Text = context.GetString(Resource.String.delay, delay);
+                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+            }
+            else
+            {
+                holder.textViewStatus.Text = context.GetString(Resource.String.on_time);
+                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusGoodDark)));
+            }
+
+            //
+            //  Description
+            //
+
             holder.textViewTrack.Text = $"Peron {item.Platform} Tor {item.Track}";
-            holder.textViewDelay.Text = $"+{item.Delay} min";
+
+            holder.textViewCount.Text = position.ToString();
         }
 
         public override int ItemCount => items.Count;
@@ -61,7 +98,8 @@ namespace WozAlboPrzewoz
         public TextView textViewStationName { get; set; }
         public TextView textViewTime { get; set; }
         public TextView textViewTrack { get; set; }
-        public TextView textViewDelay { get; set; }
+        public TextView textViewStatus { get; set; }
+        public TextView textViewCount { get; set; }
 
         public DetailsAdapterViewHolder(Android.Views.View itemView, Action<DetailsAdapterClickEventArgs> clickListener,
                             Action<DetailsAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -69,7 +107,8 @@ namespace WozAlboPrzewoz
             textViewStationName = (TextView)itemView.FindViewById(Resource.Id.textViewStationName);
             textViewTime = (TextView)itemView.FindViewById(Resource.Id.textViewTime);
             textViewTrack = (TextView)itemView.FindViewById(Resource.Id.textViewTrack);
-            textViewDelay = (TextView)itemView.FindViewById(Resource.Id.textViewDelay);
+            textViewStatus = (TextView)itemView.FindViewById(Resource.Id.textViewStatus);
+            textViewCount = (TextView)itemView.FindViewById(Resource.Id.textViewCount);
             //TextView = v;
             itemView.Click += (sender, e) => clickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
             itemView.LongClick += (sender, e) => longClickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });

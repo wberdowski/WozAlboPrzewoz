@@ -146,7 +146,7 @@ namespace WozAlboPrzewoz
                 if (direction == SwipyRefreshLayoutDirection.Top)
                 {
                     var firstConn = mTrainConnData.First().Connection;
-                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(firstConn.timeDeparture), 0, 10);
+                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(firstConn.TimeDeparture), 0, 10);
 
                     RunOnUiThread(() =>
                     {
@@ -166,13 +166,13 @@ namespace WozAlboPrzewoz
                 else if (direction == SwipyRefreshLayoutDirection.Bottom)
                 {
                     var lastConn = mTrainConnData.Last().Connection;
-                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(lastConn.timeDeparture), 2, 10);
+                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(lastConn.TimeDeparture), 2, 10);
 
                     RunOnUiThread(() =>
                     {
                         foreach (var conn in connections)
                         {
-                            if (lastConn.sknnt == conn.sknnt && lastConn.spnnt == conn.spnnt) continue;
+                            if (lastConn.Sknnt == conn.Sknnt && lastConn.Spnnt == conn.Spnnt) continue;
 
                             mTrainConnData.Add(new TrainConnectionListItem(conn));
                         }
@@ -192,7 +192,7 @@ namespace WozAlboPrzewoz
 
             foreach (var item in mTrainConnData)
             {
-                var date = DateTime.FromOADate(item.Connection.timeDeparture).Date;
+                var date = DateTime.FromOADate(item.Connection.TimeDeparture).Date;
 
                 if (lastDate < date)
                 {
@@ -225,7 +225,7 @@ namespace WozAlboPrzewoz
                         {
                             var conn = connections[i];
                             var item = new TrainConnectionListItem(conn);
-                            var date = DateTime.FromOADate(conn.timeDeparture).Date;
+                            var date = DateTime.FromOADate(conn.TimeDeparture).Date;
 
                             if (lastDate < date)
                             {
