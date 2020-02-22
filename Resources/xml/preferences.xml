@@ -4,19 +4,24 @@
 
   <PreferenceCategory
     app:iconSpaceReserved="false"
-    android:title="Informacje">
+    android:title="@string/setting_about">
 
     <Preference
-      app:key="version"
-      app:title="Wersja"
+      app:key="setting_version"
+      app:title="@string/setting_version"
       app:summary="1.0.0"
       app:iconSpaceReserved="false"/>
 
     <Preference
-        app:key="author"
-        app:title="Autor"
+        app:key="setting_developer"
+        app:title="@string/setting_developer"
         app:summary="Wojciech Berdowski"
         app:iconSpaceReserved="false"/>
+
+    <Preference
+      app:key="setting_licenses"
+      app:title="@string/setting_licenses"
+      app:iconSpaceReserved="false"/>
 
   </PreferenceCategory>
 
