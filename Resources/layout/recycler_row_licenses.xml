@@ -26,7 +26,7 @@
                 android:textColor="@color/colorTextStandard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorStatusDim"/>
+                android:background="@color/colorBoxLight"/>
 
             <TextView
                 android:id="@+id/textViewContent"

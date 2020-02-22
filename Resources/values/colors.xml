@@ -3,6 +3,7 @@
   <color name="colorPrimary">#263238</color>
   <color name="colorPrimaryDark">#263238</color>
   <color name="colorPrimaryLight">#37474f</color>
+  <color name="colorBoxLight">#f0f3f4</color>
   <color name="colorAccent">#009624</color>
   <color name="colorStatusGood">#00c853</color>
   <color name="colorStatusGoodDark">#009624</color>
