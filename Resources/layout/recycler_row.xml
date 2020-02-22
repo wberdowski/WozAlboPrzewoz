@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardViewRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                         <TextView
                             android:id="@+id/textViewTime"
                             android:text="00:00"
-                            android:textSize="24dp"
+                            android:textSize="28dp"
                             android:textStyle="bold"
                             android:textColor="@color/colorTextStandard"
                             android:layout_width="wrap_content"
@@ -85,12 +85,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:padding="8dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:minWidth="60dp"
-                    android:gravity="center">
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -98,53 +97,46 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
 
-                        <ImageView
-                            android:src="@drawable/train_24px"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:textColor="@color/colorTextStandard"/>
-
-                        <TextView
-                            android:id="@+id/textViewLine"
-                            android:text="ABC"
-                            android:textStyle="bold"
-                            android:textSize="14dp"
-                            android:textColor="@color/colorTextStandard"
+                        <LinearLayout
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_marginTop="1dp"
+                                android:id="@+id/imageViewTrain"
+                                android:src="@drawable/train_24px"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:tint="@color/colorTextStandard"/>
+
+                            <TextView
+                                android:id="@+id/textViewLine"
+                                android:text="ABC"
+                                android:textStyle="bold"
+                                android:textSize="16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorTextStandard"/>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/textViewDestination"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorTextStandard"
+                            android:textSize="18dp"
+                            android:text="Example Station"
+                            android:scrollHorizontally="true"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:layout_marginLeft="8dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
+
+
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textViewCarrier"
-                        android:text="ABC"
-                        android:textSize="14dp"
-                        android:textColor="@color/colorTextStandard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/textViewDestination"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorTextStandard"
-                        android:textSize="16dp"
-                        android:text="Example Station"
-                        android:scrollHorizontally="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp">
@@ -177,7 +169,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             android:background="@drawable/time_badge_bg"/>
 
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 
@@ -185,6 +177,6 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

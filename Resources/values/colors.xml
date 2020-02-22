@@ -11,6 +11,6 @@
   <color name="colorStatusBad">#dd2c00</color>
   <color name="colorStatusBadDark">#a30000</color>
   <color name="colorStatusDim">#cfd8dc</color>
-  <color name="colorTextStandard">#444444</color>
+  <color name="colorTextStandard">#333333</color>
   <color name="colorTextLight">#777777</color>
 </resources>

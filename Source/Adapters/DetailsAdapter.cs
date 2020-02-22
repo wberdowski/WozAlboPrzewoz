@@ -47,6 +47,7 @@ namespace WozAlboPrzewoz
                 holder.textViewTime.Text = item.ArrivalTime.ToShortTimeString();
             }
             holder.textViewTrack.Text = $"Peron {item.Platform} Tor {item.Track}";
+            holder.textViewDelay.Text = $"+{item.Delay} min";
         }
 
         public override int ItemCount => items.Count;
@@ -60,6 +61,7 @@ namespace WozAlboPrzewoz
         public TextView textViewStationName { get; set; }
         public TextView textViewTime { get; set; }
         public TextView textViewTrack { get; set; }
+        public TextView textViewDelay { get; set; }
 
         public DetailsAdapterViewHolder(Android.Views.View itemView, Action<DetailsAdapterClickEventArgs> clickListener,
                             Action<DetailsAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -67,6 +69,7 @@ namespace WozAlboPrzewoz
             textViewStationName = (TextView)itemView.FindViewById(Resource.Id.textViewStationName);
             textViewTime = (TextView)itemView.FindViewById(Resource.Id.textViewTime);
             textViewTrack = (TextView)itemView.FindViewById(Resource.Id.textViewTrack);
+            textViewDelay = (TextView)itemView.FindViewById(Resource.Id.textViewDelay);
             //TextView = v;
             itemView.Click += (sender, e) => clickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
             itemView.LongClick += (sender, e) => longClickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });

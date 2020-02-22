@@ -1,13 +1,9 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
-using Android.Util;
 using Android.Views;
-using Android.Widget;
 using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
 using Java.Lang;
 using Newtonsoft.Json;
@@ -15,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Xamarin.Forms;
 
 namespace WozAlboPrzewoz
 {
@@ -41,8 +36,6 @@ namespace WozAlboPrzewoz
 
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
-
-            Forms.Init(this, savedInstanceState);
 
             int sid = Intent.GetIntExtra("id", 0);
             mSelectedStation = StationsCache.Stations[sid];
@@ -103,7 +96,7 @@ namespace WozAlboPrzewoz
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.menu, menu);
+            MenuInflater.Inflate(Resource.Menu.menu_connections, menu);
             if (FavoritesManager.HasFavorite(mSelectedStation))
             {
                 IMenuItem favoriteAction = menu.FindItem(Resource.Id.action_favorite);
@@ -155,7 +148,7 @@ namespace WozAlboPrzewoz
                     var firstConn = mTrainConnData.First().Connection;
                     var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(firstConn.timeDeparture), 0, 10);
 
-                    Device.BeginInvokeOnMainThread(() =>
+                    RunOnUiThread(() =>
                     {
                         var list = new List<TrainConnectionListItem>();
 
@@ -175,7 +168,7 @@ namespace WozAlboPrzewoz
                     var lastConn = mTrainConnData.Last().Connection;
                     var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(lastConn.timeDeparture), 2, 10);
 
-                    Device.BeginInvokeOnMainThread(() =>
+                    RunOnUiThread(() =>
                     {
                         foreach (var conn in connections)
                         {
@@ -224,7 +217,7 @@ namespace WozAlboPrzewoz
                 {
                     var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, mSearchTime);
 
-                    Device.BeginInvokeOnMainThread(() =>
+                    RunOnUiThread(() =>
                     {
                         DateTime lastDate = DateTime.Now;
 
@@ -250,7 +243,7 @@ namespace WozAlboPrzewoz
                 catch (WebException ex)
                 {
                     Console.WriteLine(ex.StackTrace);
-                    Device.BeginInvokeOnMainThread(() =>
+                    RunOnUiThread(() =>
                     {
                         mSwipyRefreshLayout.Refreshing = false;
                         if (ex.Response != null)

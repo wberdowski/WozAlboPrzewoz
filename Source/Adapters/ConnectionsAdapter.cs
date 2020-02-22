@@ -4,6 +4,9 @@ using Android.Widget;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
 using Android.Content;
+using Android.Graphics;
+using Android.Content.Res;
+using Android.Support.V4.Content;
 
 namespace WozAlboPrzewoz
 {
@@ -41,7 +44,7 @@ namespace WozAlboPrzewoz
             var connection = item.Connection;
             var holder = viewHolder as ConnectionsAdapterViewHolder;
 
-            var departureTime = NormalizeTime(DateTime.FromOADate(connection.timeDeparture));
+            var departureTime = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.timeDeparture));
             var delayNormalized = Math.Max(0, connection.delay);
             var minutesLeft = (int)Math.Ceiling(departureTime.Subtract(DateTime.Now).TotalMinutes) + delayNormalized;
 
@@ -136,15 +139,8 @@ namespace WozAlboPrzewoz
 
             holder.textViewDestination.Text = connection.stationEnd;
             holder.textViewLine.Text = connection.line;
-            holder.textViewCarrier.Text = connection.carrier;
-
             holder.textViewTime1.Text = departureTime.ToShortTimeString();
             holder.textViewTime2.Text = DateTime.FromOADate(connection.timeArrivalEnd).ToShortTimeString();
-        }
-
-        private DateTime NormalizeTime(DateTime time)
-        {
-            return time.AddSeconds(-time.Second);
         }
 
         public override int ItemCount => items.Count;
@@ -161,7 +157,7 @@ namespace WozAlboPrzewoz
         public TextView textViewMin { get; set; }
         public TextView textViewStatus { get; set; }
         public TextView textViewDestination { get; set; }
-        public TextView textViewCarrier { get; set; }
+        public ImageView ImageViewTrain { get; set; }
         public TextView textViewLine { get; set; }
         public LinearLayout statusIndicator { get; set; }
         public TextView textViewTime1 { get; set; }
@@ -176,7 +172,7 @@ namespace WozAlboPrzewoz
             textViewMin = (TextView)itemView.FindViewById(Resource.Id.textViewMin);
             textViewStatus = (TextView)itemView.FindViewById(Resource.Id.textViewStatus);
             textViewDestination = (TextView)itemView.FindViewById(Resource.Id.textViewDestination);
-            textViewCarrier = (TextView)itemView.FindViewById(Resource.Id.textViewCarrier);
+            ImageViewTrain = (ImageView)itemView.FindViewById(Resource.Id.imageViewTrain);
             textViewLine = (TextView)itemView.FindViewById(Resource.Id.textViewLine);
             statusIndicator = (LinearLayout)itemView.FindViewById(Resource.Id.statusIndicator);
             textViewTime1 = (TextView)itemView.FindViewById(Resource.Id.textViewTime1);

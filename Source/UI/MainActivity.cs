@@ -9,6 +9,8 @@ using Android.Database;
 using Android.Content;
 using Android.Support.V7.Widget;
 using Android.Support.Design.Widget;
+using Android.Views;
+using Android.Widget;
 
 namespace WozAlboPrzewoz
 {
@@ -184,6 +186,23 @@ namespace WozAlboPrzewoz
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
+
+            return base.OnPrepareOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if(item.ItemId == Resource.Id.action_settings)
+            {
+                StartActivity(typeof(SettingsActivity));
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

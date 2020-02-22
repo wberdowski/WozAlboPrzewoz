@@ -25,6 +25,7 @@ namespace WozAlboPrzewoz
                 s.DepartureTime = DateTime.FromOADate(item["PODT"].Value<double>());
                 s.Platform = item["P0"].ToString();
                 s.Track = item["T0"].ToString();
+                s.Delay = item["OP"].Value<int>();
                 Stations.Add(s);
             }
 

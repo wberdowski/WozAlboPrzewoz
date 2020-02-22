@@ -1,0 +1,23 @@
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <PreferenceCategory
+    app:iconSpaceReserved="false"
+    android:title="Informacje">
+
+    <Preference
+      app:key="version"
+      app:title="Wersja"
+      app:summary="1.0.0"
+      app:iconSpaceReserved="false"/>
+
+    <Preference
+        app:key="author"
+        app:title="Autor"
+        app:summary="Wojciech Berdowski"
+        app:iconSpaceReserved="false"/>
+
+  </PreferenceCategory>
+
+</PreferenceScreen>
