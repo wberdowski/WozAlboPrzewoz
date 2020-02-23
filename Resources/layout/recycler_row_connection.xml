@@ -156,6 +156,19 @@
                             android:background="@drawable/time_badge_bg"/>
 
                         <TextView
+                            android:id="@+id/textViewInfo"
+                            android:text="Test"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintLeft_toRightOf="@id/textViewTime1"
+                            app:layout_constraintRight_toLeftOf="@id/textViewTime2"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textColor="@color/colorTextLight"
+                            android:textSize="14dp"
+                            android:textAlignment="center"/>
+
+                        <TextView
                             android:id="@+id/textViewTime2"
                             android:text="00:00"
                             android:layout_width="wrap_content"

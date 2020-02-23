@@ -185,7 +185,7 @@
     <AndroidResource Include="Resources\drawable\favorite_border_24px.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_connection_details.xml">
+    <AndroidResource Include="Resources\layout\activity_details.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>

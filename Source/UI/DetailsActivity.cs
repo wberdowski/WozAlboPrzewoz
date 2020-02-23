@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Android.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
 using Newtonsoft.Json;
 using System;
@@ -23,7 +24,7 @@ namespace WozAlboPrzewoz
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            SetContentView(Resource.Layout.activity_connection_details);
+            SetContentView(Resource.Layout.activity_details);
 
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
@@ -37,6 +38,7 @@ namespace WozAlboPrzewoz
             //
 
             mSwipeRefreshLayout = (SwipeRefreshLayout)FindViewById(Resource.Id.swipeRefreshLayoutDetails);
+            mSwipeRefreshLayout.Refresh += MSwipeRefreshLayout_Refresh;
 
             //
             //  Recycler details
@@ -53,11 +55,28 @@ namespace WozAlboPrzewoz
             mDetailsAdapter.ItemClick += MDetailsAdapter_ItemClick;
             mRecyclerDetails.SetAdapter(mDetailsAdapter);
 
+            //
+            //  Info
+            //
+
+            var mTextViewRelation = (TextView)FindViewById(Resource.Id.textViewRelation);
+            mTextViewRelation.Text = $"{mTrainConnection.StationStart} ({DateTime.FromOADate(mTrainConnection.TimeDepartureStart).ToShortTimeString()}) > {mTrainConnection.StationEnd} ({DateTime.FromOADate(mTrainConnection.TimeArrivalEnd).ToShortTimeString()})";
+            
+            var mTextViewDifficulties = (TextView)FindViewById(Resource.Id.textViewDifficulties);
+            mTextViewDifficulties.Text = mTrainConnection.Up;
+
+            UpdateAdapterData();
+        }
+
+        private void MSwipeRefreshLayout_Refresh(object sender, EventArgs e)
+        {
             UpdateAdapterData();
         }
 
         private void UpdateAdapterData()
         {
+            mConnectionDetails.Clear();
+
             mSwipeRefreshLayout.Refreshing = true;
             new System.Threading.Thread(() =>
             {

@@ -139,6 +139,7 @@ namespace WozAlboPrzewoz
             holder.textViewLine.Text = connection.Line;
             holder.textViewTime1.Text = departureTime.ToShortTimeString();
             holder.textViewTime2.Text = DateTime.FromOADate(connection.TimeArrivalEnd).ToShortTimeString();
+            holder.textViewInfo.Text = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeArrivalEnd)).Subtract(departureTime).ToString(@"hh\:mm");
         }
 
         public override int ItemCount => items.Count;
@@ -160,6 +161,7 @@ namespace WozAlboPrzewoz
         public LinearLayout statusIndicator { get; set; }
         public TextView textViewTime1 { get; set; }
         public TextView textViewTime2 { get; set; }
+        public TextView textViewInfo { get; set; }
 
         public ConnectionsAdapterViewHolder(Android.Views.View itemView, Action<ConnectionsAdapterClickEventArgs> clickListener,
                             Action<ConnectionsAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -175,6 +177,7 @@ namespace WozAlboPrzewoz
             statusIndicator = (LinearLayout)itemView.FindViewById(Resource.Id.statusIndicator);
             textViewTime1 = (TextView)itemView.FindViewById(Resource.Id.textViewTime1);
             textViewTime2 = (TextView)itemView.FindViewById(Resource.Id.textViewTime2);
+            textViewInfo = (TextView)itemView.FindViewById(Resource.Id.textViewInfo);
 
             //TextView = v;
             cardViewRow.Click += (sender, e) => clickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
