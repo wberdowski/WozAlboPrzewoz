@@ -62,7 +62,8 @@ namespace WozAlboPrzewoz
                 {
                     foreach (int sid in arr)
                     {
-                        favorites.Add(StationsCache.Stations.Where(x => x.id == sid).FirstOrDefault());
+                        if (favorites.Where(x => x.id == sid).Count() == 0)
+                            favorites.Add(StationsCache.Stations.Where(x => x.id == sid).FirstOrDefault());
                     }
                 }
             }
