@@ -13,4 +13,5 @@
   <attr name="colorBadgeBackgroundBad" format="reference"/>
   <attr name="colorBadgeTextGood" format="reference"/>
   <attr name="colorBadgeTextBad" format="reference"/>
+  <attr name="colorCardViewHeader" format="reference"/>
 </resources>

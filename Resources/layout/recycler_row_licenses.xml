@@ -26,14 +26,14 @@
                 android:textColor="?attr/textColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBoxLight"/>
+                android:background="?attr/colorCardViewHeader"/>
 
             <TextView
                 android:id="@+id/textViewContent"
                 android:text="Content"
                 android:padding="8dp"
                 android:textSize="12dp"
-                android:textColor="?attr/textColorFaint"
+                android:textColor="?attr/textColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

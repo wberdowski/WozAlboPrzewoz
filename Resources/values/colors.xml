@@ -3,7 +3,6 @@
   <color name="colorPrimary">#ffffff</color>
   <color name="colorPrimaryDark">#eeeeee</color>
   <color name="colorPrimaryLight">#eeeeee</color>
-  <color name="colorBoxLight">#f0f3f4</color>
 
   <!--Accent-->
   <color name="colorAccent_Light">#009624</color>
@@ -65,7 +64,9 @@
   <color name="colorBadgeTextBad_Light">#ffffff</color>
   <color name="colorBadgeTextBad_Dark">#ff3d00</color>
 
-
+  <!--CardViewHeader-->
+  <color name="colorCardViewHeader_Light">#11000000</color>
+  <color name="colorCardViewHeader_Dark">#22000000</color>
 
   <!--NOT IMPLEMENTED-->
   <color name="colorStatusIntermediate">#ffd600</color>

@@ -193,7 +193,10 @@ namespace WozAlboPrzewoz
 
             mTrainConnData.Sort((a, b) =>
             {
-                return System.Math.Sign(a.Connection.TimeDeparture - b.Connection.TimeDeparture);
+                return System.Math.Sign(TimeUtils.DiscardSeconds(DateTime.FromOADate(a.Connection.TimeDeparture))
+                    .AddMinutes(System.Math.Max(0, a.Connection.DelayStart))
+                    .Subtract(DateTime.FromOADate(b.Connection.TimeDeparture)
+                    .AddMinutes(System.Math.Max(0, b.Connection.DelayStart))).TotalMinutes);
             });
 
             foreach (var item in mTrainConnData)

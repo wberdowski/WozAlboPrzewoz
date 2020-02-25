@@ -19,6 +19,7 @@
     <item name="colorBadgeBackgroundBad">@color/colorBadgeBackgroundBad_Light</item>
     <item name="colorBadgeTextGood">@color/colorBadgeTextGood_Light</item>
     <item name="colorBadgeTextBad">@color/colorBadgeTextBad_Light</item>
+    <item name="colorCardViewHeader">@color/colorCardViewHeader_Light</item>
   </style>
 
   <style name="TimeNormal" parent="AppTheme">

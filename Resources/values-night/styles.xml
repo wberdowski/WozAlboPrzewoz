@@ -19,5 +19,6 @@
     <item name="colorBadgeBackgroundBad">@color/colorBadgeBackgroundBad_Dark</item>
     <item name="colorBadgeTextGood">@color/colorBadgeTextGood_Dark</item>
     <item name="colorBadgeTextBad">@color/colorBadgeTextBad_Dark</item>
+    <item name="colorCardViewHeader">@color/colorCardViewHeader_Dark</item>
   </style>
 </resources>
