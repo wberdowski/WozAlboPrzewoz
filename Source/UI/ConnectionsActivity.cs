@@ -159,7 +159,7 @@ namespace WozAlboPrzewoz
                         }
 
                         mTrainConnData.InsertRange(0, list);
-                        AdjustDateHeaders();
+                        CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
                         mSwipyRefreshLayout.Refreshing = false;
                     });
@@ -178,7 +178,7 @@ namespace WozAlboPrzewoz
                             mTrainConnData.Add(new TrainConnectionListItem(conn));
                         }
 
-                        AdjustDateHeaders();
+                        CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
                         mSwipyRefreshLayout.Refreshing = false;
                     });
@@ -187,9 +187,14 @@ namespace WozAlboPrzewoz
 
         }
 
-        private void AdjustDateHeaders()
+        private void CleanUpData()
         {
             DateTime lastDate = DateTime.Now;
+
+            mTrainConnData.Sort((a, b) =>
+            {
+                return System.Math.Sign(a.Connection.TimeDeparture - b.Connection.TimeDeparture);
+            });
 
             foreach (var item in mTrainConnData)
             {
@@ -237,6 +242,7 @@ namespace WozAlboPrzewoz
                             lastDate = date;
                             mTrainConnData.Add(item);
                         }
+                        CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
                         mSwipyRefreshLayout.Refreshing = false;
                     });

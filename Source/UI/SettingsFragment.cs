@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.OS;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AndroidX.Preference;
 
 namespace WozAlboPrzewoz
@@ -17,6 +18,11 @@ namespace WozAlboPrzewoz
             if (preference.Key == "setting_licenses")
             {
                 StartActivity(new Intent(Activity, typeof(LicensesActivity)));
+            } else if(preference.Key == "dark_mode")
+            {
+                var switchPref = preference as SwitchPreference;
+                AppCompatDelegate.DefaultNightMode = (switchPref.Checked ? AppCompatDelegate.ModeNightYes : AppCompatDelegate.ModeNightNo);
+                //Activity.Recreate();
             }
 
             return base.OnPreferenceTreeClick(preference);

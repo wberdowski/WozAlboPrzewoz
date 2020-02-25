@@ -9,9 +9,8 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
         android:paddingVertical="12dp"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="6dp"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.SearchView
@@ -20,14 +19,13 @@
             app:iconifiedByDefault="false"
             app:searchIcon="@null"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFavorites"
-        android:paddingVertical="4dp"
+        android:paddingVertical="8dp"
         android:clipToPadding="false"
         android:layout_width="0dp"
         android:layout_height="0dp"

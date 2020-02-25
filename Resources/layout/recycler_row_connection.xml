@@ -9,10 +9,11 @@
         android:visibility="gone"
         android:id="@+id/textViewHeader"
         android:text="Header"
-        android:padding="8dp"
-        android:textSize="14dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="16dp"
+        android:textSize="16dp"
         android:textAlignment="center"
-        android:textColor="@color/colorTextLight"
+        android:textColor="?attr/textColorFaint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -20,7 +21,7 @@
         android:id="@+id/cardViewRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="12dp"
         android:layout_marginVertical="4dp"
         android:foreground="?android:attr/selectableItemBackground">
 
@@ -29,9 +30,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
                 android:id="@+id/statusIndicator"
-                android:background="@color/colorStatusDim"
+                android:theme="@style/StatusIndicator"
                 android:layout_width="5dp"
                 android:layout_height="match_parent"/>
 
@@ -55,21 +56,17 @@
 
                         <TextView
                             android:id="@+id/textViewTime"
+                            android:theme="@style/TimeNormal"
                             android:text="00:00"
-                            android:textSize="28dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorTextStandard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
                         <TextView
                             android:id="@+id/textViewMin"
+                            android:theme="@style/MinNormal"
                             android:text="min"
                             android:visibility="gone"
-                            android:textSize="12dp"
                             android:layout_marginLeft="2dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorTextStandard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -77,8 +74,8 @@
 
                     <TextView
                         android:id="@+id/textViewStatus"
+                        android:theme="@style/StatusText"
                         android:text="Status"
-                        android:textSize="14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -108,7 +105,7 @@
                                 android:src="@drawable/train_24px"
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
-                                android:tint="@color/colorTextStandard"/>
+                                android:tint="?attr/textColor"/>
 
                             <TextView
                                 android:id="@+id/textViewLine"
@@ -117,13 +114,13 @@
                                 android:textSize="14dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/colorTextStandard"/>
+                                android:textColor="?attr/textColor"/>
 
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/textViewDestination"
-                            android:textColor="@color/colorTextStandard"
+                            android:theme="@style/DestinationText"
                             android:textSize="16dp"
                             android:textStyle="bold"
                             android:layout_marginLeft="8dp"
@@ -143,17 +140,14 @@
 
                         <TextView
                             android:id="@+id/textViewTime1"
+                            android:theme="@style/TimeBadge"
                             android:text="00:00"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#fff"
-                            android:textStyle="bold"
-                            android:textSize="12dp"
                             android:paddingVertical="1dp"
                             android:paddingHorizontal="2dp"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:background="@drawable/time_badge_bg"/>
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <TextView
                             android:id="@+id/textViewInfo"
@@ -164,23 +158,20 @@
                             app:layout_constraintRight_toLeftOf="@id/textViewTime2"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:textColor="@color/colorTextLight"
+                            android:textColor="?attr/textColorFaint"
                             android:textSize="14dp"
                             android:textAlignment="center"/>
 
                         <TextView
                             android:id="@+id/textViewTime2"
+                            android:theme="@style/TimeBadge"
                             android:text="00:00"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#fff"
-                            android:textStyle="bold"
-                            android:textSize="12dp"
                             android:paddingVertical="1dp"
                             android:paddingHorizontal="2dp"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:background="@drawable/time_badge_bg"/>
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

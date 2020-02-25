@@ -1,18 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#263238</color>
-  <color name="colorPrimaryDark">#263238</color>
-  <color name="colorPrimaryLight">#37474f</color>
+  <color name="colorPrimary">#ffffff</color>
+  <color name="colorPrimaryDark">#eeeeee</color>
+  <color name="colorPrimaryLight">#eeeeee</color>
   <color name="colorBoxLight">#f0f3f4</color>
-  <color name="colorAccent">#009624</color>
-  <color name="colorStatusGood">#00c853</color>
-  <color name="colorStatusGoodDark">#009624</color>
+
+  <!--Accent-->
+  <color name="colorAccent_Light">#009624</color>
+  <color name="colorAccent_Dark">#00c853</color>
+
+  <!--StatusIndicatorGood-->
+  <color name="colorStatusIndicatorGood_Light">#00c853</color>
+  <color name="colorStatusIndicatorGood_Dark">#00c853</color>
+
+  <!--StatusIndicatorBad-->
+  <color name="colorStatusIndicatorBad_Light">#dd2c00</color>
+  <color name="colorStatusIndicatorBad_Dark">#dd2c00</color>
+  
+  <!--StatusIndicatorFaint-->
+  <color name="colorStatusIndicatorFaint_Light">#77aaaaaa</color>
+  <color name="colorStatusIndicatorFaint_Dark">#77aaaaaa</color>
+  
+  <!--StatusGood-->
+  <color name="colorStatusGood_Light">#00c853</color>
+  <color name="colorStatusGood_Dark">#00c853</color>
+
+  <!--StatusGoodText-->
+  <color name="colorStatusGoodText_Light">#009624</color>
+  <color name="colorStatusGoodText_Dark">#00c853</color>
+
+  <!--StatusBad-->
+  <color name="colorStatusBad_Light">#dd2c00</color>
+  <color name="colorStatusBad_Dark">#dd2c00</color>
+
+  <!--StatusBadText-->
+  <color name="colorStatusBadText_Light">#a30000</color>
+  <color name="colorStatusBadText_Dark">#ff3d00</color>
+  
+  <!--TextStandard-->
+  <color name="colorText_Light">#333333</color>
+  <color name="colorText_Dark">#ffffff</color>
+
+  <!--TextFaint-->
+  <color name="colorTextFaint_Light">#777777</color>
+  <color name="colorTextFaint_Dark">#777777</color>
+  
+  <!--ActionTint-->
+  <color name="actionTint_Light">#000000</color>
+  <color name="actionTint_Dark">#ffffff</color>
+
+  <!--BadgeBackgroundGood-->
+  <color name="colorBadgeBackgroundGood_Light">#009624</color>
+  <color name="colorBadgeBackgroundGood_Dark">#44000000</color>
+
+  <!--BadgeBackgroundBad-->
+  <color name="colorBadgeBackgroundBad_Light">#dd2c00</color>
+  <color name="colorBadgeBackgroundBad_Dark">#44000000</color>
+
+  <!--BadgeTextGood-->
+  <color name="colorBadgeTextGood_Light">#ffffff</color>
+  <color name="colorBadgeTextGood_Dark">#00c853</color>
+
+  <!--BadgeTextBad-->
+  <color name="colorBadgeTextBad_Light">#ffffff</color>
+  <color name="colorBadgeTextBad_Dark">#ff3d00</color>
+
+
+
+  <!--NOT IMPLEMENTED-->
   <color name="colorStatusIntermediate">#ffd600</color>
   <color name="colorStatusIntermediateDark">#c7a500</color>
-  <color name="colorStatusBad">#dd2c00</color>
-  <color name="colorStatusBadDark">#a30000</color>
-  <color name="colorStatusDim">#cfd8dc</color>
-  <color name="colorTextStandard">#333333</color>
-  <color name="colorTextLight">#777777</color>
+  <color name="colorTextStandardDark">#ffffff</color>
   <color name="colorTextUltraLight">#cccccc</color>
+  <color name="menuActionTint">#222222</color>
 </resources>

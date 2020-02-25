@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+		xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
-    android:id="@+id/action_datetime"
-    android:title="00:00"
-    app:iconTint="#fff"
-    app:iconTintMode="src_in"
-    app:showAsAction="always"/>
-  
+		android:id="@+id/action_datetime"
+		android:title="00:00"
+		app:showAsAction="always"/>
+
   <item
-      android:id="@+id/action_favorite"
-      android:icon="@drawable/favorite_border_24px"
-      android:title="@string/action_favorite"
-      app:iconTint="#fff"
-      app:iconTintMode="src_in"
-      app:showAsAction="always"/>
+			android:id="@+id/action_favorite"
+			android:icon="@drawable/favorite_border_24px"
+			android:title="@string/action_favorite"
+			app:iconTint="?attr/colorAccent"
+			app:iconTintMode="src_in"
+			app:showAsAction="always"/>
 </menu>

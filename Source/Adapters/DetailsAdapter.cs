@@ -49,7 +49,7 @@ namespace WozAlboPrzewoz
             if (position == 0)
             {
                 time = item.DepartureTime;
-                delay = Math.Max(0, connection.Delay);
+                delay = Math.Max(0, connection.DelayStart);
             }
             else
             {
@@ -70,12 +70,12 @@ namespace WozAlboPrzewoz
             if (delay > 0)
             {
                 holder.textViewStatus.Text = context.GetString(Resource.String.delay, delay);
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+                holder.textViewStatus.SetTextAppearance(Resource.Style.StatusTextBad);
             }
             else
             {
                 holder.textViewStatus.Text = context.GetString(Resource.String.on_time);
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusGoodDark)));
+                holder.textViewStatus.SetTextAppearance(Resource.Style.StatusTextGood);
             }
 
             //

@@ -8,6 +8,7 @@
   <string name="difficulties">Utrudnienia</string>
   <string name="on_time">Na czas</string>
   <string name="delay">+%d min</string>
+  <string name="now">Teraz</string>
   <string name="dialog_server_error_title">Błąd ładowania danych</string>
   <string name="dialog_server_error_body">Serwer zwrócił status %1$d %2$s. Użyj przycisku Ponów próbę lub spróbuj ponownie później.</string>
   <string name="dialog_button_ok">OK</string>
@@ -19,6 +20,8 @@
   <string name="setting_version">Wersja</string>
   <string name="setting_developer">Deweloper</string>
   <string name="setting_licenses">Licencje</string>
+  <string name="setting_theme">Wygląd</string>
+  <string name="setting_dark_theme">Ciemny motyw</string>
   <string-array name="licenses">
     <item>
       SwipyRefreshLayout#Copyright 2016 Duong Dinh Loi\n

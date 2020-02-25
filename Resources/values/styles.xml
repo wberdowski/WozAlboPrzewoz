@@ -1,11 +1,86 @@
 <resources>
+  <!-- LIGHT THEME -->
+  <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight">
+    <!--<item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <item name="colorAccent">@color/colorAccent_Light</item>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+    <item name="textColor">@color/colorText_Light</item>
+    <item name="textColorFaint">@color/colorTextFaint_Light</item>
+    <item name="actionTint">@color/actionTint_Light</item>
+    <item name="colorStatusIndicatorGood">@color/colorStatusIndicatorGood_Light</item>
+    <item name="colorStatusIndicatorBad">@color/colorStatusIndicatorBad_Light</item>
+    <item name="colorStatusIndicatorFaint">@color/colorStatusIndicatorFaint_Light</item>
+    <item name="colorStatusGood">@color/colorStatusGood_Light</item>
+    <item name="colorStatusGoodText">@color/colorStatusGoodText_Light</item>
+    <item name="colorStatusBad">@color/colorStatusBad_Light</item>
+    <item name="colorStatusBadText">@color/colorStatusBadText_Light</item>
+    <item name="colorBadgeBackgroundGood">@color/colorBadgeBackgroundGood_Light</item>
+    <item name="colorBadgeBackgroundBad">@color/colorBadgeBackgroundBad_Light</item>
+    <item name="colorBadgeTextGood">@color/colorBadgeTextGood_Light</item>
+    <item name="colorBadgeTextBad">@color/colorBadgeTextBad_Light</item>
+  </style>
 
+  <style name="TimeNormal" parent="AppTheme">
+    <item name="android:textColor">?attr/textColor</item>
+    <item name="android:textSize">28dp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <style name="TimeFaint" parent="TimeNormal">
+    <item name="android:textColor">?attr/textColorFaint</item>
+  </style>
+
+  <style name="MinNormal" parent="AppTheme">
+    <item name="android:textColor">?attr/textColor</item>
+    <item name="android:textSize">12dp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+  
+  <style name="MinFaint" parent="MinNormal">
+    <item name="android:textColor">?attr/textColorFaint</item>
+  </style>
+  
+  <style name="StatusText" parent="AppTheme">
+    <item name="android:textSize">14dp</item>
+    <item name="android:textColor">?attr/textColor</item>
+  </style>
+
+  <style name="StatusIndicator" parent="AppTheme">
+    <item name="android:background">?attr/colorStatusIndicatorFaint</item>
+  </style>
+
+  <style name="StatusIndicatorGood" parent="AppTheme">
+    <item name="android:background">?attr/colorStatusIndicatorGood</item>
+  </style>
+
+  <style name="StatusIndicatorBad" parent="AppTheme">
+    <item name="android:background">?attr/colorStatusIndicatorBad</item>
+  </style>
+
+  <style name="StatusTextGood" parent="StatusText">
+    <item name="android:textColor">?attr/colorStatusGoodText</item>
+  </style>
+
+  <style name="StatusTextBad" parent="StatusText">
+    <item name="android:textColor">?attr/colorStatusBadText</item>
+  </style>
+
+  <style name="DestinationText" parent="AppTheme">
+    <item name="android:textColor">?attr/textColor</item>
+  </style>
+
+  <style name="TimeBadge" parent="AppTheme">
+    <item name="android:textColor">?attr/textColor</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">12dp</item>
+  </style>
+
+  <style name="TimeBadgeGood" parent="TimeBadge">
+    <item name="android:textColor">?attr/colorBadgeTextGood</item>
+  </style>
+
+  <style name="TimeBadgeBad" parent="TimeBadge">
+    <item name="android:textColor">?attr/colorBadgeTextBad</item>
+  </style>
 </resources>

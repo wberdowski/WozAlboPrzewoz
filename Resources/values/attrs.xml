@@ -1,0 +1,16 @@
+<resources>
+  <attr name="textColor" format="reference" />
+  <attr name="actionTint" format="reference" />
+  <attr name="colorStatusIndicatorGood" format="reference"/>
+  <attr name="colorStatusIndicatorBad" format="reference"/>
+  <attr name="colorStatusIndicatorFaint" format="reference"/>
+  <attr name="colorStatusGood" format="reference"/>
+  <attr name="colorStatusGoodText" format="reference"/>
+  <attr name="colorStatusBad" format="reference"/>
+  <attr name="colorStatusBadText" format="reference"/>
+  <attr name="textColorFaint" format="reference"/>
+  <attr name="colorBadgeBackgroundGood" format="reference"/>
+  <attr name="colorBadgeBackgroundBad" format="reference"/>
+  <attr name="colorBadgeTextGood" format="reference"/>
+  <attr name="colorBadgeTextBad" format="reference"/>
+</resources>

@@ -30,7 +30,7 @@
                 android:text="00:00"
                 android:textSize="28dp"
                 android:textStyle="bold"
-                android:textColor="@color/colorTextStandard"
+                android:textColor="?attr/textColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -59,7 +59,7 @@
                 android:text="Station"
                 android:textStyle="bold"
                 android:textSize="16dp"
-                android:textColor="@color/colorTextStandard"
+                android:textColor="?attr/textColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -67,7 +67,7 @@
                 android:id="@+id/textViewTrack"
                 android:text="Platform 0 Track 0"
                 android:textSize="12dp"
-                android:textColor="@color/colorTextLight"
+                android:textColor="?attr/textColorFaint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

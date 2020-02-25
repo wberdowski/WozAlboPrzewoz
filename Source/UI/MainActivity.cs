@@ -10,7 +10,7 @@ using Android.Content;
 using Android.Support.V7.Widget;
 using Android.Support.Design.Widget;
 using Android.Views;
-using Android.Widget;
+using AndroidX.Preference;
 
 namespace WozAlboPrzewoz
 {
@@ -29,6 +29,9 @@ namespace WozAlboPrzewoz
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
+
+            ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+            AppCompatDelegate.DefaultNightMode = (prefs.GetBoolean("dark_mode", false) ? AppCompatDelegate.ModeNightYes : AppCompatDelegate.ModeNightNo);
 
             StationsCache.LoadStations();
             FavoritesManager.Load();
@@ -197,7 +200,7 @@ namespace WozAlboPrzewoz
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if(item.ItemId == Resource.Id.action_settings)
+            if (item.ItemId == Resource.Id.action_settings)
             {
                 StartActivity(typeof(SettingsActivity));
             }

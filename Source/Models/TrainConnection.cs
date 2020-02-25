@@ -17,7 +17,7 @@ namespace WozAlboPrzewoz
         [JsonProperty("G")]
         public double TimeDeparture { get; set; }
         [JsonProperty("GO")]
-        public int Delay { get; set; }
+        public int DelayStart { get; set; }
         [JsonProperty("PS")]
         public string Carrier { get; set; }
         [JsonProperty("KH")]
@@ -37,7 +37,7 @@ namespace WozAlboPrzewoz
         [JsonProperty("RPG")]
         public double TimeDepartureStart { get; set; }
         [JsonProperty("RPO")]
-        public int Rpo { get; set; }
+        public int DelayEnd { get; set; }
         [JsonProperty("RK")]
         public string StationEnd { get; set; }
         [JsonProperty("RKL")]

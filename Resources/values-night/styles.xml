@@ -1,0 +1,23 @@
+<resources>
+  <!-- DARK THEME -->
+  <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight">
+    <!--<item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <item name="colorAccent">@color/colorAccent_Dark</item>
+    
+    <item name="textColor">@color/colorText_Dark</item>
+    <item name="textColorFaint">@color/colorTextFaint_Dark</item>
+    <item name="actionTint">@color/actionTint_Dark</item>
+    <item name="colorStatusIndicatorGood">@color/colorStatusIndicatorGood_Dark</item>
+    <item name="colorStatusIndicatorBad">@color/colorStatusIndicatorBad_Dark</item>
+    <item name="colorStatusIndicatorFaint">@color/colorStatusIndicatorFaint_Dark</item>
+    <item name="colorStatusGood">@color/colorStatusGood_Dark</item>
+    <item name="colorStatusGoodText">@color/colorStatusGoodText_Dark</item>
+    <item name="colorStatusBad">@color/colorStatusBad_Dark</item>
+    <item name="colorStatusBadText">@color/colorStatusBadText_Dark</item>
+    <item name="colorBadgeBackgroundGood">@color/colorBadgeBackgroundGood_Dark</item>
+    <item name="colorBadgeBackgroundBad">@color/colorBadgeBackgroundBad_Dark</item>
+    <item name="colorBadgeTextGood">@color/colorBadgeTextGood_Dark</item>
+    <item name="colorBadgeTextBad">@color/colorBadgeTextBad_Dark</item>
+  </style>
+</resources>

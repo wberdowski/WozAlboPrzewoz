@@ -43,7 +43,7 @@ namespace WozAlboPrzewoz
             var holder = viewHolder as ConnectionsAdapterViewHolder;
 
             var departureTime = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeDeparture));
-            var delayNormalized = Math.Max(0, connection.Delay);
+            var delayNormalized = Math.Max(0, connection.DelayStart);
             var minutesLeft = (int)Math.Ceiling(departureTime.Subtract(DateTime.Now).TotalMinutes) + delayNormalized;
 
             //
@@ -66,26 +66,26 @@ namespace WozAlboPrzewoz
             if (minutesLeft < 0)
             {
                 holder.textViewStatus.Text = context.GetString(Resource.String.train_left);
-                holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextLight)));
+                holder.textViewStatus.SetTextAppearance(Resource.Style.StatusText);
             }
             else
             {
-                if (connection.Delay > 0)
+                if (connection.DelayStart > 0)
                 {
-                    holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.Delay);
-                    holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+                    holder.textViewStatus.Text = context.GetString(Resource.String.delay, connection.DelayStart);
+                    holder.textViewStatus.SetTextAppearance(Resource.Style.StatusTextBad);
                 }
                 else
                 {
                     if (connection.Up.Length > 0)
                     {
                         holder.textViewStatus.Text = context.GetString(Resource.String.difficulties);
-                        holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusBadDark)));
+                        holder.textViewStatus.SetTextAppearance(Resource.Style.StatusTextBad);
                     }
                     else
                     {
                         holder.textViewStatus.Text = context.GetString(Resource.String.on_time);
-                        holder.textViewStatus.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorStatusGoodDark)));
+                        holder.textViewStatus.SetTextAppearance(Resource.Style.StatusTextGood);
                     }
                 }
             }
@@ -95,17 +95,17 @@ namespace WozAlboPrzewoz
             //
             if (minutesLeft < 0)
             {
-                holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusDim);
+                holder.statusIndicator.SetBackgroundColor(AttrValueUtils.GetColor(Resource.Attribute.colorStatusIndicatorFaint));
             }
             else
             {
                 if (connection.Up.Length > 0)
                 {
-                    holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusBad);
+                    holder.statusIndicator.SetBackgroundColor(AttrValueUtils.GetColor(Resource.Attribute.colorStatusIndicatorBad));
                 }
                 else
                 {
-                    holder.statusIndicator.SetBackgroundResource(Resource.Color.colorStatusGood);
+                    holder.statusIndicator.SetBackgroundColor(AttrValueUtils.GetColor(Resource.Attribute.colorStatusIndicatorGood));
                 }
             }
 
@@ -115,8 +115,16 @@ namespace WozAlboPrzewoz
 
             if (Math.Abs(minutesLeft) < 60)
             {
-                holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
-                holder.textViewMin.Visibility = ViewStates.Visible;
+                if (minutesLeft == 0)
+                {
+                    holder.textViewTime.Text = context.GetString(Resource.String.now);
+                    holder.textViewMin.Visibility = ViewStates.Gone;
+                }
+                else
+                {
+                    holder.textViewTime.Text = Math.Abs(minutesLeft).ToString();
+                    holder.textViewMin.Visibility = ViewStates.Visible;
+                }
             }
             else
             {
@@ -126,13 +134,13 @@ namespace WozAlboPrzewoz
 
             if (minutesLeft < 0)
             {
-                holder.textViewTime.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextLight)));
-                holder.textViewMin.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextLight)));
+                holder.textViewTime.SetTextAppearance(Resource.Style.TimeFaint);
+                holder.textViewMin.SetTextAppearance(Resource.Style.MinFaint);
             }
             else
             {
-                holder.textViewTime.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextStandard)));
-                holder.textViewMin.SetTextColor(new Android.Graphics.Color(context.GetColor(Resource.Color.colorTextStandard)));
+                holder.textViewTime.SetTextAppearance(Resource.Style.TimeNormal);
+                holder.textViewMin.SetTextAppearance(Resource.Style.MinNormal);
             }
 
             holder.textViewDestination.Text = connection.StationEnd;
@@ -140,6 +148,28 @@ namespace WozAlboPrzewoz
             holder.textViewTime1.Text = departureTime.ToShortTimeString();
             holder.textViewTime2.Text = DateTime.FromOADate(connection.TimeArrivalEnd).ToShortTimeString();
             holder.textViewInfo.Text = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeArrivalEnd)).Subtract(departureTime).ToString(@"hh\:mm");
+
+            if (connection.DelayStart > 0)
+            {
+                holder.textViewTime1.SetTextAppearance(Resource.Style.TimeBadgeBad);
+                holder.textViewTime1.SetBackgroundResource(Resource.Drawable.time_badge_bad);
+            }
+            else
+            {
+                holder.textViewTime1.SetTextAppearance(Resource.Style.TimeBadgeGood);
+                holder.textViewTime1.SetBackgroundResource(Resource.Drawable.time_badge_good);
+            }
+
+            if (connection.DelayEnd > 0)
+            {
+                holder.textViewTime2.SetTextAppearance(Resource.Style.TimeBadgeBad);
+                holder.textViewTime2.SetBackgroundResource(Resource.Drawable.time_badge_bad);
+            }
+            else
+            {
+                holder.textViewTime2.SetTextAppearance(Resource.Style.TimeBadgeGood);
+                holder.textViewTime2.SetBackgroundResource(Resource.Drawable.time_badge_good);
+            }
         }
 
         public override int ItemCount => items.Count;
@@ -158,7 +188,7 @@ namespace WozAlboPrzewoz
         public TextView textViewDestination { get; set; }
         public ImageView ImageViewTrain { get; set; }
         public TextView textViewLine { get; set; }
-        public LinearLayout statusIndicator { get; set; }
+        public TextView statusIndicator { get; set; }
         public TextView textViewTime1 { get; set; }
         public TextView textViewTime2 { get; set; }
         public TextView textViewInfo { get; set; }
@@ -174,7 +204,7 @@ namespace WozAlboPrzewoz
             textViewDestination = (TextView)itemView.FindViewById(Resource.Id.textViewDestination);
             ImageViewTrain = (ImageView)itemView.FindViewById(Resource.Id.imageViewTrain);
             textViewLine = (TextView)itemView.FindViewById(Resource.Id.textViewLine);
-            statusIndicator = (LinearLayout)itemView.FindViewById(Resource.Id.statusIndicator);
+            statusIndicator = (TextView)itemView.FindViewById(Resource.Id.statusIndicator);
             textViewTime1 = (TextView)itemView.FindViewById(Resource.Id.textViewTime1);
             textViewTime2 = (TextView)itemView.FindViewById(Resource.Id.textViewTime2);
             textViewInfo = (TextView)itemView.FindViewById(Resource.Id.textViewInfo);
