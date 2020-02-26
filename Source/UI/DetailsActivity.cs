@@ -38,6 +38,7 @@ namespace WozAlboPrzewoz
             //
 
             mSwipeRefreshLayout = (SwipeRefreshLayout)FindViewById(Resource.Id.swipeRefreshLayoutDetails);
+            mSwipeRefreshLayout.SetColorSchemeResources(Resource.Color.colorAccent_Light, Resource.Color.colorAccent_Dark);
             mSwipeRefreshLayout.Refresh += MSwipeRefreshLayout_Refresh;
 
             //

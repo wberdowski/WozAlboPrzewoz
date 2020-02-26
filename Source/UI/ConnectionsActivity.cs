@@ -1,6 +1,7 @@
 ﻿using Android.Animation;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Util;
 using Android.Views;
@@ -28,8 +29,7 @@ namespace WozAlboPrzewoz
         private IMenuItem mDatetimeAction;
         private RecyclerView mRecyclerView;
         private LinearLayoutManager mLayoutManager;
-        private RecyclerLinearSmoothScrollerTop mSmoothScrollerTop;
-        private LinearSmoothScroller mSmoothScrollerBottom;
+        private LinearSmoothScroller mSmoothScroller;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -52,6 +52,7 @@ namespace WozAlboPrzewoz
             //
 
             mSwipyRefreshLayout = (SwipyRefreshLayout)FindViewById(Resource.Id.swipyRefreshLayoutTrains);
+            mSwipyRefreshLayout.SetColorSchemeResources(Resource.Color.colorAccent_Light, Resource.Color.colorAccent_Dark);
             mSwipyRefreshLayout.SetDistanceToTriggerSync((int)(Resources.DisplayMetrics.Density * 64));
             mSwipyRefreshLayout.Refresh += MSwipeRefreshLayout_Refresh;
 
@@ -74,8 +75,7 @@ namespace WozAlboPrzewoz
             //  Smooth scroller
             //
 
-            mSmoothScrollerTop = new RecyclerLinearSmoothScrollerTop(this);
-            mSmoothScrollerBottom = new RecyclerLinearSmoothScrollerBottom(this);
+            mSmoothScroller = new RecyclerLinearSmoothScroller(this);
 
             //
             //  Results time update timer
@@ -86,25 +86,11 @@ namespace WozAlboPrzewoz
             UpdateAdapterData();
         }
 
-        private class RecyclerLinearSmoothScrollerTop : LinearSmoothScroller
-        {
-            protected override int VerticalSnapPreference => SnapToStart;
-
-            public RecyclerLinearSmoothScrollerTop(Context context) : base(context)
-            {
-            }
-
-            protected override float CalculateSpeedPerPixel(DisplayMetrics displayMetrics)
-            {
-                return 300f / (int)displayMetrics.DensityDpi;
-            }
-        }
-
-        private class RecyclerLinearSmoothScrollerBottom : LinearSmoothScroller
+        private class RecyclerLinearSmoothScroller : LinearSmoothScroller
         {
             protected override int VerticalSnapPreference => SnapToAny;
 
-            public RecyclerLinearSmoothScrollerBottom(Context context) : base(context)
+            public RecyclerLinearSmoothScroller(Context context) : base(context)
             {
             }
 
@@ -203,8 +189,8 @@ namespace WozAlboPrzewoz
                         CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
                         (mRecyclerView.GetLayoutManager() as LinearLayoutManager).ScrollToPositionWithOffset(10, 0);
-                        mSmoothScrollerTop.TargetPosition = 7;
-                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScrollerTop);
+                        mSmoothScroller.TargetPosition = 7;
+                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScroller);
                         mSwipyRefreshLayout.Refreshing = false;
                     });
                 }
@@ -229,8 +215,8 @@ namespace WozAlboPrzewoz
 
                         CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
-                        mSmoothScrollerBottom.TargetPosition = previousCount + 3;
-                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScrollerBottom);
+                        mSmoothScroller.TargetPosition = previousCount + 3;
+                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScroller);
                         mSwipyRefreshLayout.Refreshing = false;
                     });
                 }

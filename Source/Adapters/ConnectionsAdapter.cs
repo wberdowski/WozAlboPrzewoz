@@ -180,7 +180,7 @@ namespace WozAlboPrzewoz
 
     public class ConnectionsAdapterViewHolder : RecyclerView.ViewHolder
     {
-        public CardView cardViewRow { get; set; }
+        public LinearLayout linearLayoutRow { get; set; }
         public TextView textViewHeader { get; set; }
         public TextView textViewTime { get; set; }
         public TextView textViewMin { get; set; }
@@ -196,7 +196,7 @@ namespace WozAlboPrzewoz
         public ConnectionsAdapterViewHolder(Android.Views.View itemView, Action<ConnectionsAdapterClickEventArgs> clickListener,
                             Action<ConnectionsAdapterClickEventArgs> longClickListener) : base(itemView)
         {
-            cardViewRow = (CardView)itemView.FindViewById(Resource.Id.cardViewRow);
+            linearLayoutRow = (LinearLayout)itemView.FindViewById(Resource.Id.linearLayoutRow);
             textViewHeader = (TextView)itemView.FindViewById(Resource.Id.textViewHeader);
             textViewTime = (TextView)itemView.FindViewById(Resource.Id.textViewTime);
             textViewMin = (TextView)itemView.FindViewById(Resource.Id.textViewMin);
@@ -210,8 +210,8 @@ namespace WozAlboPrzewoz
             textViewInfo = (TextView)itemView.FindViewById(Resource.Id.textViewInfo);
 
             //TextView = v;
-            cardViewRow.Click += (sender, e) => clickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
-            cardViewRow.LongClick += (sender, e) => longClickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            linearLayoutRow.Click += (sender, e) => clickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            linearLayoutRow.LongClick += (sender, e) => longClickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
         }
     }
 

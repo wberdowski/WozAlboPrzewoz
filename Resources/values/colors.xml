@@ -68,6 +68,10 @@
   <color name="colorCardViewHeader_Light">#11000000</color>
   <color name="colorCardViewHeader_Dark">#22000000</color>
 
+  <!--RecyclerBorder-->
+  <color name="colorRecyclerBorder_Light">#11000000</color>
+  <color name="colorRecyclerBorder_Dark">#11ffffff</color>
+  
   <!--NOT IMPLEMENTED-->
   <color name="colorStatusIntermediate">#ffd600</color>
   <color name="colorStatusIntermediateDark">#c7a500</color>
