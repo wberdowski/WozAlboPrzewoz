@@ -1,8 +1,9 @@
-﻿using Android.App;
+﻿using Android.Animation;
+using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Util;
 using Android.Views;
-using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
 using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
@@ -27,6 +28,8 @@ namespace WozAlboPrzewoz
         private IMenuItem mDatetimeAction;
         private RecyclerView mRecyclerView;
         private LinearLayoutManager mLayoutManager;
+        private RecyclerLinearSmoothScrollerTop mSmoothScrollerTop;
+        private LinearSmoothScroller mSmoothScrollerBottom;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -68,12 +71,47 @@ namespace WozAlboPrzewoz
             mRecyclerView.SetAdapter(mTrainConnAdapter);
 
             //
+            //  Smooth scroller
+            //
+
+            mSmoothScrollerTop = new RecyclerLinearSmoothScrollerTop(this);
+            mSmoothScrollerBottom = new RecyclerLinearSmoothScrollerBottom(this);
+
+            //
             //  Results time update timer
             //
 
             RegisterTickReceiver();
 
             UpdateAdapterData();
+        }
+
+        private class RecyclerLinearSmoothScrollerTop : LinearSmoothScroller
+        {
+            protected override int VerticalSnapPreference => SnapToStart;
+
+            public RecyclerLinearSmoothScrollerTop(Context context) : base(context)
+            {
+            }
+
+            protected override float CalculateSpeedPerPixel(DisplayMetrics displayMetrics)
+            {
+                return 300f / (int)displayMetrics.DensityDpi;
+            }
+        }
+
+        private class RecyclerLinearSmoothScrollerBottom : LinearSmoothScroller
+        {
+            protected override int VerticalSnapPreference => SnapToAny;
+
+            public RecyclerLinearSmoothScrollerBottom(Context context) : base(context)
+            {
+            }
+
+            protected override float CalculateSpeedPerPixel(DisplayMetrics displayMetrics)
+            {
+                return 300f / (int)displayMetrics.DensityDpi;
+            }
         }
 
         private void MSwipeRefreshLayout_Refresh(object sender, SwipyRefreshLayout.RefreshEventArgs e)
@@ -144,6 +182,9 @@ namespace WozAlboPrzewoz
         {
             new System.Threading.Thread(() =>
             {
+                //
+                //  Load earlier connections
+                //
                 if (direction == SwipyRefreshLayoutDirection.Top)
                 {
                     var firstConn = mTrainConnData.First().Connection;
@@ -161,9 +202,15 @@ namespace WozAlboPrzewoz
                         mTrainConnData.InsertRange(0, list);
                         CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
+                        (mRecyclerView.GetLayoutManager() as LinearLayoutManager).ScrollToPositionWithOffset(10, 0);
+                        mSmoothScrollerTop.TargetPosition = 7;
+                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScrollerTop);
                         mSwipyRefreshLayout.Refreshing = false;
                     });
                 }
+                //
+                //  Load later connections
+                //
                 else if (direction == SwipyRefreshLayoutDirection.Bottom)
                 {
                     var lastConn = mTrainConnData.Last().Connection;
@@ -171,6 +218,8 @@ namespace WozAlboPrzewoz
 
                     RunOnUiThread(() =>
                     {
+                        var previousCount = mTrainConnData.Count - 1;
+
                         foreach (var conn in connections)
                         {
                             if (lastConn.Sknnt == conn.Sknnt && lastConn.Spnnt == conn.Spnnt) continue;
@@ -180,6 +229,8 @@ namespace WozAlboPrzewoz
 
                         CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
+                        mSmoothScrollerBottom.TargetPosition = previousCount + 3;
+                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScrollerBottom);
                         mSwipyRefreshLayout.Refreshing = false;
                     });
                 }
