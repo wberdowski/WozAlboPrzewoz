@@ -23,6 +23,10 @@
     <item name="colorRecyclerBorder">@color/colorRecyclerBorder_Light</item>
   </style>
 
+  <style name="AppTheme.Launcher">
+    <item name="android:windowBackground">@drawable/launch_screen</item>
+  </style>
+
   <style name="TimeNormal" parent="AppTheme">
     <item name="android:textColor">?attr/textColor</item>
     <item name="android:textSize">28dp</item>

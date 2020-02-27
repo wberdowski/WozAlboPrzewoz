@@ -14,7 +14,7 @@ using AndroidX.Preference;
 
 namespace WozAlboPrzewoz
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
         private Android.Support.V7.Widget.SearchView mSearchView;
@@ -25,6 +25,7 @@ namespace WozAlboPrzewoz
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            SetTheme(Resource.Style.AppTheme);
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
