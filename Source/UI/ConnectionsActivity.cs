@@ -1,10 +1,10 @@
-﻿using Android.Animation;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Util;
 using Android.Views;
+using Android.Views.Animations;
 using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
 using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
@@ -29,7 +29,6 @@ namespace WozAlboPrzewoz
         private IMenuItem mDatetimeAction;
         private RecyclerView mRecyclerView;
         private LinearLayoutManager mLayoutManager;
-        private LinearSmoothScroller mSmoothScroller;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -62,7 +61,10 @@ namespace WozAlboPrzewoz
 
             mRecyclerView = (RecyclerView)FindViewById(Resource.Id.recyclerView);
 
-            mLayoutManager = new LinearLayoutManager(this);
+            mLayoutManager = new LinearLayoutManager(this)
+            {
+                ItemPrefetchEnabled = true
+            };
             mRecyclerView.SetLayoutManager(mLayoutManager);
 
             mTrainConnData = new List<TrainConnectionListItem>();
@@ -70,12 +72,6 @@ namespace WozAlboPrzewoz
             mTrainConnAdapter = new ConnectionsAdapter(this, mTrainConnData);
             mTrainConnAdapter.ItemClick += MTrainConnAdapter_ItemClick;
             mRecyclerView.SetAdapter(mTrainConnAdapter);
-
-            //
-            //  Smooth scroller
-            //
-
-            mSmoothScroller = new RecyclerLinearSmoothScroller(this);
 
             //
             //  Results time update timer
@@ -188,10 +184,12 @@ namespace WozAlboPrzewoz
                         mTrainConnData.InsertRange(0, list);
                         CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
+
                         (mRecyclerView.GetLayoutManager() as LinearLayoutManager).ScrollToPositionWithOffset(10, 0);
-                        mSmoothScroller.TargetPosition = 7;
-                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScroller);
+                        var manager = (mRecyclerView.GetLayoutManager() as LinearLayoutManager);
+                        var height = manager.FindViewByPosition(manager.FindLastVisibleItemPosition()).MeasuredHeight;
                         mSwipyRefreshLayout.Refreshing = false;
+                        mRecyclerView.SmoothScrollBy(0, -height * 3, new AnticipateOvershootInterpolator(), 1000);
                     });
                 }
                 //
@@ -204,7 +202,7 @@ namespace WozAlboPrzewoz
 
                     RunOnUiThread(() =>
                     {
-                        var previousCount = mTrainConnData.Count - 1;
+                        var previousLastIndex = mTrainConnData.Count - 1;
 
                         foreach (var conn in connections)
                         {
@@ -215,9 +213,12 @@ namespace WozAlboPrzewoz
 
                         CleanUpData();
                         mTrainConnAdapter.NotifyDataSetChanged();
-                        mSmoothScroller.TargetPosition = previousCount + 3;
-                        mRecyclerView.GetLayoutManager().StartSmoothScroll(mSmoothScroller);
                         mSwipyRefreshLayout.Refreshing = false;
+
+                        var manager = (mRecyclerView.GetLayoutManager() as LinearLayoutManager);
+                        var height = manager.FindViewByPosition(manager.FindLastVisibleItemPosition()).MeasuredHeight;
+                        mSwipyRefreshLayout.Refreshing = false;
+                        mRecyclerView.SmoothScrollBy(0, height * 3, new AnticipateOvershootInterpolator(), 1000);
                     });
                 }
             }).Start();

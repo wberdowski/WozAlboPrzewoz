@@ -14,10 +14,10 @@ using AndroidX.Preference;
 
 namespace WozAlboPrzewoz
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher ", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        private Android.Support.V7.Widget.SearchView mSearchView;
+        private SearchView mSearchView;
         private SearchCursorAdapter mSearchSuggestionsAdapter;
         private RecyclerView mRecyclerViewFavorites;
         private List<Station> mFavoritesData;
