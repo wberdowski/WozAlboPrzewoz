@@ -1,12 +1,16 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
+using Java.Lang;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace WozAlboPrzewoz
 {
@@ -18,6 +22,8 @@ namespace WozAlboPrzewoz
         private DetailsAdapter mDetailsAdapter;
         private TrainConnection mTrainConnection;
         private SwipeRefreshLayout mSwipeRefreshLayout;
+        private TickReceiver mTickReceiver;
+        private ConnectionsAdapterViewHolder vh;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -62,14 +68,33 @@ namespace WozAlboPrzewoz
 
             var mTextViewRelation = (TextView)FindViewById(Resource.Id.textViewRelation);
             mTextViewRelation.Text = $"{mTrainConnection.StationStart} ({DateTime.FromOADate(mTrainConnection.TimeDepartureStart).ToShortTimeString()}) > {mTrainConnection.StationEnd} ({DateTime.FromOADate(mTrainConnection.TimeArrivalEnd).ToShortTimeString()})";
-            
+
             var mTextViewDifficulties = (TextView)FindViewById(Resource.Id.textViewDifficulties);
             mTextViewDifficulties.Text = mTrainConnection.Up;
 
-            UpdateAdapterData();
+            var view = FindViewById(Resource.Id.include1);
+
+            vh = new ConnectionsAdapterViewHolder(view, (e) =>
+            {
+
+            }, (e) =>
+            {
+
+            });
+
+            RegisterTickReceiver();
+
+            ConnectionItemHelper.BindViewHolder(this, new TrainConnectionListItem(mTrainConnection), vh);
+
+            UpdateAll();
         }
 
         private void MSwipeRefreshLayout_Refresh(object sender, EventArgs e)
+        {
+            UpdateAll();
+        }
+
+        private void UpdateAll()
         {
             UpdateAdapterData();
         }
@@ -81,25 +106,52 @@ namespace WozAlboPrzewoz
             mSwipeRefreshLayout.Refreshing = true;
             new System.Threading.Thread(() =>
             {
-                var req = new ConnectionDetailsRequest(
-                    mTrainConnection.TimetableYear,
-                    mTrainConnection.Z,
-                    mTrainConnection.Dk,
-                    mTrainConnection.Spnnt,
-                    mTrainConnection.Sknnt
-                    );
-
-                var details = PKPAPI.GetConnectionRoute(req);
-                RunOnUiThread(() =>
+                try
                 {
-                    var dt = new ConnectionDetails()
-                    .FromJson(details);
+                    var req = new ConnectionDetailsRequest(
+                        mTrainConnection.TimetableYear,
+                        mTrainConnection.Z,
+                        mTrainConnection.Dk,
+                        mTrainConnection.Spnnt,
+                        mTrainConnection.Sknnt
+                        );
 
-                    mConnectionDetails.AddRange(dt.Stations);
+                    var details = PKPAPI.GetConnectionRoute(req);
+                    RunOnUiThread(() =>
+                    {
+                        var dt = new ConnectionDetails()
+                        .FromJson(details);
 
-                    mDetailsAdapter.NotifyDataSetChanged();
-                    mSwipeRefreshLayout.Refreshing = false;
-                });
+                        mConnectionDetails.AddRange(dt.Stations);
+
+                        mDetailsAdapter.NotifyDataSetChanged();
+
+                        mSwipeRefreshLayout.Refreshing = false;
+                    });
+                }
+                catch (WebException ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                    RunOnUiThread(() =>
+                    {
+                        if (ex.Response != null)
+                        {
+                            var status = ((HttpWebResponse)ex.Response).StatusCode;
+
+                            ErrorDialogHelper.ShowServerErrorDialog(this, status, (s, e) =>
+                            {
+                                UpdateAdapterData();
+                            });
+                        }
+                        else
+                        {
+                            ErrorDialogHelper.ShowConnectionErrorDialog(this, (s, e) =>
+                            {
+                                UpdateAdapterData();
+                            });
+                        }
+                    });
+                }
             }).Start();
         }
 
@@ -112,6 +164,52 @@ namespace WozAlboPrzewoz
         {
             Finish();
             return true;
+        }
+
+        protected override void OnResume()
+        {
+            RegisterTickReceiver();
+            //mTrainConnAdapter.NotifyDataSetChanged();
+            base.OnResume();
+        }
+
+        private void RegisterTickReceiver()
+        {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.AddAction(Intent.ActionTimeTick);
+            mTickReceiver = new TickReceiver(() =>
+            {
+                UpdateAll();
+            });
+            RegisterReceiver(mTickReceiver, intentFilter);
+        }
+
+        protected override void OnDestroy()
+        {
+            try
+            {
+                UnregisterReceiver(mTickReceiver);
+            }
+            catch (IllegalArgumentException ex)
+            {
+                ex.PrintStackTrace();
+            }
+            base.OnDestroy();
+        }
+
+        private class TickReceiver : BroadcastReceiver
+        {
+            Action Action { get; set; }
+
+            public TickReceiver(Action action)
+            {
+                Action = action;
+            }
+
+            public override void OnReceive(Context context, Intent intent)
+            {
+                Action.Invoke();
+            }
         }
     }
 }

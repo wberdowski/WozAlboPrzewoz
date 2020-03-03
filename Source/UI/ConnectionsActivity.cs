@@ -164,61 +164,88 @@ namespace WozAlboPrzewoz
         {
             new System.Threading.Thread(() =>
             {
-                //
-                //  Load earlier connections
-                //
-                if (direction == SwipyRefreshLayoutDirection.Top)
+                try
                 {
-                    var firstConn = mTrainConnData.First().Connection;
-                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(firstConn.TimeDeparture), 0, 10);
-
-                    RunOnUiThread(() =>
+                    //
+                    //  Load earlier connections
+                    //
+                    if (direction == SwipyRefreshLayoutDirection.Top)
                     {
-                        var list = new List<TrainConnectionListItem>();
+                        var firstConn = mTrainConnData.First().Connection;
+                        var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(firstConn.TimeDeparture), 0, 10);
 
-                        foreach (var conn in connections)
+                        RunOnUiThread(() =>
                         {
-                            list.Add(new TrainConnectionListItem(conn));
-                        }
+                            var list = new List<TrainConnectionListItem>();
 
-                        mTrainConnData.InsertRange(0, list);
-                        CleanUpData();
-                        mTrainConnAdapter.NotifyDataSetChanged();
+                            foreach (var conn in connections)
+                            {
+                                list.Add(new TrainConnectionListItem(conn));
+                            }
 
-                        (mRecyclerView.GetLayoutManager() as LinearLayoutManager).ScrollToPositionWithOffset(10, 0);
-                        var manager = (mRecyclerView.GetLayoutManager() as LinearLayoutManager);
-                        var height = manager.FindViewByPosition(manager.FindLastVisibleItemPosition()).MeasuredHeight;
-                        mSwipyRefreshLayout.Refreshing = false;
-                        mRecyclerView.SmoothScrollBy(0, -height * 3, new AnticipateOvershootInterpolator(), 1000);
-                    });
+                            mTrainConnData.InsertRange(0, list);
+                            CleanUpData();
+                            mTrainConnAdapter.NotifyDataSetChanged();
+
+                            (mRecyclerView.GetLayoutManager() as LinearLayoutManager).ScrollToPositionWithOffset(10, 0);
+                            var manager = (mRecyclerView.GetLayoutManager() as LinearLayoutManager);
+                            var height = manager.FindViewByPosition(manager.FindLastVisibleItemPosition()).MeasuredHeight;
+                            mSwipyRefreshLayout.Refreshing = false;
+                            mRecyclerView.SmoothScrollBy(0, -height * 3, new AnticipateOvershootInterpolator(), 1000);
+                        });
+                    }
+                    //
+                    //  Load later connections
+                    //
+                    else if (direction == SwipyRefreshLayoutDirection.Bottom)
+                    {
+                        var lastConn = mTrainConnData.Last().Connection;
+                        var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(lastConn.TimeDeparture), 2, 10);
+
+                        RunOnUiThread(() =>
+                        {
+                            var previousLastIndex = mTrainConnData.Count - 1;
+
+                            foreach (var conn in connections)
+                            {
+                                if (lastConn.Sknnt == conn.Sknnt && lastConn.Spnnt == conn.Spnnt) continue;
+
+                                mTrainConnData.Add(new TrainConnectionListItem(conn));
+                            }
+
+                            CleanUpData();
+                            mTrainConnAdapter.NotifyDataSetChanged();
+                            mSwipyRefreshLayout.Refreshing = false;
+
+                            var manager = (mRecyclerView.GetLayoutManager() as LinearLayoutManager);
+                            var height = manager.FindViewByPosition(manager.FindLastVisibleItemPosition()).MeasuredHeight;
+                            mSwipyRefreshLayout.Refreshing = false;
+                            mRecyclerView.SmoothScrollBy(0, height * 3, new AnticipateOvershootInterpolator(), 1000);
+                        });
+                    }
                 }
-                //
-                //  Load later connections
-                //
-                else if (direction == SwipyRefreshLayoutDirection.Bottom)
+                catch (WebException ex)
                 {
-                    var lastConn = mTrainConnData.Last().Connection;
-                    var connections = PKPAPI.GetStationTimetable(mSelectedStation.id, DateTime.FromOADate(lastConn.TimeDeparture), 2, 10);
-
+                    Console.WriteLine(ex.StackTrace);
                     RunOnUiThread(() =>
                     {
-                        var previousLastIndex = mTrainConnData.Count - 1;
-
-                        foreach (var conn in connections)
+                        mSwipyRefreshLayout.Refreshing = false;
+                        if (ex.Response != null)
                         {
-                            if (lastConn.Sknnt == conn.Sknnt && lastConn.Spnnt == conn.Spnnt) continue;
+                            var status = ((HttpWebResponse)ex.Response).StatusCode;
 
-                            mTrainConnData.Add(new TrainConnectionListItem(conn));
+                            ErrorDialogHelper.ShowServerErrorDialog(this, status, (s, e) =>
+                            {
+                                UpdateAdapterData();
+                            });
                         }
-
-                        CleanUpData();
-                        mTrainConnAdapter.NotifyDataSetChanged();
-                        mSwipyRefreshLayout.Refreshing = false;
-
-                        var manager = (mRecyclerView.GetLayoutManager() as LinearLayoutManager);
-                        var height = manager.FindViewByPosition(manager.FindLastVisibleItemPosition()).MeasuredHeight;
-                        mSwipyRefreshLayout.Refreshing = false;
-                        mRecyclerView.SmoothScrollBy(0, height * 3, new AnticipateOvershootInterpolator(), 1000);
+                        else
+                        {
+                            ErrorDialogHelper.ShowConnectionErrorDialog(this, (s, e) =>
+                            {
+                                UpdateAdapterData();
+                            });
+                        }
                     });
                 }
             }).Start();
@@ -274,12 +301,6 @@ namespace WozAlboPrzewoz
                             var item = new TrainConnectionListItem(conn);
                             var date = DateTime.FromOADate(conn.TimeDeparture).Date;
 
-                            if (lastDate < date)
-                            {
-                                item.HasHeader = true;
-                                item.HeaderText = date.ToLongDateString();
-                            }
-
                             lastDate = date;
                             mTrainConnData.Add(item);
                         }
@@ -298,33 +319,17 @@ namespace WozAlboPrzewoz
                         {
                             var status = ((HttpWebResponse)ex.Response).StatusCode;
 
-                            var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
-                            dialog.SetTitle(Resource.String.dialog_server_error_title);
-                            dialog.SetMessage(Resources.GetString(Resource.String.dialog_server_error_body, (int)status, status.ToString()));
-                            dialog.SetNeutralButton(Resource.String.dialog_button_try_again, (s, e) =>
-                            {
-                                UpdateAdapterData();
-                            });
-                            dialog.SetPositiveButton(Resource.String.dialog_button_ok, (s, e) =>
-                            {
-
-                            });
-                            dialog.Show();
+                            ErrorDialogHelper.ShowServerErrorDialog(this, status, (s, e) =>
+                             {
+                                 UpdateAdapterData();
+                             });
                         }
                         else
                         {
-                            var dialog = new Android.Support.V7.App.AlertDialog.Builder(this);
-                            dialog.SetTitle(Resource.String.dialog_connection_error_title);
-                            dialog.SetMessage(Resource.String.dialog_connection_error_body);
-                            dialog.SetNeutralButton(Resource.String.dialog_button_try_again, (s, e) =>
+                            ErrorDialogHelper.ShowConnectionErrorDialog(this, (s, e) =>
                             {
                                 UpdateAdapterData();
                             });
-                            dialog.SetPositiveButton(Resource.String.dialog_button_ok, (s, e) =>
-                            {
-
-                            });
-                            dialog.Show();
                         }
                     });
                 }

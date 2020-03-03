@@ -73,7 +73,7 @@ namespace WozAlboPrzewoz
             var station = FavoritesManager.favorites[e.Position];
             int idx = FavoritesManager.RemoveFavorite(station);
             mFavoritesAdapter.NotifyItemRemoved(idx);
-            Snackbar.Make(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.name), Snackbar.LengthLong)
+            SnackbarUtils.MakeWithMargins(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.name), Snackbar.LengthLong)
                 .SetAction(Resource.String.action_undo, (v) =>
                 {
                     FavoritesManager.AddFavorite(station);

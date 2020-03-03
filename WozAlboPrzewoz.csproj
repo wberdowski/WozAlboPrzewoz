@@ -81,6 +81,9 @@
     <Compile Include="Source\UI\SettingsActivity.cs" />
     <Compile Include="Source\UI\SettingsFragment.cs" />
     <Compile Include="Source\Utils\CarrierInfo.cs" />
+    <Compile Include="Source\Utils\ConnectionItemHelper.cs" />
+    <Compile Include="Source\Utils\StationConnectionsCache.cs" />
+    <Compile Include="Source\Utils\ErrorDialogHelper.cs" />
     <Compile Include="Source\Utils\FavoritesManager.cs" />
     <Compile Include="Source\Models\TrainConnectionListItem.cs" />
     <Compile Include="Source\UI\DetailsActivity.cs" />
@@ -309,6 +312,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_launcher_foreground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\snackbar_background.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

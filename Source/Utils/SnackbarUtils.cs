@@ -1,5 +1,6 @@
 ﻿using Android.Support.Design.Widget;
 using Android.Views;
+using AndroidX.Core.View;
 
 namespace WozAlboPrzewoz
 {
@@ -7,17 +8,16 @@ namespace WozAlboPrzewoz
     {
         public static Snackbar MakeWithMargins(View view, string text, int duration)
         {
-            var snackbar = Snackbar.Make(view, text, duration);
-            var snackBarView = snackbar.View;
-            AndroidX.CoordinatorLayout.Widget.CoordinatorLayout.LayoutParams param = (AndroidX.CoordinatorLayout.Widget.CoordinatorLayout.LayoutParams)snackBarView.LayoutParameters;
+            var snack = Snackbar.Make(view, text, duration);
 
-            param.SetMargins(param.LeftMargin + 8,
-                        param.TopMargin,
-                        param.RightMargin + 8,
-                        param.BottomMargin + 8);
+            ViewGroup.MarginLayoutParams parameters = (ViewGroup.MarginLayoutParams)snack.View.LayoutParameters;
+            parameters.SetMargins(16, 16, 16, 16);
 
-            snackBarView.LayoutParameters = param;
-            return snackbar;
+            snack.View.SetBackgroundResource(Resource.Drawable.snackbar_background);
+
+            ViewCompat.SetElevation(snack.View, 6f);
+
+            return snack;
         }
     }
 }
