@@ -6,7 +6,7 @@ namespace WozAlboPrzewoz
 {
     public class ConnectionItemHelper
     {
-        public static void BindViewHolder(Context context, TrainConnectionListItem item, ConnectionsAdapterViewHolder holder)
+        public static void SetViewHolderContent(Context context, TrainConnectionListItem item, ConnectionsAdapterViewHolder holder)
         {
             var connection = item.Connection;
             var departureTime = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeDeparture));

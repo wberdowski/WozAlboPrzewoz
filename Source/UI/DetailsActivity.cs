@@ -84,8 +84,6 @@ namespace WozAlboPrzewoz
 
             RegisterTickReceiver();
 
-            ConnectionItemHelper.BindViewHolder(this, new TrainConnectionListItem(mTrainConnection), vh);
-
             UpdateAll();
         }
 
@@ -96,7 +94,13 @@ namespace WozAlboPrzewoz
 
         private void UpdateAll()
         {
+            UpdateViewHolder();
             UpdateAdapterData();
+        }
+
+        private void UpdateViewHolder()
+        {
+            ConnectionItemHelper.SetViewHolderContent(this, new TrainConnectionListItem(mTrainConnection), vh);
         }
 
         private void UpdateAdapterData()
@@ -179,7 +183,9 @@ namespace WozAlboPrzewoz
             intentFilter.AddAction(Intent.ActionTimeTick);
             mTickReceiver = new TickReceiver(() =>
             {
-                UpdateAll();
+                //TODO:
+                //UpdateAll();
+                UpdateViewHolder();
             });
             RegisterReceiver(mTickReceiver, intentFilter);
         }

@@ -41,7 +41,7 @@ namespace WozAlboPrzewoz
             var item = items[position];
             var holder = viewHolder as ConnectionsAdapterViewHolder;
 
-            ConnectionItemHelper.BindViewHolder(context, item, holder);
+            ConnectionItemHelper.SetViewHolderContent(context, item, holder);
         }
 
         public override int ItemCount => items.Count;
