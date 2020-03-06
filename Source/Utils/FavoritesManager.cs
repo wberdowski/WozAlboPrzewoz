@@ -26,7 +26,7 @@ namespace WozAlboPrzewoz
         {
             if (HasFavorite(station))
             {
-                int idx = favorites.FindIndex(x => x.id == station.id);
+                int idx = favorites.FindIndex(x => x.Id == station.Id);
                 favorites.RemoveAt(idx);
                 Commit();
                 return idx;
@@ -41,7 +41,7 @@ namespace WozAlboPrzewoz
 
             foreach (Station s in favorites)
             {
-                arr.Add(s.id);
+                arr.Add(s.Id);
             }
 
             var serialized = JsonConvert.SerializeObject(arr);
@@ -50,7 +50,7 @@ namespace WozAlboPrzewoz
 
         public static bool HasFavorite(Station station)
         {
-            return favorites.Where(x => x.id == station.id).Count() > 0;
+            return favorites.Where(x => x.Id == station.Id).Count() > 0;
         }
 
         public static void Load()
@@ -62,8 +62,8 @@ namespace WozAlboPrzewoz
                 {
                     foreach (int sid in arr)
                     {
-                        if (favorites.Where(x => x.id == sid).Count() == 0)
-                            favorites.Add(StationsCache.Stations.Where(x => x.id == sid).FirstOrDefault());
+                        if (favorites.Where(x => x.Id == sid).Count() == 0)
+                            favorites.Add(StationsCache.Stations.Where(x => x.Id == sid).FirstOrDefault());
                     }
                 }
             }

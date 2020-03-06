@@ -73,7 +73,7 @@ namespace WozAlboPrzewoz
             var station = FavoritesManager.favorites[e.Position];
             int idx = FavoritesManager.RemoveFavorite(station);
             mFavoritesAdapter.NotifyItemRemoved(idx);
-            SnackbarUtils.MakeWithMargins(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.name), Snackbar.LengthLong)
+            SnackbarUtils.MakeWithMargins(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.Name), Snackbar.LengthLong)
                 .SetAction(Resource.String.action_undo, (v) =>
                 {
                     FavoritesManager.AddFavorite(station);
@@ -86,7 +86,7 @@ namespace WozAlboPrzewoz
             var station = FavoritesManager.favorites[e.Position];
             for (int i = 0; i < StationsCache.Stations.Length; i++)
             {
-                if (StationsCache.Stations[i].id == station.id)
+                if (StationsCache.Stations[i].Id == station.Id)
                 {
                     OpenStationActivity(i);
                 }
@@ -144,9 +144,9 @@ namespace WozAlboPrzewoz
                 {
                     var station = StationsCache.Stations[i];
 
-                    if (ReplaceNonEnglishCharacters(station.name.ToLower()).Contains(text))
+                    if (ReplaceNonEnglishCharacters(station.Name.ToLower()).Contains(text))
                     {
-                        c.AddRow(new Java.Lang.Object[] { i, station.name });
+                        c.AddRow(new Java.Lang.Object[] { i, station.Name });
                     }
                 }
 

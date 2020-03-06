@@ -77,8 +77,11 @@
     <Compile Include="Source\Adapters\SearchCursorAdapter.cs" />
     <Compile Include="Source\Interfaces\IJsonModel.cs" />
     <Compile Include="Source\Models\ConnectionDetails.cs" />
+    <Compile Include="Source\Models\ConnectionsEventArgs.cs" />
+    <Compile Include="Source\Models\Direction.cs" />
     <Compile Include="Source\Models\License.cs" />
     <Compile Include="Source\Models\StationSchedule.cs" />
+    <Compile Include="Source\Models\WebExceptionEventArgs.cs" />
     <Compile Include="Source\UI\LicensesActivity.cs" />
     <Compile Include="Source\UI\SettingsActivity.cs" />
     <Compile Include="Source\UI\SettingsFragment.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Source\Adapters\ConnectionsAdapter.cs" />
     <Compile Include="Source\UI\ConnectionsActivity.cs" />
     <Compile Include="Source\Utils\SnackbarUtils.cs" />
+    <Compile Include="Source\Utils\StationConnectionsManager.cs" />
     <Compile Include="Source\Utils\StationsCache.cs" />
     <Compile Include="Source\Utils\AttrValueUtils.cs" />
     <Compile Include="Source\Utils\TimeUtils.cs" />

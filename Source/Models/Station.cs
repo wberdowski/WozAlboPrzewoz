@@ -5,25 +5,25 @@ namespace WozAlboPrzewoz
     public class Station : JPacket
     {
         [JsonProperty("ID")]
-        public int id;
+        public int Id { get; set; }
         [JsonProperty("N")]
-        public string name;
+        public string Name { get; set; }
         [JsonProperty("P")]
-        public int p;
+        public int P { get; set; }
         [JsonProperty("M")]
-        public string m;
+        public string M { get; set; }
         [JsonProperty("I")]
-        public string i;
+        public string I { get; set; }
         [JsonProperty("D")]
-        public double d;
+        public double D { get; set; }
         [JsonProperty("S")]
-        public double s;
+        public double S { get; set; }
         [JsonProperty("T")]
-        public string t;
+        public string T { get; set; }
         [JsonProperty("W")]
-        public int w;
+        public int W { get; set; }
         [JsonProperty("NZ")]
-        public string nz;
+        public string Nz { get; set; }
 
         public Station()
         {

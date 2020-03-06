@@ -37,7 +37,7 @@ namespace WozAlboPrzewoz
             var item = items[position];
             var holder = viewHolder as FavoritesAdapterViewHolder;
 
-            holder.textViewText.Text = item.name;
+            holder.textViewText.Text = item.Name;
         }
 
         public override int ItemCount => items.Count;
