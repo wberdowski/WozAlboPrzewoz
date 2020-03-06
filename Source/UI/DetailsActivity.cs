@@ -6,11 +6,13 @@ using Android.Support.V7.Widget;
 using Android.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
 using Java.Lang;
+using Java.Util;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 
 namespace WozAlboPrzewoz
 {
@@ -25,6 +27,7 @@ namespace WozAlboPrzewoz
         private TickReceiver mTickReceiver;
         private ConnectionsAdapterViewHolder vh;
         private Station mSelectedStation;
+        private System.Timers.Timer mProgressTimer;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -87,6 +90,15 @@ namespace WozAlboPrzewoz
             RegisterTickReceiver();
 
             UpdateAll();
+
+            mProgressTimer = new System.Timers.Timer(1000);
+            mProgressTimer.Elapsed += Timer_Elapsed;
+            mProgressTimer.Start();
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            mDetailsAdapter.UpdateProgress();
         }
 
         private void MSwipeRefreshLayout_Refresh(object sender, EventArgs e)
@@ -144,6 +156,7 @@ namespace WozAlboPrzewoz
                 }
                 catch (WebException ex)
                 {
+                    mSwipeRefreshLayout.Refreshing = false;
                     Console.WriteLine(ex.StackTrace);
                     RunOnUiThread(() =>
                     {
@@ -203,6 +216,8 @@ namespace WozAlboPrzewoz
         {
             try
             {
+                mProgressTimer.Stop();
+                mProgressTimer.Dispose();
                 UnregisterReceiver(mTickReceiver);
             }
             catch (IllegalArgumentException ex)

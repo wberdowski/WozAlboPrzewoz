@@ -3,7 +3,9 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using System.Collections.Generic;
-using AndroidX.Core.Content;
+using Android.Graphics.Drawables;
+using Android.OS;
+using Java.Lang;
 
 namespace WozAlboPrzewoz
 {
@@ -13,6 +15,7 @@ namespace WozAlboPrzewoz
         public event EventHandler<DetailsAdapterClickEventArgs> ItemLongClick;
         TrainConnection connection;
         List<StationSchedule> items;
+        public Dictionary<int, Action> actions = new Dictionary<int, Action>();
 
         public DetailsAdapter(TrainConnection connection, List<StationSchedule> data)
         {
@@ -54,7 +57,7 @@ namespace WozAlboPrzewoz
             //else
             {
                 time = item.ArrivalTime;
-                delay = Math.Max(0, item.Delay);
+                delay = System.Math.Max(0, item.Delay);
             }
 
             //
@@ -79,12 +82,42 @@ namespace WozAlboPrzewoz
             }
 
             //
+            //  Progress
+            //
+
+            var mImageDrawable = (ClipDrawable)holder.imageViewProgressForeground.Drawable;
+
+            Action a = () =>
+            {
+                if (items.Count > position + 1)
+                {
+                    var nextStation = items[position + 1];
+                    var nextStationArrivalTime = nextStation.ArrivalTime.AddMinutes(nextStation.Delay);
+                    var currentStationDepartureTime = item.DepartureTime.AddMinutes(item.Delay);
+                    var totalSeconds = nextStationArrivalTime.Subtract(currentStationDepartureTime).TotalSeconds;
+                    var secondsLeft = nextStationArrivalTime.Subtract(DateTime.Now).TotalSeconds;
+
+                    mImageDrawable.SetLevel(10000 - (int)((secondsLeft / (float)totalSeconds) * 10000));
+                }
+            };
+            a.Invoke();
+            actions[position] = a;
+
+            //
             //  Description
             //
 
             holder.textViewTrack.Text = $"Peron {item.Platform} Tor {item.Track}";
 
             holder.textViewCount.Text = position.ToString();
+        }
+
+        public void UpdateProgress()
+        {
+            foreach (var a in actions)
+            {
+                a.Value.Invoke();
+            }
         }
 
         public override int ItemCount => items.Count;
@@ -100,6 +133,7 @@ namespace WozAlboPrzewoz
         public TextView textViewTrack { get; set; }
         public TextView textViewStatus { get; set; }
         public TextView textViewCount { get; set; }
+        public ImageView imageViewProgressForeground { get; set; }
 
         public DetailsAdapterViewHolder(Android.Views.View itemView, Action<DetailsAdapterClickEventArgs> clickListener,
                             Action<DetailsAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -109,6 +143,7 @@ namespace WozAlboPrzewoz
             textViewTrack = (TextView)itemView.FindViewById(Resource.Id.textViewTrack);
             textViewStatus = (TextView)itemView.FindViewById(Resource.Id.textViewStatus);
             textViewCount = (TextView)itemView.FindViewById(Resource.Id.textViewCount);
+            imageViewProgressForeground = (ImageView)itemView.FindViewById(Resource.Id.imageViewProgressForeground);
             //TextView = v;
             itemView.Click += (sender, e) => clickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
             itemView.LongClick += (sender, e) => longClickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });

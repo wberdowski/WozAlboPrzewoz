@@ -71,6 +71,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_background.xml" />
     <Compile Include="Source\Adapters\LicensesAdapter.cs" />
     <Compile Include="Source\Adapters\DetailsAdapter.cs" />
     <Compile Include="Source\Adapters\FavoritesAdapter.cs" />
@@ -87,7 +88,6 @@
     <Compile Include="Source\UI\SettingsFragment.cs" />
     <Compile Include="Source\Utils\CarrierInfo.cs" />
     <Compile Include="Source\Utils\ConnectionItemHelper.cs" />
-    <Compile Include="Source\Utils\StationConnectionsCache.cs" />
     <Compile Include="Source\Utils\ErrorDialogHelper.cs" />
     <Compile Include="Source\Utils\FavoritesManager.cs" />
     <Compile Include="Source\Models\TrainConnectionListItem.cs" />
@@ -321,6 +321,14 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\snackbar_background.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_foreground.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_clip.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
