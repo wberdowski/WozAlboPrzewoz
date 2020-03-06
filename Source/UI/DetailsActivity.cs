@@ -24,6 +24,7 @@ namespace WozAlboPrzewoz
         private SwipeRefreshLayout mSwipeRefreshLayout;
         private TickReceiver mTickReceiver;
         private ConnectionsAdapterViewHolder vh;
+        private Station mSelectedStation;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,6 +37,7 @@ namespace WozAlboPrzewoz
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             mTrainConnection = JsonConvert.DeserializeObject<TrainConnection>(Intent.GetStringExtra("train_conn"));
+            mSelectedStation = JsonConvert.DeserializeObject<Station>(Intent.GetStringExtra("selected_station"));
 
             Title = $"{mTrainConnection.TrainNumber} {mTrainConnection.StationEnd}";
 
@@ -100,7 +102,13 @@ namespace WozAlboPrzewoz
 
         private void UpdateViewHolder()
         {
-            ConnectionItemHelper.SetViewHolderContent(this, new TrainConnectionListItem(mTrainConnection), vh);
+            var item = new TrainConnectionListItem(mTrainConnection);
+            if (mConnectionDetails.Count > 0)
+            {
+                item.Connection.DelayStart = mConnectionDetails.Where(x => x.Name == mSelectedStation.Name).FirstOrDefault().Delay;
+                item.Connection.DelayEnd = mConnectionDetails.Last().Delay;
+            }
+            ConnectionItemHelper.SetViewHolderContent(this, item, vh);
         }
 
         private void UpdateAdapterData()
@@ -120,7 +128,8 @@ namespace WozAlboPrzewoz
                         mTrainConnection.Sknnt
                         );
 
-                    var details = PKPAPI.GetConnectionRoute(req);
+                    var details = PKPAPI.GetConnectionRoute(req, true);
+
                     RunOnUiThread(() =>
                     {
                         var dt = new ConnectionDetails()

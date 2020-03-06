@@ -190,6 +190,7 @@ namespace WozAlboPrzewoz
         {
             var intent = new Intent(this, typeof(DetailsActivity));
             intent.PutExtra("train_conn", JsonConvert.SerializeObject(conn));
+            intent.PutExtra("selected_station", JsonConvert.SerializeObject(mSelectedStation));
             StartActivity(intent);
         }
 
