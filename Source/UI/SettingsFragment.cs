@@ -1,8 +1,8 @@
 ﻿using Android.Content;
 using Android.OS;
-using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.Preference;
+using System.Reflection;
 
 namespace WozAlboPrzewoz
 {
@@ -11,6 +11,13 @@ namespace WozAlboPrzewoz
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {
             SetPreferencesFromResource(Resource.Xml.preferences, rootKey);
+
+            var versionPref = FindPreference("setting_version");
+            versionPref.Summary = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+#if DEBUG
+            versionPref.Summary += "\nTryb debugowania";
+#endif
         }
 
         public override bool OnPreferenceTreeClick(Preference preference)
@@ -18,7 +25,8 @@ namespace WozAlboPrzewoz
             if (preference.Key == "setting_licenses")
             {
                 StartActivity(new Intent(Activity, typeof(LicensesActivity)));
-            } else if(preference.Key == "dark_mode")
+            }
+            else if (preference.Key == "dark_mode")
             {
                 var switchPref = preference as SwitchPreference;
                 AppCompatDelegate.DefaultNightMode = (switchPref.Checked ? AppCompatDelegate.ModeNightYes : AppCompatDelegate.ModeNightNo);

@@ -22,7 +22,7 @@
     <Preference
       app:key="setting_version"
       app:title="@string/setting_version"
-      app:summary="1.0.0"
+      app:summary=""
       app:iconSpaceReserved="false"/>
 
     <Preference

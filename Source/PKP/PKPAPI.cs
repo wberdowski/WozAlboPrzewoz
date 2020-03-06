@@ -42,9 +42,14 @@ namespace WozAlboPrzewoz
             return response;
         }
 
-        public static string GetConnectionRoute(ConnectionDetailsRequest packet)
+        public static string GetConnectionRoute(ConnectionDetailsRequest packet, bool full = false)
         {
             //[{"R":2020,"Z":130026500,"DK":43871.0,"SPNNT":6,"SKNNT":25}]
+            if (full)
+            {
+                packet.spnnt = short.MinValue;
+                packet.sknnt = short.MaxValue;
+            }
 
             string parameters = EncryptionHelpers.Encrypt(packet.Serialize());
             HttpStatusCode status;

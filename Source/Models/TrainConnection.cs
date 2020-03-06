@@ -51,9 +51,9 @@ namespace WozAlboPrzewoz
         [JsonProperty("RKO")]
         public int DelayEnd { get; set; }
         [JsonProperty("SPNNT")]
-        public int Spnnt { get; set; }
+        public short Spnnt { get; set; }
         [JsonProperty("sknnt")]
-        public int Sknnt { get; set; }
+        public short Sknnt { get; set; }
         [JsonProperty("UP")]
         public string Up { get; set; }
 

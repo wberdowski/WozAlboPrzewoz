@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace WozAlboPrzewoz
 {
@@ -11,16 +12,16 @@ namespace WozAlboPrzewoz
         [JsonProperty("DK")]
         public double dk;
         [JsonProperty("SPNNT")]
-        public int spnnt;
+        public short spnnt;
         [JsonProperty("SKNNT")]
-        public int sknnt;
+        public short sknnt;
 
         public ConnectionDetailsRequest()
         {
 
         }
 
-        public ConnectionDetailsRequest(int r, int z, double dk, int spnnt, int sknnt)
+        public ConnectionDetailsRequest(int r, int z, double dk, short spnnt, short sknnt)
         {
             this.r = r;
             this.z = z;

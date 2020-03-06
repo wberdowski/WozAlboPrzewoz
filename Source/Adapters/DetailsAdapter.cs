@@ -46,12 +46,12 @@ namespace WozAlboPrzewoz
             DateTime time;
             int delay;
 
-            if (position == 0)
-            {
-                time = item.DepartureTime;
-                delay = Math.Max(0, connection.DelayStart);
-            }
-            else
+            //if (position == 0)
+            //{
+            //    time = item.DepartureTime;
+            //    delay = Math.Max(0, connection.DelayStart);
+            //}
+            //else
             {
                 time = item.ArrivalTime;
                 delay = Math.Max(0, item.Delay);
