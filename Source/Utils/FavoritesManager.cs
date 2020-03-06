@@ -60,10 +60,11 @@ namespace WozAlboPrzewoz
                 var arr = JsonConvert.DeserializeObject<List<int>>(reader.ReadToEnd());
                 if (arr != null)
                 {
+                    favorites.Clear();
+
                     foreach (int sid in arr)
                     {
-                        if (favorites.Where(x => x.Id == sid).Count() == 0)
-                            favorites.Add(StationsCache.Stations.Where(x => x.Id == sid).FirstOrDefault());
+                        favorites.Add(StationsCache.Stations.Where(x => x.Id == sid).FirstOrDefault());
                     }
                 }
             }
