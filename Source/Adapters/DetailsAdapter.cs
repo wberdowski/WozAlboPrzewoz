@@ -3,6 +3,7 @@ using Android.Views;
 using Android.Widget;
 using System.Collections.Generic;
 using AndroidX.RecyclerView.Widget;
+using Android.Graphics;
 
 namespace WozAlboPrzewoz
 {
@@ -12,12 +13,14 @@ namespace WozAlboPrzewoz
         public event EventHandler<DetailsAdapterClickEventArgs> ItemLongClick;
         TrainConnection connection;
         List<StationSchedule> items;
+        Station selectedStation;
         public Dictionary<int, Action> actions = new Dictionary<int, Action>();
 
-        public DetailsAdapter(TrainConnection connection, List<StationSchedule> data)
+        public DetailsAdapter(TrainConnection connection, Station selectedStation, List<StationSchedule> items)
         {
             this.connection = connection;
-            items = data;
+            this.selectedStation = selectedStation;
+            this.items = items;
         }
 
         // Create new views (invoked by the layout manager)
@@ -42,24 +45,29 @@ namespace WozAlboPrzewoz
 
             holder.textViewStationName.Text = item.Name;
 
+            if (item.Name == selectedStation.Name)
+            {
+                holder.textViewStationName.SetTextColor(new Color(context.GetColor(Resource.Color.colorRouteProgressForeground)));
+            }
+
             DateTime arrivalTime, departureTime;
             int delay;
 
             if (position == 0)
             {
                 departureTime = item.DepartureTime;
-                delay = System.Math.Max(0, connection.DelayStart);
+                delay = Math.Max(0, connection.DelayStart);
             }
             else if (position == ItemCount - 1)
             {
                 departureTime = item.ArrivalTime;
-                delay = System.Math.Max(0, item.DelayDeparture);
+                delay = Math.Max(0, item.DelayDeparture);
             }
             else
             {
                 arrivalTime = item.ArrivalTime;
                 departureTime = item.DepartureTime;
-                delay = System.Math.Max(0, item.DelayDeparture);
+                delay = Math.Max(0, item.DelayDeparture);
             }
 
             //
@@ -152,7 +160,6 @@ namespace WozAlboPrzewoz
             //
 
             holder.textViewTrack.Text = $"Peron {item.Platform} Tor {item.Track}";
-
             holder.textViewCount.Text = position.ToString();
         }
 

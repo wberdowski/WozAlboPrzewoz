@@ -63,7 +63,7 @@ namespace WozAlboPrzewoz
 
             mStations = new List<StationSchedule>();
 
-            mDetailsAdapter = new DetailsAdapter(mTrainConnection, mStations);
+            mDetailsAdapter = new DetailsAdapter(mTrainConnection, mSelectedStation, mStations);
             mDetailsAdapter.ItemClick += MDetailsAdapter_ItemClick;
             mRecyclerDetails.SetAdapter(mDetailsAdapter);
 
