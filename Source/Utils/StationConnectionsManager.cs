@@ -106,7 +106,7 @@ namespace WozAlboPrzewoz
 
                     foreach (var conn in connections)
                     {
-                        if (lastConn.Sknnt == conn.Sknnt && lastConn.Spnnt == conn.Spnnt) continue;
+                        if (lastConn.Sknnt == conn.Sknnt && lastConn.Spnnt == conn.Spnnt && lastConn.TrainNumber == conn.TrainNumber) continue;
 
                         Connections.Add(new TrainConnectionListItem(conn));
                     }
