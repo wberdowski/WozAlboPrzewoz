@@ -57,11 +57,11 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
+                android:theme="@style/StationText"
                 android:id="@+id/textViewStationName"
                 android:text="Station"
                 android:textStyle="bold"
                 android:textSize="16dp"
-                android:textColor="?attr/textColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

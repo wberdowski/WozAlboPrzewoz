@@ -89,4 +89,12 @@
   <style name="TimeBadgeBad" parent="TimeBadge">
     <item name="android:textColor">?attr/colorBadgeTextBad</item>
   </style>
+
+  <style name="StationText" parent="AppTheme">
+    <item name="android:textColor">?attr/textColor</item>
+  </style>
+
+  <style name="StationTextSelected" parent="AppTheme">
+    <item name="android:textColor">@color/colorRouteProgressForeground</item>
+  </style>
 </resources>

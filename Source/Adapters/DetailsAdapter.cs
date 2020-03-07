@@ -47,7 +47,12 @@ namespace WozAlboPrzewoz
 
             if (item.Name == selectedStation.Name)
             {
-                holder.textViewStationName.SetTextColor(new Color(context.GetColor(Resource.Color.colorRouteProgressForeground)));
+                holder.textViewStationName.SetTextAppearance(Resource.Style.StationTextSelected);
+                holder.textViewTime.SetTextAppearance(Resource.Style.StationTextSelected);
+            } else
+            {
+                holder.textViewStationName.SetTextAppearance(Resource.Style.StationText);
+                holder.textViewTime.SetTextAppearance(Resource.Style.StationText);
             }
 
             DateTime arrivalTime, departureTime;
