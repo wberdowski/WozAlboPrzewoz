@@ -1,18 +1,18 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
+using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
 using Java.Lang;
-using Java.Util;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading;
 
 namespace WozAlboPrzewoz
 {
@@ -20,7 +20,7 @@ namespace WozAlboPrzewoz
     public class DetailsActivity : AppCompatActivity
     {
         private RecyclerView mRecyclerDetails;
-        private List<StationSchedule> mConnectionDetails;
+        private List<StationSchedule> mStations;
         private DetailsAdapter mDetailsAdapter;
         private TrainConnection mTrainConnection;
         private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -49,7 +49,7 @@ namespace WozAlboPrzewoz
             //
 
             mSwipeRefreshLayout = (SwipeRefreshLayout)FindViewById(Resource.Id.swipeRefreshLayoutDetails);
-            mSwipeRefreshLayout.SetColorSchemeResources(Resource.Color.colorAccent_Light, Resource.Color.colorAccent_Dark);
+            mSwipeRefreshLayout.SetColorSchemeResources(Resource.Color.colorAccent_Light);
             mSwipeRefreshLayout.Refresh += MSwipeRefreshLayout_Refresh;
 
             //
@@ -61,9 +61,9 @@ namespace WozAlboPrzewoz
             var mLayoutManager = new LinearLayoutManager(this);
             mRecyclerDetails.SetLayoutManager(mLayoutManager);
 
-            mConnectionDetails = new List<StationSchedule>();
+            mStations = new List<StationSchedule>();
 
-            mDetailsAdapter = new DetailsAdapter(mTrainConnection, mConnectionDetails);
+            mDetailsAdapter = new DetailsAdapter(mTrainConnection, mStations);
             mDetailsAdapter.ItemClick += MDetailsAdapter_ItemClick;
             mRecyclerDetails.SetAdapter(mDetailsAdapter);
 
@@ -78,10 +78,15 @@ namespace WozAlboPrzewoz
             mTextViewDifficulties.Text = mTrainConnection.Up;
 
             var view = FindViewById(Resource.Id.include1);
+            view.Elevation = 4 * Resources.DisplayMetrics.Density + 0.5f;
+            view.SetBackgroundResource(Resource.Drawable.recycler_row_bg_full);
+            view.OutlineProvider = ViewOutlineProvider.Background;
+
+            var linearLayoutRow = (LinearLayout)view.FindViewById(Resource.Id.linearLayoutRow);
+            linearLayoutRow.SetBackgroundResource(0);
 
             vh = new ConnectionsAdapterViewHolder(view, (e) =>
             {
-
             }, (e) =>
             {
 
@@ -89,16 +94,32 @@ namespace WozAlboPrzewoz
 
             RegisterTickReceiver();
 
-            UpdateAll();
+            UpdateViewHolder();
+            UpdateAll(onRefreshed: () =>
+             {
+                 int idx = mStations.FindIndex((x) =>
+                 {
+                     return x.Name == mSelectedStation.Name;
+                 });
 
-            mProgressTimer = new System.Timers.Timer(1000);
+                 (mRecyclerDetails.GetLayoutManager() as LinearLayoutManager).ScrollToPositionWithOffset(idx, 0);
+             });
+
+            mProgressTimer = new System.Timers.Timer(1000 / 10f);
             mProgressTimer.Elapsed += Timer_Elapsed;
             mProgressTimer.Start();
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            mDetailsAdapter.UpdateProgress();
+            try
+            {
+                mDetailsAdapter.UpdateProgress();
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
         }
 
         private void MSwipeRefreshLayout_Refresh(object sender, EventArgs e)
@@ -106,28 +127,31 @@ namespace WozAlboPrzewoz
             UpdateAll();
         }
 
-        private void UpdateAll()
+        private void UpdateAll(bool showRefresh = true, Action onRefreshed = null)
         {
-            UpdateViewHolder();
-            UpdateAdapterData();
+            UpdateAdapterData(showRefresh, () =>
+             {
+                 UpdateViewHolder();
+                 onRefreshed?.Invoke();
+             });
         }
 
         private void UpdateViewHolder()
         {
             var item = new TrainConnectionListItem(mTrainConnection);
-            if (mConnectionDetails.Count > 0)
+            if (mStations.Count > 0)
             {
-                item.Connection.DelayStart = mConnectionDetails.Where(x => x.Name == mSelectedStation.Name).FirstOrDefault().Delay;
-                item.Connection.DelayEnd = mConnectionDetails.Last().Delay;
+                item.Connection.DelayStart = mStations.Where(x => x.Name == mSelectedStation.Name).FirstOrDefault().DelayDeparture;
+                item.Connection.DelayEnd = mStations.Last().DelayDeparture;
             }
             ConnectionItemHelper.SetViewHolderContent(this, item, vh);
         }
 
-        private void UpdateAdapterData()
+        private void UpdateAdapterData(bool showRefresh = true, Action onFinished = null)
         {
-            mConnectionDetails.Clear();
+            if (showRefresh)
+                mSwipeRefreshLayout.Refreshing = true;
 
-            mSwipeRefreshLayout.Refreshing = true;
             new System.Threading.Thread(() =>
             {
                 try
@@ -147,11 +171,15 @@ namespace WozAlboPrzewoz
                         var dt = new ConnectionDetails()
                         .FromJson(details);
 
-                        mConnectionDetails.AddRange(dt.Stations);
+                        mStations.Clear();
+                        mStations.AddRange(dt.Stations);
 
                         mDetailsAdapter.NotifyDataSetChanged();
 
                         mSwipeRefreshLayout.Refreshing = false;
+
+                        if (onFinished != null)
+                            onFinished?.Invoke();
                     });
                 }
                 catch (WebException ex)
@@ -206,8 +234,8 @@ namespace WozAlboPrzewoz
             mTickReceiver = new TickReceiver(() =>
             {
                 //TODO:
-                //UpdateAll();
-                UpdateViewHolder();
+                UpdateAll(false);
+                //UpdateViewHolder();
             });
             RegisterReceiver(mTickReceiver, intentFilter);
         }

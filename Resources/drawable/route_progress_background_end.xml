@@ -1,16 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item
       android:width="24dp"
       android:height="88dp"
       android:gravity="center">
     <shape>
-      <solid android:color="@color/colorRouteProgressBackground" />
+      <solid android:color="#00000000" />
     </shape>
   </item>
   <item
-      android:width="10dp"
-      android:height="10dp"
+      android:width="24dp"
+      android:height="56dp"
+      android:gravity="top">
+    <shape>
+      <solid android:color="@color/colorRouteProgressBackground" />
+      <corners
+          android:bottomLeftRadius="12dp"
+          android:bottomRightRadius="12dp"
+          android:topLeftRadius="0dp"
+          android:topRightRadius="0dp" />
+    </shape>
+  </item>
+  <item
+      android:width="12dp"
+      android:height="12dp"
       android:gravity="center">
     <shape xmlns:android="http://schemas.android.com/apk/res/android"
         android:shape="oval">

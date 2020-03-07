@@ -1,11 +1,8 @@
 ﻿using System;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
 using System.Collections.Generic;
-using Android.Graphics.Drawables;
-using Android.OS;
-using Java.Lang;
+using AndroidX.RecyclerView.Widget;
 
 namespace WozAlboPrzewoz
 {
@@ -26,7 +23,6 @@ namespace WozAlboPrzewoz
         // Create new views (invoked by the layout manager)
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-
             //Setup your layout here
             Android.Views.View itemView = null;
             var id = Resource.Layout.recycler_row_details;
@@ -46,25 +42,31 @@ namespace WozAlboPrzewoz
 
             holder.textViewStationName.Text = item.Name;
 
-            DateTime time;
+            DateTime arrivalTime, departureTime;
             int delay;
 
-            //if (position == 0)
-            //{
-            //    time = item.DepartureTime;
-            //    delay = Math.Max(0, connection.DelayStart);
-            //}
-            //else
+            if (position == 0)
             {
-                time = item.ArrivalTime;
-                delay = System.Math.Max(0, item.Delay);
+                departureTime = item.DepartureTime;
+                delay = System.Math.Max(0, connection.DelayStart);
+            }
+            else if (position == ItemCount - 1)
+            {
+                departureTime = item.ArrivalTime;
+                delay = System.Math.Max(0, item.DelayDeparture);
+            }
+            else
+            {
+                arrivalTime = item.ArrivalTime;
+                departureTime = item.DepartureTime;
+                delay = System.Math.Max(0, item.DelayDeparture);
             }
 
             //
             //  Time
             //
 
-            holder.textViewTime.Text = time.ToShortTimeString();
+            holder.textViewTime.Text = departureTime.ToShortTimeString();
 
             //
             //  Status
@@ -85,20 +87,62 @@ namespace WozAlboPrzewoz
             //  Progress
             //
 
-            var mImageDrawable = (ClipDrawable)holder.imageViewProgressForeground.Drawable;
+            if (position == 0)
+                RouteProgressHelper.SetType(holder.routeProgress, RouteProgressType.Start);
+            else if (ItemCount - 1 == position)
+                RouteProgressHelper.SetType(holder.routeProgress, RouteProgressType.End);
+            else
+                RouteProgressHelper.SetType(holder.routeProgress, RouteProgressType.Normal);
+
+            var drawable = RouteProgressHelper.GetDrawable(holder.routeProgress);
+
+            StationSchedule previousStation, nextStation;
+
+            if (position - 1 < 0)
+            {
+                previousStation = items[0];
+                previousStation.ArrivalTime = previousStation.DepartureTime.AddMinutes(previousStation.DelayDeparture);
+            }
+            else
+            {
+                previousStation = items[position - 1];
+            }
+
+            var previousStationRealDepartureTime = previousStation.DepartureTime.AddMinutes(previousStation.DelayDeparture);
+
+            if (position + 1 > ItemCount - 1)
+            {
+                nextStation = items[ItemCount - 1];
+                nextStation.DepartureTime = nextStation.ArrivalTime.AddMinutes(nextStation.DelayArrival);
+            }
+            else
+            {
+                nextStation = items[position + 1];
+            }
+
+            var nextStationRealArrivalTime = nextStation.ArrivalTime.AddMinutes(nextStation.DelayArrival);
+
+            var currentStationRealArrivalTime = item.ArrivalTime.AddMinutes(item.DelayArrival);
+            var currentStationRealDepartureTime = item.DepartureTime.AddMinutes(item.DelayDeparture);
 
             Action a = () =>
             {
-                if (items.Count > position + 1)
-                {
-                    var nextStation = items[position + 1];
-                    var nextStationArrivalTime = nextStation.ArrivalTime.AddMinutes(nextStation.Delay);
-                    var currentStationDepartureTime = item.DepartureTime.AddMinutes(item.Delay);
-                    var totalSeconds = nextStationArrivalTime.Subtract(currentStationDepartureTime).TotalSeconds;
-                    var secondsLeft = nextStationArrivalTime.Subtract(DateTime.Now).TotalSeconds;
+                //
+                //  Top
+                //
+                var totalTop = currentStationRealArrivalTime.Subtract(previousStationRealDepartureTime).TotalMilliseconds;
+                var positionTop = totalTop - currentStationRealArrivalTime.Subtract(DateTime.Now).TotalMilliseconds;
 
-                    mImageDrawable.SetLevel(10000 - (int)((secondsLeft / (float)totalSeconds) * 10000));
-                }
+                //
+                //  Bottom
+                //
+                var totalBottom = nextStationRealArrivalTime.Subtract(currentStationRealDepartureTime).TotalMilliseconds;
+                var positionBottom = totalBottom - nextStationRealArrivalTime.Subtract(DateTime.Now).TotalMilliseconds;
+
+                var top = (positionTop / (float)totalTop * 100).Clamp(50, 100) - 50;
+                var bottom = (positionBottom / (float)totalBottom * 100).Clamp(0, 50);
+
+                RouteProgressHelper.SetProgress(drawable, top + bottom);
             };
             a.Invoke();
             actions[position] = a;
@@ -133,7 +177,7 @@ namespace WozAlboPrzewoz
         public TextView textViewTrack { get; set; }
         public TextView textViewStatus { get; set; }
         public TextView textViewCount { get; set; }
-        public ImageView imageViewProgressForeground { get; set; }
+        public FrameLayout routeProgress { get; set; }
 
         public DetailsAdapterViewHolder(Android.Views.View itemView, Action<DetailsAdapterClickEventArgs> clickListener,
                             Action<DetailsAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -143,7 +187,7 @@ namespace WozAlboPrzewoz
             textViewTrack = (TextView)itemView.FindViewById(Resource.Id.textViewTrack);
             textViewStatus = (TextView)itemView.FindViewById(Resource.Id.textViewStatus);
             textViewCount = (TextView)itemView.FindViewById(Resource.Id.textViewCount);
-            imageViewProgressForeground = (ImageView)itemView.FindViewById(Resource.Id.imageViewProgressForeground);
+            routeProgress = (FrameLayout)itemView.FindViewById(Resource.Id.routeProgress);
             //TextView = v;
             itemView.Click += (sender, e) => clickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
             itemView.LongClick += (sender, e) => longClickListener(new DetailsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });

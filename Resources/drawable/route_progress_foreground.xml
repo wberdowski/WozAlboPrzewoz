@@ -1,10 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:width="24dp"
-        android:gravity="center">
-        <shape>
-            <solid android:color="?attr/colorStatusGood" />
-        </shape>
-    </item>
+  <item
+      android:width="24dp"
+      android:height="88dp"
+      android:gravity="center">
+    <shape>
+      <solid android:color="@color/colorRouteProgressForeground" />
+    </shape>
+  </item>
+  <item
+      android:width="10dp"
+      android:height="10dp"
+      android:gravity="center">
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="oval">
+
+      <solid android:color="@color/colorRouteProgressStationDot" />
+    </shape>
+  </item>
 </layer-list>

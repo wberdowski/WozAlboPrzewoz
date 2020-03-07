@@ -41,8 +41,8 @@
   <color name="colorText_Dark">#ffffff</color>
 
   <!--TextFaint-->
-  <color name="colorTextFaint_Light">#777777</color>
-  <color name="colorTextFaint_Dark">#777777</color>
+  <color name="colorTextFaint_Light">#44000000</color>
+  <color name="colorTextFaint_Dark">#44ffffff</color>
   
   <!--ActionTint-->
   <color name="actionTint_Light">#000000</color>
@@ -71,6 +71,15 @@
   <!--RecyclerBorder-->
   <color name="colorRecyclerBorder_Light">#11000000</color>
   <color name="colorRecyclerBorder_Dark">#11ffffff</color>
+
+  <!--RouteProgressForeground-->
+  <color name="colorRouteProgressForeground">#00aa00</color>
+
+  <!--RouteProgressBackground-->
+  <color name="colorRouteProgressBackground">#22000000</color>
+
+  <!--RouteProgressStationDot-->
+  <color name="colorRouteProgressStationDot">#44000000</color>
   
   <!--NOT IMPLEMENTED-->
   <color name="colorStatusIntermediate">#ffd600</color>

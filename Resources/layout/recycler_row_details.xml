@@ -5,28 +5,14 @@
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <FrameLayout
-        android:layout_width="48dp"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/imageViewProgressBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/route_progress_background"/>
-
-        <ImageView
-            android:id="@+id/imageViewProgressForeground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/route_progress_clip"/>
-
-    </FrameLayout>
+    <include
+        android:id="@+id/routeProgress"
+        layout="@layout/route_progress"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="88dp"
         android:padding="16dp"
         android:gravity="center_vertical"
         android:background="@drawable/recycler_row_bg">
@@ -44,7 +30,7 @@
             <TextView
                 android:id="@+id/textViewTime"
                 android:text="00:00"
-                android:textSize="28dp"
+                android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="?attr/textColor"
                 android:layout_width="wrap_content"
@@ -102,7 +88,7 @@
             <TextView
                 android:id="@+id/textViewCount"
                 android:text="1"
-                android:textSize="40dp"
+                android:textSize="24dp"
                 android:textColor="?attr/textColorFaint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -110,5 +96,6 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>

@@ -106,6 +106,8 @@
     <Compile Include="Source\PKP\PKPAPI.cs" />
     <Compile Include="Source\Adapters\ConnectionsAdapter.cs" />
     <Compile Include="Source\UI\ConnectionsActivity.cs" />
+    <Compile Include="Source\Utils\MathUtils.cs" />
+    <Compile Include="Source\Utils\RouteProgressHelper.cs" />
     <Compile Include="Source\Utils\SnackbarUtils.cs" />
     <Compile Include="Source\Utils\StationConnectionsManager.cs" />
     <Compile Include="Source\Utils\StationsCache.cs" />
@@ -329,6 +331,49 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\route_progress_clip.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_foreground_start.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_background_start.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_clip_start.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_clip_end.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_background_end.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\route_progress_foreground_end.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\route_progress.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\recycler_row_bg_full.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

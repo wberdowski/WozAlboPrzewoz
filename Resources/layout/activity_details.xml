@@ -19,10 +19,6 @@
                 android:id="@+id/include1"
                 layout="@layout/recycler_row_connection"/>
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,13 +80,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="none"
-                        android:nestedScrollingEnabled="false"/>
+                        android:layout_height="match_parent"/>
 
                 </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
 

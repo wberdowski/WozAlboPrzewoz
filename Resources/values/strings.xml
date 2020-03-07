@@ -22,6 +22,7 @@
   <string name="setting_licenses">Licencje</string>
   <string name="setting_theme">Wygląd</string>
   <string name="setting_dark_theme">Ciemny motyw</string>
+  <string name="setting_debug_mode">Tryb debugowania</string>
   <string-array name="licenses">
     <item>
       SwipyRefreshLayout#Copyright 2016 Duong Dinh Loi\n

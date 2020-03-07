@@ -16,7 +16,7 @@ namespace WozAlboPrzewoz
             versionPref.Summary = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 #if DEBUG
-            versionPref.Summary += "\nTryb debugowania";
+            versionPref.Summary += "\n" + GetString(Resource.String.setting_debug_mode);
 #endif
         }
 

@@ -9,6 +9,7 @@ namespace WozAlboPrzewoz
         public DateTime DepartureTime { get; set; }
         public string Platform { get; set; }
         public string Track { get; set; }
-        public int Delay { get; set; }
+        public int DelayArrival { get; set; }
+        public int DelayDeparture { get; set; }
     }
 }
