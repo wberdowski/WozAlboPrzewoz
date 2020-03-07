@@ -1,6 +1,6 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using Android.Views;
+using System;
 
 namespace WozAlboPrzewoz
 {

@@ -1,9 +1,8 @@
-﻿using System;
-using Android.Views;
+﻿using Android.Views;
 using Android.Widget;
-using System.Collections.Generic;
 using AndroidX.RecyclerView.Widget;
-using Android.Graphics;
+using System;
+using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
 {
@@ -49,7 +48,8 @@ namespace WozAlboPrzewoz
             {
                 holder.textViewStationName.SetTextAppearance(Resource.Style.StationTextSelected);
                 holder.textViewTime.SetTextAppearance(Resource.Style.StationTextSelected);
-            } else
+            }
+            else
             {
                 holder.textViewStationName.SetTextAppearance(Resource.Style.StationText);
                 holder.textViewTime.SetTextAppearance(Resource.Style.StationText);

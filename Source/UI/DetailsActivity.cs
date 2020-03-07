@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.OS;
 using Android.Views;
-using Android.Views.Animations;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;

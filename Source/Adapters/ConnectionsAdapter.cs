@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Android.Content;
 using Android.Views;
 using Android.Widget;
-using System.Collections.Generic;
-using Android.Content;
 using AndroidX.RecyclerView.Widget;
-using AndroidX.CardView.Widget;
+using System;
+using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
 {

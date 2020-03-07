@@ -1,16 +1,16 @@
 ﻿using Android.App;
-using Android.OS;
-using Android.Support.V7.App;
-using Android.Runtime;
-using System.Collections.Generic;
-using Android.Text;
-using Android.Provider;
-using Android.Database;
 using Android.Content;
-using Android.Support.V7.Widget;
+using Android.Database;
+using Android.OS;
+using Android.Provider;
+using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V7.App;
+using Android.Support.V7.Widget;
+using Android.Text;
 using Android.Views;
 using AndroidX.Preference;
+using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
 {
