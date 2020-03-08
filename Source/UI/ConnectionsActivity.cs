@@ -5,6 +5,7 @@ using Android.Util;
 using Android.Views;
 using Android.Views.Animations;
 using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
 using AndroidX.RecyclerView.Widget;
 using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
 using Java.Lang;
@@ -35,6 +36,9 @@ namespace WozAlboPrzewoz
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_train_connections);
+
+            var mToolbar = (Toolbar)FindViewById(Resource.Id.toolbar);
+            SetSupportActionBar(mToolbar);
 
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);

@@ -13,7 +13,7 @@
       android:height="56dp"
       android:gravity="top">
     <shape>
-      <solid android:color="@color/colorRouteProgressBackground" />
+      <solid android:color="?attr/colorRouteProgressBackground" />
       <corners
           android:bottomLeftRadius="12dp"
           android:bottomRightRadius="12dp"

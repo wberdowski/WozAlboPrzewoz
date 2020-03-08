@@ -5,7 +5,7 @@
       android:height="88dp"
       android:gravity="center">
     <shape>
-      <solid android:color="@color/colorRouteProgressBackground" />
+      <solid android:color="?attr/colorRouteProgressBackground" />
     </shape>
   </item>
   <item

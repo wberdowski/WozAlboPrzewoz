@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher ", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
         private SearchView mSearchView;
@@ -37,6 +37,11 @@ namespace WozAlboPrzewoz
             StationsCache.LoadStations();
             FavoritesManager.Load();
             FavoritesManager.FavoritesChanged += FavoritesManager_FavoritesChanged;
+
+            var mToolbar = (Toolbar)FindViewById(Resource.Id.toolbar);
+            SetSupportActionBar(mToolbar);
+            
+            SupportActionBar.SetDisplayShowTitleEnabled(false);
 
             //
             //  Favorites Recycler

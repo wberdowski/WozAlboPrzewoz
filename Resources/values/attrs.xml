@@ -15,4 +15,5 @@
   <attr name="colorBadgeTextBad" format="reference"/>
   <attr name="colorCardViewHeader" format="reference"/>
   <attr name="colorRecyclerBorder" format="reference"/>
+  <attr name="colorRouteProgressBackground" format="reference"/>
 </resources>

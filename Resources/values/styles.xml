@@ -1,6 +1,6 @@
 <resources>
   <!-- LIGHT THEME -->
-  <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight">
+  <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
     <!--<item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
     <item name="colorAccent">@color/colorAccent_Light</item>
@@ -21,9 +21,12 @@
     <item name="colorBadgeTextBad">@color/colorBadgeTextBad_Light</item>
     <item name="colorCardViewHeader">@color/colorCardViewHeader_Light</item>
     <item name="colorRecyclerBorder">@color/colorRecyclerBorder_Light</item>
+    <item name="colorRouteProgressBackground">@color/colorRouteProgressBackground_Light</item>
+
+    <item name="android:windowBackground">@android:color/white</item>
   </style>
 
-  <style name="AppTheme.Launcher">
+  <style name="AppTheme.Launcher" parent="AppTheme">
     <item name="android:windowBackground">@drawable/launch_screen</item>
   </style>
 

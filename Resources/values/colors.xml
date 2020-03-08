@@ -76,7 +76,8 @@
   <color name="colorRouteProgressForeground">#00aa00</color>
 
   <!--RouteProgressBackground-->
-  <color name="colorRouteProgressBackground">#22000000</color>
+  <color name="colorRouteProgressBackground_Light">#22000000</color>
+  <color name="colorRouteProgressBackground_Dark">#22ffffff</color>
 
   <!--RouteProgressStationDot-->
   <color name="colorRouteProgressStationDot">#44000000</color>
