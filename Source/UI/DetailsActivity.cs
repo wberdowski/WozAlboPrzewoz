@@ -39,13 +39,16 @@ namespace WozAlboPrzewoz
             var mToolbar = (AndroidX.AppCompat.Widget.Toolbar)FindViewById(Resource.Id.toolbar);
             SetSupportActionBar(mToolbar);
 
+            SupportActionBar.SetDisplayShowTitleEnabled(false);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             mTrainConnection = JsonConvert.DeserializeObject<TrainConnection>(Intent.GetStringExtra("train_conn"));
             mSelectedStation = JsonConvert.DeserializeObject<Station>(Intent.GetStringExtra("selected_station"));
 
-            Title = $"{mTrainConnection.TrainNumber} {mTrainConnection.StationEnd}";
+            var mToolbarText = (TextView)mToolbar.FindViewById(Resource.Id.toolbar_title);
+            mToolbarText.Text = $"{mTrainConnection.TrainNumber} {mTrainConnection.StationEnd}";
+            mToolbarText.Selected = true;
 
             //
             //  SwipeRefreshLayout

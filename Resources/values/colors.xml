@@ -70,7 +70,7 @@
 
   <!--RecyclerBorder-->
   <color name="colorRecyclerBorder_Light">#11000000</color>
-  <color name="colorRecyclerBorder_Dark">#11ffffff</color>
+  <color name="colorRecyclerBorder_Dark">#22ffffff</color>
 
   <!--RouteProgressForeground-->
   <color name="colorRouteProgressForeground">#00aa00</color>

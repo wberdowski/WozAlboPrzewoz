@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-    <LinearLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:gravity="center_vertical"        
+    android:padding="8dp"
+    android:gravity="center_vertical"
     android:foreground="?android:attr/selectableItemBackground"
-        android:background="@drawable/recycler_row_bg">
+    android:background="@drawable/recycler_row_bg">
 
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/train_24px"
-            android:tint="?attr/textColor"/>
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/train_24px"
+        android:tint="?attr/textColor"/>
 
-        <TextView
-            android:id="@+id/textViewFavoriteText"
-            android:text="Test"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:textColor="?attr/textColor"
-        android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/textViewFavoriteText"
+        android:text="Test"
+        android:textSize="18dp"        
+        android:layout_margin="8dp"
+        android:textStyle="bold"
+        android:textColor="?attr/textColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+</LinearLayout>

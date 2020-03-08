@@ -5234,6 +5234,9 @@ namespace WozAlboPrzewoz
 			// aapt resource value: 0x7F0C0055
 			public const int support_simple_spinner_dropdown_item = 2131492949;
 			
+			// aapt resource value: 0x7F0C0056
+			public const int toolbar_center = 2131492950;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
