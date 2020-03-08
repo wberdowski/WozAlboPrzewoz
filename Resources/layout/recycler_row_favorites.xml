@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="12dp"
     android:gravity="center_vertical"
     android:foreground="?android:attr/selectableItemBackground"
     android:background="@drawable/recycler_row_bg">
@@ -19,8 +19,8 @@
     <TextView
         android:id="@+id/textViewFavoriteText"
         android:text="Test"
-        android:textSize="18dp"        
-        android:layout_margin="8dp"
+        android:textSize="16dp"       
+        android:padding="8dp"
         android:textStyle="bold"
         android:textColor="?attr/textColor"
         android:layout_width="match_parent"

@@ -40,7 +40,7 @@ namespace WozAlboPrzewoz
 
             var mToolbar = (Toolbar)FindViewById(Resource.Id.toolbar);
             SetSupportActionBar(mToolbar);
-            
+
             SupportActionBar.SetDisplayShowTitleEnabled(false);
 
             //

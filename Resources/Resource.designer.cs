@@ -3935,28 +3935,34 @@ namespace WozAlboPrzewoz
 			public const int route_progress_foreground_start = 2131230863;
 			
 			// aapt resource value: 0x7F080090
-			public const int settings_24px = 2131230864;
+			public const int search_bg = 2131230864;
 			
 			// aapt resource value: 0x7F080091
-			public const int snackbar_background = 2131230865;
+			public const int search_layout_bg = 2131230865;
 			
 			// aapt resource value: 0x7F080092
-			public const int time_24px = 2131230866;
+			public const int settings_24px = 2131230866;
 			
 			// aapt resource value: 0x7F080093
-			public const int time_badge_bad = 2131230867;
+			public const int snackbar_background = 2131230867;
 			
 			// aapt resource value: 0x7F080094
-			public const int time_badge_good = 2131230868;
+			public const int time_24px = 2131230868;
 			
 			// aapt resource value: 0x7F080095
-			public const int tooltip_frame_dark = 2131230869;
+			public const int time_badge_bad = 2131230869;
 			
 			// aapt resource value: 0x7F080096
-			public const int tooltip_frame_light = 2131230870;
+			public const int time_badge_good = 2131230870;
 			
 			// aapt resource value: 0x7F080097
-			public const int train_24px = 2131230871;
+			public const int tooltip_frame_dark = 2131230871;
+			
+			// aapt resource value: 0x7F080098
+			public const int tooltip_frame_light = 2131230872;
+			
+			// aapt resource value: 0x7F080099
+			public const int train_24px = 2131230873;
 			
 			static Drawable()
 			{
