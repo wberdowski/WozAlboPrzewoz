@@ -2,8 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content">
 
     <include
         android:id="@+id/routeProgress"
@@ -15,7 +14,8 @@
         android:layout_height="88dp"
         android:padding="16dp"
         android:gravity="center_vertical"
-        android:background="@drawable/recycler_row_bg">
+        android:background="@drawable/recycler_row_bg"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:id="@+id/linearLayoutTime"

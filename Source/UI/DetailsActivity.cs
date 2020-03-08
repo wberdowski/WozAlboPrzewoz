@@ -217,7 +217,27 @@ namespace WozAlboPrzewoz
 
         private void MDetailsAdapter_ItemClick(object sender, DetailsAdapterClickEventArgs e)
         {
+            var item = mStations[e.Position];
 
+            Dialog dialog = new Dialog(this);
+            dialog.SetContentView(Resource.Layout.dialog_station_details);
+
+            var title = (TextView)dialog.FindViewById(Resource.Id.textViewDialogTitle);
+            title.Text = item.Name;
+
+            var arrivalTime = (TextView)dialog.FindViewById(Resource.Id.textViewArrivalTime);
+            arrivalTime.Text = item.ArrivalTime.ToShortTimeString() + (item.DelayArrival > 0 ? $" (+{item.DelayArrival})" : "");
+
+            var departureTime = (TextView)dialog.FindViewById(Resource.Id.textViewDepartureTime);
+            departureTime.Text = item.DepartureTime.ToShortTimeString() + (item.DelayDeparture > 0 ? $" (+{item.DelayDeparture})" : "");
+
+            var platformTrack = (TextView)dialog.FindViewById(Resource.Id.textViewPlatformTrack);
+            platformTrack.Text = $"{item.Platform} / {item.Track}";
+
+            var layoutParams = dialog.Window.Attributes;
+            layoutParams.Width = ViewGroup.LayoutParams.MatchParent;
+
+            dialog.Show();
         }
 
         public override bool OnSupportNavigateUp()
