@@ -81,7 +81,7 @@ namespace WozAlboPrzewoz
             SnackbarUtils.MakeWithMargins(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.Name), Snackbar.LengthLong)
                 .SetAction(Resource.String.action_undo, (v) =>
                 {
-                    FavoritesManager.AddFavorite(station);
+                    FavoritesManager.AddFavoriteAt(station, idx);
                 })
                 .Show();
         }

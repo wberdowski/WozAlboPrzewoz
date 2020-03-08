@@ -11,15 +11,22 @@ namespace WozAlboPrzewoz
         public static List<Station> favorites = new List<Station>();
         public static event EventHandler<EventArgs> FavoritesChanged;
 
-        public static int AddFavorite(Station station)
+        public static void AddFavorite(Station station)
         {
             if (!HasFavorite(station))
             {
                 favorites.Add(station);
                 Commit();
-                return favorites.Count - 1;
             }
-            return -1;
+        }
+
+        public static void AddFavoriteAt(Station station, int index)
+        {
+            if (!HasFavorite(station))
+            {
+                favorites.Insert(index, station);
+                Commit();
+            }
         }
 
         public static int RemoveFavorite(Station station)
