@@ -5,8 +5,8 @@
   <color name="colorPrimaryLight">#eeeeee</color>
 
   <!--Accent-->
-  <color name="colorAccent_Light">#009624</color>
-  <color name="colorAccent_Dark">#00c853</color>
+  <color name="colorAccent_Light">#00aa00</color>
+  <color name="colorAccent_Dark">#00aa00</color>
 
   <!--StatusIndicatorGood-->
   <color name="colorStatusIndicatorGood_Light">#00c853</color>
