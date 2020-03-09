@@ -61,6 +61,13 @@
     <AndroidSupportedAbis />
     <AndroidKeyStore>false</AndroidKeyStore>
     <MandroidI18n />
+    <AndroidSigningKeyStore>C:\Users\Wojtek\AppData\Local\Xamarin\Mono for Android\Keystore\key\key.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>
+    </AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>
+    </AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>
+    </AndroidSigningKeyPass>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -13,7 +13,7 @@ namespace WozAlboPrzewoz
             SetPreferencesFromResource(Resource.Xml.preferences, rootKey);
 
             var versionPref = FindPreference("setting_version");
-            versionPref.Summary = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            versionPref.Summary = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
 #if DEBUG
             versionPref.Summary += "\n" + GetString(Resource.String.setting_debug_mode);
