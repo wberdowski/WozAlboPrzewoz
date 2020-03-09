@@ -1,9 +1,10 @@
 <resources>
   <!-- LIGHT THEME -->
   <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
-    <!--<item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent_Light</item>
+    <item name="android:windowLightStatusBar">true</item>
 
     <item name="textColor">@color/colorText_Light</item>
     <item name="textColorFaint">@color/colorTextFaint_Light</item>
@@ -22,12 +23,15 @@
     <item name="colorCardViewHeader">@color/colorCardViewHeader_Light</item>
     <item name="colorRecyclerBorder">@color/colorRecyclerBorder_Light</item>
     <item name="colorRouteProgressBackground">@color/colorRouteProgressBackground_Light</item>
+    <item name="colorToolbarBackground">@android:color/white</item>
 
     <item name="android:windowBackground">@android:color/white</item>
   </style>
 
   <style name="AppTheme.Launcher" parent="AppTheme">
+    <item name="colorPrimaryDark">@color/colorRouteProgressForeground</item>
     <item name="android:windowBackground">@drawable/launch_screen</item>
+    <item name="android:windowLightStatusBar">false</item>
   </style>
 
   <style name="DialogTitle" parent="AppTheme">
@@ -105,5 +109,9 @@
 
   <style name="StationTextSelected" parent="AppTheme">
     <item name="android:textColor">@color/colorRouteProgressForeground</item>
+  </style>
+
+  <style name="ToolbarStyle" parent="AppTheme">
+    <item name="android:background">?attr/colorToolbarBackground</item>
   </style>
 </resources>

@@ -16,4 +16,5 @@
   <attr name="colorCardViewHeader" format="reference"/>
   <attr name="colorRecyclerBorder" format="reference"/>
   <attr name="colorRouteProgressBackground" format="reference"/>
+  <attr name="colorToolbarBackground" format="reference"/>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="colorPrimary">#ffffff</color>
-  <color name="colorPrimaryDark">#eeeeee</color>
+  <color name="colorPrimaryDark">#ffffff</color>
   <color name="colorPrimaryLight">#eeeeee</color>
 
   <!--Accent-->
@@ -88,4 +88,6 @@
   <color name="colorTextStandardDark">#ffffff</color>
   <color name="colorTextUltraLight">#cccccc</color>
   <color name="menuActionTint">#222222</color>
+  <color name="colorDarkGray">#111111</color>
+  <color name="colorWhiteOverlay">#22ffffff</color>
 </resources>

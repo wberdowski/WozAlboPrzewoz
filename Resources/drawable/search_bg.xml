@@ -8,7 +8,13 @@
   </item>
   <item android:top="1dp">
     <shape android:shape="rectangle">
-      <solid android:color="?android:attr/windowBackground"/>
+      <solid android:color="?attr/colorToolbarBackground"/>
+      <corners android:radius="24dp"/>
+    </shape>
+  </item>
+  <item android:top="1dp">
+    <shape android:shape="rectangle">
+      <solid android:color="@color/colorWhiteOverlay"/>
       <corners android:radius="24dp"/>
     </shape>
   </item>
