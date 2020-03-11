@@ -249,7 +249,7 @@ namespace WozAlboPrzewoz
         protected override void OnResume()
         {
             RegisterTickReceiver();
-            //mTrainConnAdapter.NotifyDataSetChanged();
+            UpdateViewHolder();
             base.OnResume();
         }
 
@@ -259,9 +259,8 @@ namespace WozAlboPrzewoz
             intentFilter.AddAction(Intent.ActionTimeTick);
             mTickReceiver = new TickReceiver(() =>
             {
-                //TODO:
-                UpdateAll(false);
-                //UpdateViewHolder();
+                // UpdateAll(false);
+                UpdateViewHolder();
             });
             RegisterReceiver(mTickReceiver, intentFilter);
         }
