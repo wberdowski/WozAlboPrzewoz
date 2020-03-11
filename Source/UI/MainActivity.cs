@@ -157,14 +157,17 @@ namespace WozAlboPrzewoz
             string text = ReplaceNonEnglishCharacters(e.NewText.ToLower());
             if (text.Length > 1)
             {
-                var cursor = mSearchSuggestionsAdapter.GetItem(0) as MatrixCursor;
-                int sid = cursor.GetInt(0);
+                if (mSearchSuggestionsAdapter.Count > 0)
+                {
+                    var cursor = mSearchSuggestionsAdapter.GetItem(0) as MatrixCursor;
+                    int sid = cursor.GetInt(0);
 
-                OpenStationActivity(sid);
+                    OpenStationActivity(sid);
 
-                mSearchView.SetQuery(string.Empty, false);
+                    mSearchView.SetQuery(string.Empty, false);
 
-                e.Handled = true;
+                    e.Handled = true;
+                }
             }
         }
 

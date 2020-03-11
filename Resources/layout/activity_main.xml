@@ -20,7 +20,7 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/editTextSearch"
-            app:defaultQueryHint="Wyszukaj stacje"
+            app:defaultQueryHint="@string/find_station"
             app:iconifiedByDefault="false"
             app:searchIcon="@null"
             app:queryBackground="@null"
