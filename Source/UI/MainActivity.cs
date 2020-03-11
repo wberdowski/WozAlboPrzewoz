@@ -4,7 +4,6 @@ using Android.Database;
 using Android.OS;
 using Android.Provider;
 using Android.Runtime;
-using Android.Support.Design.Widget;
 using Android.Text;
 using Android.Views;
 using AndroidX.AppCompat.App;
@@ -15,7 +14,7 @@ using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher", MainLauncher = true, Icon = "@mipmap/ic_launcher")]
     public class MainActivity : AppCompatActivity
     {
         private Android.Support.V7.Widget.SearchView mSearchView;
