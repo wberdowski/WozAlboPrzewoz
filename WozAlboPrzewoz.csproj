@@ -113,6 +113,7 @@
     <Compile Include="Source\PKP\PKPAPI.cs" />
     <Compile Include="Source\Adapters\ConnectionsAdapter.cs" />
     <Compile Include="Source\UI\ConnectionsActivity.cs" />
+    <Compile Include="Source\Utils\ListUtils.cs" />
     <Compile Include="Source\Utils\MathUtils.cs" />
     <Compile Include="Source\Utils\RouteProgressHelper.cs" />
     <Compile Include="Source\Utils\SnackbarUtils.cs" />

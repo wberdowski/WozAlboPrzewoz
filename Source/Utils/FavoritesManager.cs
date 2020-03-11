@@ -41,9 +41,11 @@ namespace WozAlboPrzewoz
             return -1;
         }
 
-        private static void Commit()
+        public static void Commit(bool notify = true)
         {
-            FavoritesChanged?.Invoke(null, null);
+            if (notify)
+                FavoritesChanged?.Invoke(null, null);
+
             List<int> arr = new List<int>();
 
             foreach (Station s in favorites)

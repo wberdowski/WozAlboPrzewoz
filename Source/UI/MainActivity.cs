@@ -5,11 +5,12 @@ using Android.OS;
 using Android.Provider;
 using Android.Runtime;
 using Android.Support.Design.Widget;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Text;
 using Android.Views;
+using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
 using AndroidX.Preference;
+using AndroidX.RecyclerView.Widget;
 using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
@@ -17,7 +18,7 @@ namespace WozAlboPrzewoz
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Launcher", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        private SearchView mSearchView;
+        private Android.Support.V7.Widget.SearchView mSearchView;
         private SearchCursorAdapter mSearchSuggestionsAdapter;
         private RecyclerView mRecyclerViewFavorites;
         private List<Station> mFavoritesData;
@@ -56,8 +57,10 @@ namespace WozAlboPrzewoz
 
             mFavoritesAdapter = new FavoritesAdapter(mFavoritesData);
             mFavoritesAdapter.ItemClick += MFavoritesAdapter_ItemClick;
-            mFavoritesAdapter.ItemLongClick += MFavoritesAdapter_ItemLongClick;
             mRecyclerViewFavorites.SetAdapter(mFavoritesAdapter);
+
+            ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(this));
+            touchHelper.AttachToRecyclerView(mRecyclerViewFavorites);
 
             //
             //  SearchView
@@ -73,18 +76,58 @@ namespace WozAlboPrzewoz
             mSearchView.SuggestionsAdapter = mSearchSuggestionsAdapter;
         }
 
-        private void MFavoritesAdapter_ItemLongClick(object sender, ConnectionsAdapterClickEventArgs e)
+        private class ItemTouchHelperCallback : ItemTouchHelper.Callback
         {
-            var station = FavoritesManager.favorites[e.Position];
-            int idx = FavoritesManager.RemoveFavorite(station);
-            mFavoritesAdapter.NotifyItemRemoved(idx);
-            SnackbarUtils.MakeWithMargins(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.Name), Snackbar.LengthLong)
-                .SetAction(Resource.String.action_undo, (v) =>
+            private MainActivity Activity { get; set; }
+            private bool mOrderChanged;
+
+            public ItemTouchHelperCallback(MainActivity activity)
+            {
+                Activity = activity;
+            }
+
+            public override int GetMovementFlags(RecyclerView p0, RecyclerView.ViewHolder p1)
+            {
+                return MakeFlag(ItemTouchHelper.ActionStateDrag, ItemTouchHelper.Down | ItemTouchHelper.Up);
+            }
+
+            public override bool OnMove(RecyclerView p0, RecyclerView.ViewHolder p1, RecyclerView.ViewHolder p2)
+            {
+                Activity.mFavoritesData.Swap(p1.AdapterPosition, p2.AdapterPosition);
+                Activity.mFavoritesAdapter.NotifyItemMoved(p1.AdapterPosition, p2.AdapterPosition);
+                mOrderChanged = true;
+                return true;
+            }
+
+            public override void OnSwiped(RecyclerView.ViewHolder p0, int p1)
+            {
+
+            }
+
+            public override void OnSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState)
+            {
+                base.OnSelectedChanged(viewHolder, actionState);
+
+                if (actionState == ItemTouchHelper.ActionStateIdle && mOrderChanged)
                 {
-                    FavoritesManager.AddFavoriteAt(station, idx);
-                })
-                .Show();
+                    FavoritesManager.Commit(false);
+                    mOrderChanged = false;
+                }
+            }
         }
+
+        //private void MFavoritesAdapter_ItemLongClick(object sender, ConnectionsAdapterClickEventArgs e)
+        //{
+        //var station = FavoritesManager.favorites[e.Position];
+        //int idx = FavoritesManager.RemoveFavorite(station);
+        //mFavoritesAdapter.NotifyItemRemoved(idx);
+        //SnackbarUtils.MakeWithMargins(mSearchView, Application.Resources.GetString(Resource.String.action_favorite_removed, station.Name), Snackbar.LengthLong)
+        //    .SetAction(Resource.String.action_undo, (v) =>
+        //    {
+        //        FavoritesManager.AddFavoriteAt(station, idx);
+        //    })
+        //    .Show();
+        //}
 
         private void MFavoritesAdapter_ItemClick(object sender, ConnectionsAdapterClickEventArgs e)
         {
