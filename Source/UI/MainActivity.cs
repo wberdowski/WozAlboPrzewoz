@@ -6,10 +6,12 @@ using Android.Provider;
 using Android.Runtime;
 using Android.Text;
 using Android.Views;
+using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Preference;
 using AndroidX.RecyclerView.Widget;
+using System;
 using System.Collections.Generic;
 
 namespace WozAlboPrzewoz
@@ -38,7 +40,7 @@ namespace WozAlboPrzewoz
             FavoritesManager.Load();
             FavoritesManager.FavoritesChanged += FavoritesManager_FavoritesChanged;
 
-            var mToolbar = (Toolbar)FindViewById(Resource.Id.toolbar);
+            var mToolbar = (AndroidX.AppCompat.Widget.Toolbar)FindViewById(Resource.Id.toolbar);
             SetSupportActionBar(mToolbar);
 
             SupportActionBar.SetDisplayShowTitleEnabled(false);
@@ -73,6 +75,13 @@ namespace WozAlboPrzewoz
 
             mSearchSuggestionsAdapter = new SearchCursorAdapter(this, null, mSearchView);
             mSearchView.SuggestionsAdapter = mSearchSuggestionsAdapter;
+
+            //
+            //  No favorites container
+            //
+
+            mNoFavoritesContainer = (Android.Widget.LinearLayout)FindViewById(Resource.Id.noFavoritesContainer);
+            UpdateNoFavoritesContainerVisibility();
         }
 
         private class ItemTouchHelperCallback : ItemTouchHelper.Callback
@@ -143,6 +152,19 @@ namespace WozAlboPrzewoz
         private void FavoritesManager_FavoritesChanged(object sender, System.EventArgs e)
         {
             mFavoritesAdapter.NotifyDataSetChanged();
+            UpdateNoFavoritesContainerVisibility();
+        }
+
+        private void UpdateNoFavoritesContainerVisibility()
+        {
+            if (FavoritesManager.favorites.Count > 0)
+            {
+                mNoFavoritesContainer.Visibility = ViewStates.Gone;
+            }
+            else
+            {
+                mNoFavoritesContainer.Visibility = ViewStates.Visible;
+            }
         }
 
         private void OpenStationActivity(int sid)
@@ -218,6 +240,7 @@ namespace WozAlboPrzewoz
             {'ż', 'z'},
             {'-',' '}
         };
+        private LinearLayout mNoFavoritesContainer;
 
         private string ReplaceNonEnglishCharacters(string str)
         {

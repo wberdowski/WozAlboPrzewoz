@@ -24,6 +24,8 @@
   <string name="setting_dark_theme">Ciemny motyw</string>
   <string name="setting_debug_mode">Tryb debugowania</string>
   <string name="find_station">Wyszukaj stację</string>
+  <string name="no_favorites">Brak ulubionych stacji.</string>
+  <string name="no_favorites_hint">Wyszukaj stację i kliknij ikonę serca, aby pojawiła się w tym miejscu.</string>
   <string-array name="licenses">
     <item>
       SwipyRefreshLayout#Copyright 2016 Duong Dinh Loi\n
