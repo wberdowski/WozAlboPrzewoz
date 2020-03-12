@@ -45,6 +45,11 @@ namespace WozAlboPrzewoz
 
             mTrainConnection = JsonConvert.DeserializeObject<TrainConnection>(Intent.GetStringExtra("train_conn"));
             mSelectedStation = JsonConvert.DeserializeObject<Station>(Intent.GetStringExtra("selected_station"));
+            Bundle extras = Intent.Extras;
+
+            //
+            //  Toolbar
+            //
 
             var mToolbarText = (TextView)mToolbar.FindViewById(Resource.Id.toolbar_title);
             mToolbarText.Text = $"{mTrainConnection.TrainNumber} {mTrainConnection.StationEnd}";
@@ -83,6 +88,10 @@ namespace WozAlboPrzewoz
             var mTextViewDifficulties = (TextView)FindViewById(Resource.Id.textViewDifficulties);
             mTextViewDifficulties.Text = mTrainConnection.Up;
 
+            //
+            //  Include
+            //
+
             var view = FindViewById(Resource.Id.include1);
             view.Elevation = 4 * Resources.DisplayMetrics.Density + 0.5f;
             view.SetBackgroundResource(Resource.Drawable.recycler_row_bg_full);
@@ -97,6 +106,20 @@ namespace WozAlboPrzewoz
             {
 
             });
+
+            //
+            //  Transition
+            //
+
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                view.TransitionName = extras.GetString("transition");
+                SupportStartPostponedEnterTransition();
+            }
+
+            //
+            //  Init
+            //
 
             RegisterTickReceiver();
 
@@ -242,7 +265,7 @@ namespace WozAlboPrzewoz
 
         public override bool OnSupportNavigateUp()
         {
-            Finish();
+            FinishAfterTransition();
             return true;
         }
 
@@ -267,6 +290,7 @@ namespace WozAlboPrzewoz
 
         protected override void OnDestroy()
         {
+            base.OnDestroy();
             try
             {
                 mProgressTimer.Stop();
@@ -277,7 +301,6 @@ namespace WozAlboPrzewoz
             {
                 ex.PrintStackTrace();
             }
-            base.OnDestroy();
         }
 
         private class TickReceiver : BroadcastReceiver

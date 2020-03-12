@@ -6,6 +6,8 @@ using Android.Views;
 using Android.Views.Animations;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
+using AndroidX.Core.App;
+using AndroidX.Core.View;
 using AndroidX.RecyclerView.Widget;
 using Com.Orangegangsters.Github.Swipyrefreshlayout.Library;
 using Java.Lang;
@@ -187,17 +189,19 @@ namespace WozAlboPrzewoz
         private void MTrainConnAdapter_ItemClick(object sender, ConnectionsAdapterClickEventArgs e)
         {
             TrainConnectionListItem item = mTrainConnData[e.Position];
-            OpenDetailsActivity(item.Connection);
-        }
 
-        private void OpenDetailsActivity(TrainConnection conn)
-        {
             var intent = new Intent(this, typeof(DetailsActivity));
-            intent.PutExtra("train_conn", JsonConvert.SerializeObject(conn));
+            intent.PutExtra("train_conn", JsonConvert.SerializeObject(item.Connection));
             intent.PutExtra("selected_station", JsonConvert.SerializeObject(mSelectedStation));
-            StartActivity(intent);
-        }
+            intent.PutExtra("transition", ViewCompat.GetTransitionName(e.View));
 
+            ActivityOptionsCompat options = ActivityOptionsCompat.MakeSceneTransitionAnimation(
+                    this,
+                    e.View,
+                    ViewCompat.GetTransitionName(e.View));
+
+            StartActivity(intent, options.ToBundle());
+        }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {

@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Core.View;
 using AndroidX.RecyclerView.Widget;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,8 @@ namespace WozAlboPrzewoz
             var holder = viewHolder as ConnectionsAdapterViewHolder;
 
             ConnectionItemHelper.SetViewHolderContent(context, item, holder);
+
+            ViewCompat.SetTransitionName(holder.ItemView, item.Connection.StationEnd);
         }
 
         public override int ItemCount => items.Count;
