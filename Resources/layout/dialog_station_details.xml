@@ -17,8 +17,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/recycler_row_bg">
+        android:orientation="horizontal">
 
         <TextView
             android:text="Czas przyjazdu"
@@ -45,8 +44,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/recycler_row_bg">
+        android:orientation="horizontal">
 
         <TextView
             android:text="Czas odjazdu"
@@ -74,8 +72,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/recycler_row_bg">
+        android:orientation="horizontal">
 
         <TextView
             android:text="Peron / Tor"
