@@ -8,7 +8,7 @@ namespace WozAlboPrzewoz
     public class StationConnectionsManager
     {
         public Station Station { get; private set; }
-        public DateTime Time { get; private set; }
+        public DateTime Time { get; set; }
         public List<TrainConnectionListItem> Connections { get; private set; }
 
         public event EventHandler<ConnectionsEventArgs> UpdateEnd;
@@ -27,11 +27,6 @@ namespace WozAlboPrzewoz
         {
             Connections.Clear();
             LoadPrimary();
-        }
-
-        public void SetTime(DateTime time)
-        {
-            Time = time;
         }
 
         #endregion

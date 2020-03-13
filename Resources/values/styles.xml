@@ -25,8 +25,17 @@
     <item name="colorRouteProgressBackground">@color/colorRouteProgressBackground_Light</item>
     <item name="colorToolbarBackground">@android:color/white</item>
     <item name="colorOverlay">@color/colorOverlay_Light</item>
+    <item name="colorOverlayStrong">@color/colorOverlayStrong_Light</item>
+    <item name="android:buttonStyle">@style/button</item>
+    <item name="android:timePickerDialogTheme">@style/AlertDialogCustom</item>
+    <item name="android:datePickerDialogTheme">@style/AlertDialogCustom</item>
+    <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
 
     <item name="android:windowBackground">@android:color/white</item>
+  </style>
+
+  <style name="AlertDialogCustom" parent="android:Theme.Material.Light.Dialog.Alert">
+    <item name="android:colorAccent">?attr/colorAccent</item>
   </style>
 
   <style name="AppTheme.Launcher" parent="AppTheme">
@@ -114,5 +123,14 @@
 
   <style name="ToolbarStyle" parent="AppTheme">
     <item name="android:background">?attr/colorToolbarBackground</item>
+  </style>
+
+  <style name="button" parent="Widget.AppCompat.Button">
+    <item name="android:background">@drawable/button_selector</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:minHeight">0dp</item>
+    <item name="android:padding">12dp</item>
+    <item name="android:textSize">14dp</item>
+    <item name="android:textColor">@android:color/white</item>
   </style>
 </resources>

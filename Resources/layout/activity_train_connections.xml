@@ -6,12 +6,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        android:elevation="4dp"/>
+        android:orientation="vertical"
+        android:elevation="4dp"
+        android:background="@drawable/search_layout_bg">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_center"
+            android:gravity="top"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="6dp">
+
+            <Button
+                android:id="@+id/buttonPickDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="DATE"
+                android:padding="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_group_start"
+                android:singleLine="true"
+                android:maxLines="1"/>
+
+            <Button
+                android:id="@+id/buttonPickTime"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:padding="6dp"
+                android:layout_weight="1" 
+                android:background="@drawable/button_group_end"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

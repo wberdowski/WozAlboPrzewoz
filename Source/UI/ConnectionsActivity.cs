@@ -4,8 +4,8 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using Android.Views.Animations;
+using Android.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.AppCompat.Widget;
 using AndroidX.Core.App;
 using AndroidX.Core.View;
 using AndroidX.RecyclerView.Widget;
@@ -19,7 +19,7 @@ using System.Net;
 namespace WozAlboPrzewoz
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = false)]
-    public class ConnectionsActivity : AppCompatActivity, TimePickerDialog.IOnTimeSetListener
+    public class ConnectionsActivity : AppCompatActivity, TimePickerDialog.IOnTimeSetListener, DatePickerDialog.IOnDateSetListener
     {
         private Station mSelectedStation;
         private List<TrainConnectionListItem> mTrainConnData;
@@ -27,10 +27,10 @@ namespace WozAlboPrzewoz
         private TickReceiver mTickReceiver;
         private StationConnectionsManager mManager;
         private SwipyRefreshLayout mSwipyRefreshLayout;
-        private DateTime mSearchTime;
-        private IMenuItem mDatetimeAction;
         private RecyclerView mRecyclerView;
         private LinearLayoutManager mLayoutManager;
+        private Button mButtonPickDate;
+        private Button mButtonPickTime;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,23 +39,28 @@ namespace WozAlboPrzewoz
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_train_connections);
 
-            var mToolbar = (Toolbar)FindViewById(Resource.Id.toolbar);
+            var mToolbar = (AndroidX.AppCompat.Widget.Toolbar)FindViewById(Resource.Id.toolbar);
             SetSupportActionBar(mToolbar);
 
+            SupportActionBar.SetDisplayShowTitleEnabled(false);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             int sid = Intent.GetIntExtra("id", 0);
             mSelectedStation = StationsCache.Stations[sid];
-            mSearchTime = DateTime.Now.AddMinutes(-1);
 
-            Title = mSelectedStation.Name;
+            //
+            //  Toolbar
+            //
+
+            var mToolbarText = (TextView)mToolbar.FindViewById(Resource.Id.toolbar_title);
+            mToolbarText.Text = mSelectedStation.Name;
 
             //
             //  Connections Manager
             //
 
-            mManager = new StationConnectionsManager(mSelectedStation, mSearchTime);
+            mManager = new StationConnectionsManager(mSelectedStation, DateTime.Now.AddMinutes(-1));
             mManager.UpdateEnd += MManager_UpdateEnd;
             mManager.HttpError += MManager_HttpError;
 
@@ -85,6 +90,22 @@ namespace WozAlboPrzewoz
             mTrainConnAdapter = new ConnectionsAdapter(this, mTrainConnData);
             mTrainConnAdapter.ItemClick += MTrainConnAdapter_ItemClick;
             mRecyclerView.SetAdapter(mTrainConnAdapter);
+
+            //
+            //  Date picker
+            //
+
+            mButtonPickDate = (Button)FindViewById(Resource.Id.buttonPickDate);
+            mButtonPickDate.Text = mManager.Time.ToString("d MMMM yyyy");
+            mButtonPickDate.Click += MButtonPickDate_Click;
+
+            //
+            //  Time picker
+            //
+
+            mButtonPickTime = (Button)FindViewById(Resource.Id.buttonPickTime);
+            mButtonPickTime.Text = mManager.Time.ToShortTimeString();
+            mButtonPickTime.Click += MButtonPickTime_Click;
 
             //
             //  Results time update timer
@@ -212,9 +233,6 @@ namespace WozAlboPrzewoz
                 favoriteAction.SetIcon(Resource.Drawable.favorite_24px);
             }
 
-            mDatetimeAction = menu.FindItem(Resource.Id.action_datetime);
-            mDatetimeAction.SetTitle(mSearchTime.ToShortTimeString());
-
             return base.OnPrepareOptionsMenu(menu);
         }
 
@@ -232,11 +250,6 @@ namespace WozAlboPrzewoz
                     FavoritesManager.RemoveFavorite(mSelectedStation);
                     item.SetIcon(Resource.Drawable.favorite_border_24px);
                 }
-            }
-            else if (item.ItemId == Resource.Id.action_datetime)
-            {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mSearchTime.Hour, mSearchTime.Minute, true);
-                timePickerDialog.Show();
             }
 
             return base.OnOptionsItemSelected(item);
@@ -291,13 +304,36 @@ namespace WozAlboPrzewoz
             }
         }
 
-        public void OnTimeSet(Android.Widget.TimePicker view, int hourOfDay, int minute)
+        //  Time picker
+
+        private void MButtonPickTime_Click(object sender, EventArgs e)
         {
-            DateTime currentTime = DateTime.Now;
-            DateTime selectedTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day, hourOfDay, minute, 0);
-            mDatetimeAction.SetTitle(selectedTime.ToShortTimeString());
-            mSearchTime = selectedTime;
-            mManager.SetTime(mSearchTime);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mManager.Time.Hour, mManager.Time.Minute, true);
+            timePickerDialog.Show();
+        }
+
+        public void OnTimeSet(TimePicker view, int hourOfDay, int minute)
+        {
+            DateTime selectedTime = new DateTime(mManager.Time.Year, mManager.Time.Month, mManager.Time.Day, hourOfDay, minute, 0);
+            mButtonPickTime.Text = selectedTime.ToShortTimeString();
+            mManager.Time = selectedTime;
+            UpdateAdapterData();
+        }
+
+        //  Date picker
+
+        private void MButtonPickDate_Click(object sender, EventArgs e)
+        {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mManager.Time.Year, mManager.Time.Month - 1, mManager.Time.Day);
+            datePickerDialog.Show();
+        }
+
+        public void OnDateSet(DatePicker view, int year, int month, int dayOfMonth)
+        {
+            DateTime selectedTime = new DateTime(year, month + 1, dayOfMonth, mManager.Time.Hour, mManager.Time.Minute, 0);
+            mButtonPickDate.Text = selectedTime.ToString("d MMMM yyyy");
+            mManager.Time = selectedTime;
+            UpdateAdapterData();
         }
     }
 }

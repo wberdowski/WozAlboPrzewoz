@@ -25,6 +25,8 @@
     <item name="colorRouteProgressBackground">@color/colorRouteProgressBackground_Dark</item>
     <item name="colorToolbarBackground">@android:color/black</item>
     <item name="colorOverlay">@color/colorOverlay_Dark</item>
+    <item name="colorOverlayStrong">@color/colorOverlayStrong_Dark</item>
+    <item name="android:buttonStyle">@style/button</item>
 
     <item name="android:windowBackground">@color/colorDarkGray</item>
   </style>

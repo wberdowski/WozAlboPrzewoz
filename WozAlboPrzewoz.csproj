@@ -181,7 +181,7 @@
     <PackageReference Include="Xamarin.Binding.SwipyRefreshLayout">
       <Version>1.2.3</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Essentials" Version="1.4.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
     <PackageReference Include="Xamarin.Google.Android.Material">
       <Version>1.0.0</Version>
     </PackageReference>
@@ -417,6 +417,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\bottom_sheet_peek_handle.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_selector.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_group_start.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_group_end.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

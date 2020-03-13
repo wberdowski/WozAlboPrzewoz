@@ -3,6 +3,7 @@
   <color name="colorPrimary">#ffffff</color>
   <color name="colorPrimaryDark">#ffffff</color>
   <color name="colorPrimaryLight">#eeeeee</color>
+  <color name="colorAccent">@color/colorAccent_Light</color>
 
   <!--Accent-->
   <color name="colorAccent_Light">#00aa00</color>
@@ -85,6 +86,10 @@
   <!--Overlay-->
   <color name="colorOverlay_Light">#11000000</color>
   <color name="colorOverlay_Dark">#22ffffff</color>
+
+  <!--OverlayStrong-->
+  <color name="colorOverlayStrong_Light">#22000000</color>
+  <color name="colorOverlayStrong_Dark">#33ffffff</color>
   
   <!--NOT IMPLEMENTED-->
   <color name="colorStatusIntermediate">#ffd600</color>
