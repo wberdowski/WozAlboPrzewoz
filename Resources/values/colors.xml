@@ -81,6 +81,10 @@
 
   <!--RouteProgressStationDot-->
   <color name="colorRouteProgressStationDot">#44000000</color>
+
+  <!--Overlay-->
+  <color name="colorOverlay_Light">#11000000</color>
+  <color name="colorOverlay_Dark">#22ffffff</color>
   
   <!--NOT IMPLEMENTED-->
   <color name="colorStatusIntermediate">#ffd600</color>

@@ -24,6 +24,7 @@
     <item name="colorRecyclerBorder">@color/colorRecyclerBorder_Light</item>
     <item name="colorRouteProgressBackground">@color/colorRouteProgressBackground_Light</item>
     <item name="colorToolbarBackground">@android:color/white</item>
+    <item name="colorOverlay">@color/colorOverlay_Light</item>
 
     <item name="android:windowBackground">@android:color/white</item>
   </style>

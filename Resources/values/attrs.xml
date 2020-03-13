@@ -17,4 +17,5 @@
   <attr name="colorRecyclerBorder" format="reference"/>
   <attr name="colorRouteProgressBackground" format="reference"/>
   <attr name="colorToolbarBackground" format="reference"/>
+  <attr name="colorOverlay" format="reference"/>
 </resources>
