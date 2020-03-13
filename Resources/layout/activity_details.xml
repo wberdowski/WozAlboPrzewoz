@@ -6,104 +6,106 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutDetails"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayoutDetails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar_center"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:elevation="4dp"
+                    android:orientation="vertical"
+                    android:background="?android:attr/windowBackground">
+
+                    <include
+                        android:id="@+id/toolbar"
+                        layout="@layout/toolbar_center"
+                        android:gravity="top"/>
 
                     <include
                         android:id="@+id/include1"
-                        layout="@layout/recycler_row_connection"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:text="Relacja"
-                                android:textColor="?attr/textColor"
-                                android:textStyle="bold"
-                                android:padding="8dp"
-                                android:textSize="18dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:id="@+id/textViewRelation"
-                                android:text="Station 1 > Station 2"
-                                android:textColor="?attr/textColor"
-                                android:padding="8dp"
-                                android:textSize="16dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:text="Utrudnienia"
-                                android:textColor="?attr/textColor"
-                                android:textStyle="bold"
-                                android:padding="8dp"
-                                android:textSize="18dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:id="@+id/textViewDifficulties"
-                                android:text="Difficulties"
-                                android:textColor="?attr/textColor"
-                                android:padding="8dp"
-                                android:textSize="16dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:text="Trasa"
-                                android:textColor="?attr/textColor"
-                                android:padding="8dp"
-                                android:textSize="18dp"
-                                android:textStyle="bold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-
-                    </LinearLayout>
+                        layout="@layout/recycler_row_connection"
+                        android:gravity="top"/>
 
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-        </LinearLayout>
+                    <TextView
+                        android:text="Relacja"
+                        android:textColor="?attr/textColor"
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:textSize="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    <TextView
+                        android:id="@+id/textViewRelation"
+                        android:text="Station 1 > Station 2"
+                        android:textColor="?attr/textColor"
+                        android:padding="8dp"
+                        android:textSize="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="Utrudnienia"
+                        android:textColor="?attr/textColor"
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:textSize="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/textViewDifficulties"
+                        android:text="Difficulties"
+                        android:textColor="?attr/textColor"
+                        android:padding="8dp"
+                        android:textSize="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="Trasa"
+                        android:textColor="?attr/textColor"
+                        android:padding="8dp"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="36dp"/>
+
+            </LinearLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/bottom_sheet"
+            layout="@layout/bottom_sheet_details" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>

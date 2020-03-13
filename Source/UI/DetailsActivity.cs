@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
@@ -28,6 +29,7 @@ namespace WozAlboPrzewoz
         private ConnectionsAdapterViewHolder vh;
         private Station mSelectedStation;
         private System.Timers.Timer mProgressTimer;
+        private BottomSheetBehavior mBottomSheetBehavior;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -93,7 +95,7 @@ namespace WozAlboPrzewoz
             //
 
             var view = FindViewById(Resource.Id.include1);
-            view.Elevation = 4 * Resources.DisplayMetrics.Density + 0.5f;
+            //view.Elevation = 4 * Resources.DisplayMetrics.Density + 0.5f;
             view.SetBackgroundResource(Resource.Drawable.recycler_row_bg_full);
             view.OutlineProvider = ViewOutlineProvider.Background;
 
@@ -102,10 +104,25 @@ namespace WozAlboPrzewoz
 
             vh = new ConnectionsAdapterViewHolder(view, (e) =>
             {
+                if(mBottomSheetBehavior.State == BottomSheetBehavior.StateExpanded)
+                {
+                    mBottomSheetBehavior.State = BottomSheetBehavior.StateCollapsed;
+                } else
+                {
+                    mBottomSheetBehavior.State = BottomSheetBehavior.StateExpanded;
+                }
             }, (e) =>
             {
 
             });
+
+            //
+            //  Bottom sheet
+            //
+
+            LinearLayout llBottomSheet = (LinearLayout)FindViewById(Resource.Id.bottom_sheet);
+
+            mBottomSheetBehavior = BottomSheetBehavior.From(llBottomSheet);
 
             //
             //  Transition
