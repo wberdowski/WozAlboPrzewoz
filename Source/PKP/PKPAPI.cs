@@ -21,6 +21,21 @@ namespace WozAlboPrzewoz
             return arr.ToObject<Station[]>();
         }
 
+        public static TranslationPhrase[] GetTranslations()
+        {
+            DictionaryRequest packet = new DictionaryRequest("E", 0.0, "PL", "1");
+
+            string parameters = EncryptionHelpers.Encrypt(packet.Serialize());
+            HttpStatusCode status;
+            string response = HttpUtils.SendGETRequest($"https://portalpasazera.pl/API/PobierzSlowniki?parametry={parameters}", out status);
+
+            JToken token = JsonConvert.DeserializeObject<JToken>(response);
+            Console.WriteLine(response);
+            JArray arr = JsonConvert.DeserializeObject<JArray>(token[0]["SD"].ToString());
+
+            return arr.ToObject<TranslationPhrase[]>();
+        }
+
         public static TrainConnection[] GetStationTimetable(int sid, DateTime time, int k = 1, int s = 0)
         {
             StationTimetableRequest packet = new StationTimetableRequest(sid, time.ToOADate(), 1, k, s, 0.0);

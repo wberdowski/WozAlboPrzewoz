@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace WozAlboPrzewoz
 {
-    public class StationsCache
+    public class TranslationsCache
     {
-        public static Station[] Stations { get; private set; }
+        public static TranslationPhrase[] Phrases { get; private set; }
 
         public static void Load()
         {
@@ -16,20 +16,26 @@ namespace WozAlboPrzewoz
 
             //Cache stations list
             string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
-            string settingsPath = Path.Combine(path, "stations.json");
+            string settingsPath = Path.Combine(path, "translations.json");
 
             if (!File.Exists(settingsPath))
             {
-                Stations = PKPAPI.GetStations();
+                Phrases = PKPAPI.GetTranslations();
                 StreamWriter stream = File.CreateText(settingsPath);
-                stream.Write(JsonConvert.SerializeObject(Stations));
+                stream.Write(JsonConvert.SerializeObject(Phrases));
                 stream.Close();
             }
             else
             {
                 string text = File.ReadAllText(settingsPath);
-                Stations = JsonConvert.DeserializeObject<Station[]>(text);
+                Phrases = JsonConvert.DeserializeObject<TranslationPhrase[]>(text);
             }
+        }
+
+        public static bool TryGetByGuid(string guid, out TranslationPhrase phrase)
+        {
+            phrase = Phrases.Where(x => x.N.ToLower() == guid).DefaultIfEmpty(null).FirstOrDefault();
+            return phrase != null;
         }
     }
 }

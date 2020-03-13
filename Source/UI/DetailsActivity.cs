@@ -1,13 +1,13 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
 using AndroidX.RecyclerView.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
+using Google.Android.Material.BottomSheet;
 using Java.Lang;
 using Newtonsoft.Json;
 using System;
@@ -81,16 +81,6 @@ namespace WozAlboPrzewoz
             mRecyclerDetails.SetAdapter(mDetailsAdapter);
 
             //
-            //  Info
-            //
-
-            var mTextViewRelation = (TextView)FindViewById(Resource.Id.textViewRelation);
-            mTextViewRelation.Text = $"{mTrainConnection.StationStart} ({DateTime.FromOADate(mTrainConnection.TimeDepartureStart).ToShortTimeString()}) > {mTrainConnection.StationEnd} ({DateTime.FromOADate(mTrainConnection.TimeArrivalEnd).ToShortTimeString()})";
-
-            var mTextViewDifficulties = (TextView)FindViewById(Resource.Id.textViewDifficulties);
-            mTextViewDifficulties.Text = mTrainConnection.Up;
-
-            //
             //  Include
             //
 
@@ -123,6 +113,13 @@ namespace WozAlboPrzewoz
             LinearLayout llBottomSheet = (LinearLayout)FindViewById(Resource.Id.bottom_sheet);
 
             mBottomSheetBehavior = BottomSheetBehavior.From(llBottomSheet);
+
+            //
+            //  Info
+            //
+
+            var mTextViewDifficulties = (TextView)FindViewById(Resource.Id.textViewDifficulties);
+            mTextViewDifficulties.Text = AlertParser.Parse(mTrainConnection.Up);
 
             //
             //  Transition

@@ -26,6 +26,7 @@
   <string name="find_station">Wyszukaj stację</string>
   <string name="no_favorites">Brak ulubionych stacji.</string>
   <string name="no_favorites_hint">Wyszukaj stację i kliknij ikonę serca, aby pojawiła się w tym miejscu.</string>
+  <string name="connection_details">Szczegóły połączenia</string>
   <string-array name="licenses">
     <item>
       SwipyRefreshLayout#Copyright 2016 Duong Dinh Loi\n

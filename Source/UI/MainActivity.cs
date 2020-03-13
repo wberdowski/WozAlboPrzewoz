@@ -36,7 +36,9 @@ namespace WozAlboPrzewoz
             ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
             AppCompatDelegate.DefaultNightMode = (prefs.GetBoolean("dark_mode", false) ? AppCompatDelegate.ModeNightYes : AppCompatDelegate.ModeNightNo);
 
-            StationsCache.LoadStations();
+            StationsCache.Load();
+            TranslationsCache.Load();
+
             FavoritesManager.Load();
             FavoritesManager.FavoritesChanged += FavoritesManager_FavoritesChanged;
 

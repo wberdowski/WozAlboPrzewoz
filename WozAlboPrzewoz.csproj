@@ -88,11 +88,13 @@
     <Compile Include="Source\Models\ConnectionsEventArgs.cs" />
     <Compile Include="Source\Models\Direction.cs" />
     <Compile Include="Source\Models\License.cs" />
+    <Compile Include="Source\Models\TranslationPhrase.cs" />
     <Compile Include="Source\Models\StationSchedule.cs" />
     <Compile Include="Source\Models\WebExceptionEventArgs.cs" />
     <Compile Include="Source\UI\LicensesActivity.cs" />
     <Compile Include="Source\UI\SettingsActivity.cs" />
     <Compile Include="Source\UI\SettingsFragment.cs" />
+    <Compile Include="Source\Utils\AlertParser.cs" />
     <Compile Include="Source\Utils\CarrierInfo.cs" />
     <Compile Include="Source\Utils\ConnectionItemHelper.cs" />
     <Compile Include="Source\Utils\ErrorDialogHelper.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Source\Utils\RouteProgressHelper.cs" />
     <Compile Include="Source\Utils\SnackbarUtils.cs" />
     <Compile Include="Source\Utils\StationConnectionsManager.cs" />
+    <Compile Include="Source\Utils\TranslationsCache.cs" />
     <Compile Include="Source\Utils\StationsCache.cs" />
     <Compile Include="Source\Utils\AttrValueUtils.cs" />
     <Compile Include="Source\Utils\TimeUtils.cs" />
