@@ -113,8 +113,8 @@ namespace WozAlboPrzewoz
             holder.textViewDestination.Text = connection.StationEnd;
             holder.textViewLine.Text = connection.Line;
             holder.textViewTime1.Text = departureTime.ToShortTimeString();
-            holder.textViewTime2.Text = DateTime.FromOADate(connection.TimeArrivalEnd).ToShortTimeString();
-            holder.textViewInfo.Text = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeArrivalEnd)).Subtract(departureTime).ToString(@"hh\:mm");
+            //holder.textViewTime2.Text = DateTime.FromOADate(connection.TimeArrivalEnd).ToShortTimeString();
+            //holder.textViewInfo.Text = TimeUtils.DiscardSeconds(DateTime.FromOADate(connection.TimeArrivalEnd)).Subtract(departureTime).ToString(@"hh\:mm");
 
             if (connection.DelayStart > 0)
             {
@@ -127,16 +127,16 @@ namespace WozAlboPrzewoz
                 holder.textViewTime1.SetBackgroundResource(Resource.Drawable.time_badge_good);
             }
 
-            if (connection.DelayEnd > 0)
-            {
-                holder.textViewTime2.SetTextAppearance(Resource.Style.TimeBadgeBad);
-                holder.textViewTime2.SetBackgroundResource(Resource.Drawable.time_badge_bad);
-            }
-            else
-            {
-                holder.textViewTime2.SetTextAppearance(Resource.Style.TimeBadgeGood);
-                holder.textViewTime2.SetBackgroundResource(Resource.Drawable.time_badge_good);
-            }
+            //if (connection.DelayEnd > 0)
+            //{
+            //    holder.textViewTime2.SetTextAppearance(Resource.Style.TimeBadgeBad);
+            //    holder.textViewTime2.SetBackgroundResource(Resource.Drawable.time_badge_bad);
+            //}
+            //else
+            //{
+            //    holder.textViewTime2.SetTextAppearance(Resource.Style.TimeBadgeGood);
+            //    holder.textViewTime2.SetBackgroundResource(Resource.Drawable.time_badge_good);
+            //}
         }
     }
 }

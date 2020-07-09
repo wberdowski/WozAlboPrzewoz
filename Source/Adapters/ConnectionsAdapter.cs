@@ -64,8 +64,8 @@ namespace WozAlboPrzewoz
         public TextView textViewLine { get; set; }
         public TextView statusIndicator { get; set; }
         public TextView textViewTime1 { get; set; }
-        public TextView textViewTime2 { get; set; }
-        public TextView textViewInfo { get; set; }
+        //public TextView textViewTime2 { get; set; }
+        //public TextView textViewInfo { get; set; }
 
         public ConnectionsAdapterViewHolder(Android.Views.View itemView, Action<ConnectionsAdapterClickEventArgs> clickListener,
                             Action<ConnectionsAdapterClickEventArgs> longClickListener) : base(itemView)
@@ -80,8 +80,8 @@ namespace WozAlboPrzewoz
             textViewLine = (TextView)itemView.FindViewById(Resource.Id.textViewLine);
             statusIndicator = (TextView)itemView.FindViewById(Resource.Id.statusIndicator);
             textViewTime1 = (TextView)itemView.FindViewById(Resource.Id.textViewTime1);
-            textViewTime2 = (TextView)itemView.FindViewById(Resource.Id.textViewTime2);
-            textViewInfo = (TextView)itemView.FindViewById(Resource.Id.textViewInfo);
+            //textViewTime2 = (TextView)itemView.FindViewById(Resource.Id.textViewTime2);
+            //textViewInfo = (TextView)itemView.FindViewById(Resource.Id.textViewInfo);
 
             //TextView = v;
             linearLayoutRow.Click += (sender, e) => clickListener(new ConnectionsAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
