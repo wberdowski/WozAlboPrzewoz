@@ -4,7 +4,6 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.AppCompat.Widget;
 using AndroidX.RecyclerView.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
 using Google.Android.Material.BottomSheet;
@@ -94,10 +93,11 @@ namespace WozAlboPrzewoz
 
             vh = new ConnectionsAdapterViewHolder(view, (e) =>
             {
-                if(mBottomSheetBehavior.State == BottomSheetBehavior.StateExpanded)
+                if (mBottomSheetBehavior.State == BottomSheetBehavior.StateExpanded)
                 {
                     mBottomSheetBehavior.State = BottomSheetBehavior.StateCollapsed;
-                } else
+                }
+                else
                 {
                     mBottomSheetBehavior.State = BottomSheetBehavior.StateExpanded;
                 }
@@ -319,7 +319,7 @@ namespace WozAlboPrzewoz
 
         private class TickReceiver : BroadcastReceiver
         {
-            Action Action { get; set; }
+            private Action Action { get; set; }
 
             public TickReceiver(Action action)
             {

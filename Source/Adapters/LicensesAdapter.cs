@@ -10,7 +10,8 @@ namespace WozAlboPrzewoz
     {
         public event EventHandler<LicensesAdapterClickEventArgs> ItemClick;
         public event EventHandler<LicensesAdapterClickEventArgs> ItemLongClick;
-        List<License> items;
+
+        private List<License> items;
 
         public LicensesAdapter(List<License> data)
         {
@@ -43,8 +44,8 @@ namespace WozAlboPrzewoz
 
         public override int ItemCount => items.Count;
 
-        void OnClick(LicensesAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
-        void OnLongClick(LicensesAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
+        private void OnClick(LicensesAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
+        private void OnLongClick(LicensesAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
     }
 
     public class LicensesAdapterViewHolder : RecyclerView.ViewHolder

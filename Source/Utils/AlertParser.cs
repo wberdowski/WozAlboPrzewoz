@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace WozAlboPrzewoz
 {
@@ -21,7 +20,7 @@ namespace WozAlboPrzewoz
         private static string Evaluate(Match match)
         {
             var guid = match.Groups[1].ToString();
-            if(TranslationsCache.TryGetByGuid(guid, out TranslationPhrase phrase))
+            if (TranslationsCache.TryGetByGuid(guid, out TranslationPhrase phrase))
             {
                 return phrase.T;
             }

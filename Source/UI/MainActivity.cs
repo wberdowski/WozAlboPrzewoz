@@ -8,10 +8,8 @@ using Android.Text;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.AppCompat.Widget;
 using AndroidX.Preference;
 using AndroidX.RecyclerView.Widget;
-using System;
 using System.Collections.Generic;
 
 namespace WozAlboPrzewoz

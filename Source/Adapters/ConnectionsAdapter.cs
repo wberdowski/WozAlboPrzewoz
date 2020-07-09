@@ -12,8 +12,9 @@ namespace WozAlboPrzewoz
     {
         public event EventHandler<ConnectionsAdapterClickEventArgs> ItemClick;
         public event EventHandler<ConnectionsAdapterClickEventArgs> ItemLongClick;
-        List<TrainConnectionListItem> items;
-        Context context;
+
+        private List<TrainConnectionListItem> items;
+        private Context context;
 
         public ConnectionsAdapter(Context ctx, List<TrainConnectionListItem> data)
         {
@@ -48,8 +49,8 @@ namespace WozAlboPrzewoz
 
         public override int ItemCount => items.Count;
 
-        void OnClick(ConnectionsAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
-        void OnLongClick(ConnectionsAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
+        private void OnClick(ConnectionsAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
+        private void OnLongClick(ConnectionsAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
     }
 
     public class ConnectionsAdapterViewHolder : RecyclerView.ViewHolder

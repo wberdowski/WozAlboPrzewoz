@@ -10,9 +10,10 @@ namespace WozAlboPrzewoz
     {
         public event EventHandler<DetailsAdapterClickEventArgs> ItemClick;
         public event EventHandler<DetailsAdapterClickEventArgs> ItemLongClick;
-        TrainConnection connection;
-        List<StationSchedule> items;
-        Station selectedStation;
+
+        private TrainConnection connection;
+        private List<StationSchedule> items;
+        private Station selectedStation;
         public Dictionary<int, Action> actions = new Dictionary<int, Action>();
 
         public DetailsAdapter(TrainConnection connection, Station selectedStation, List<StationSchedule> items)
@@ -178,8 +179,8 @@ namespace WozAlboPrzewoz
 
         public override int ItemCount => items.Count;
 
-        void OnClick(DetailsAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
-        void OnLongClick(DetailsAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
+        private void OnClick(DetailsAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
+        private void OnLongClick(DetailsAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
     }
 
     public class DetailsAdapterViewHolder : RecyclerView.ViewHolder
