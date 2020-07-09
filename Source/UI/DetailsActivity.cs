@@ -119,7 +119,8 @@ namespace WozAlboPrzewoz
             //
 
             var mTextViewDifficulties = (TextView)FindViewById(Resource.Id.textViewDifficulties);
-            mTextViewDifficulties.Text = AlertParser.Parse(mTrainConnection.Up);
+            var difficultiesText = AlertParser.Parse(mTrainConnection.Up);
+            mTextViewDifficulties.Text = (difficultiesText.Length > 0 ? difficultiesText : GetString(Resource.String.no_difficulties));
 
             //
             //  Transition

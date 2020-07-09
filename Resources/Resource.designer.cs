@@ -5521,77 +5521,80 @@ namespace WozAlboPrzewoz
 			// aapt resource value: 0x7F0F0034
 			public const int mtrl_chip_close_icon_content_description = 2131689524;
 			
-			// aapt resource value: 0x7F0F0037
-			public const int not_set = 2131689527;
-			
 			// aapt resource value: 0x7F0F0038
-			public const int now = 2131689528;
-			
-			// aapt resource value: 0x7F0F0035
-			public const int no_favorites = 2131689525;
-			
-			// aapt resource value: 0x7F0F0036
-			public const int no_favorites_hint = 2131689526;
+			public const int not_set = 2131689528;
 			
 			// aapt resource value: 0x7F0F0039
-			public const int on_time = 2131689529;
+			public const int now = 2131689529;
+			
+			// aapt resource value: 0x7F0F0035
+			public const int no_difficulties = 2131689525;
+			
+			// aapt resource value: 0x7F0F0036
+			public const int no_favorites = 2131689526;
+			
+			// aapt resource value: 0x7F0F0037
+			public const int no_favorites_hint = 2131689527;
 			
 			// aapt resource value: 0x7F0F003A
-			public const int password_toggle_content_description = 2131689530;
+			public const int on_time = 2131689530;
 			
 			// aapt resource value: 0x7F0F003B
-			public const int path_password_eye = 2131689531;
+			public const int password_toggle_content_description = 2131689531;
 			
 			// aapt resource value: 0x7F0F003C
-			public const int path_password_eye_mask_strike_through = 2131689532;
+			public const int path_password_eye = 2131689532;
 			
 			// aapt resource value: 0x7F0F003D
-			public const int path_password_eye_mask_visible = 2131689533;
+			public const int path_password_eye_mask_strike_through = 2131689533;
 			
 			// aapt resource value: 0x7F0F003E
-			public const int path_password_strike_through = 2131689534;
+			public const int path_password_eye_mask_visible = 2131689534;
 			
 			// aapt resource value: 0x7F0F003F
-			public const int preference_copied = 2131689535;
+			public const int path_password_strike_through = 2131689535;
 			
 			// aapt resource value: 0x7F0F0040
-			public const int search_menu_title = 2131689536;
+			public const int preference_copied = 2131689536;
 			
 			// aapt resource value: 0x7F0F0041
-			public const int setting_about = 2131689537;
+			public const int search_menu_title = 2131689537;
 			
 			// aapt resource value: 0x7F0F0042
-			public const int setting_dark_theme = 2131689538;
+			public const int setting_about = 2131689538;
 			
 			// aapt resource value: 0x7F0F0043
-			public const int setting_debug_mode = 2131689539;
+			public const int setting_dark_theme = 2131689539;
 			
 			// aapt resource value: 0x7F0F0044
-			public const int setting_developer = 2131689540;
+			public const int setting_debug_mode = 2131689540;
 			
 			// aapt resource value: 0x7F0F0045
-			public const int setting_licenses = 2131689541;
+			public const int setting_developer = 2131689541;
 			
 			// aapt resource value: 0x7F0F0046
-			public const int setting_theme = 2131689542;
+			public const int setting_licenses = 2131689542;
 			
 			// aapt resource value: 0x7F0F0047
-			public const int setting_version = 2131689543;
+			public const int setting_theme = 2131689543;
 			
 			// aapt resource value: 0x7F0F0048
-			public const int status_bar_notification_info_overflow = 2131689544;
+			public const int setting_version = 2131689544;
 			
 			// aapt resource value: 0x7F0F0049
-			public const int summary_collapsed_preference_list = 2131689545;
+			public const int status_bar_notification_info_overflow = 2131689545;
 			
 			// aapt resource value: 0x7F0F004A
-			public const int train_left = 2131689546;
+			public const int summary_collapsed_preference_list = 2131689546;
 			
 			// aapt resource value: 0x7F0F004B
-			public const int v7_preference_off = 2131689547;
+			public const int train_left = 2131689547;
 			
 			// aapt resource value: 0x7F0F004C
-			public const int v7_preference_on = 2131689548;
+			public const int v7_preference_off = 2131689548;
+			
+			// aapt resource value: 0x7F0F004D
+			public const int v7_preference_on = 2131689549;
 			
 			static String()
 			{
